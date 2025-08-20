@@ -10,13 +10,20 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 import edu.wpi.scheduler.client.IncomingAnimation;
 import edu.wpi.scheduler.client.controller.StudentSchedule;
+import edu.wpi.scheduler.shared.model.Course;
 import edu.wpi.scheduler.shared.model.Department;
 
 /**
@@ -24,7 +31,7 @@ import edu.wpi.scheduler.shared.model.Department;
  * 
  */
 public class CourseSelectorView extends Composite implements
-		CourseSelectedEventHandler, ChangeHandler {
+		CourseSelectedEventHandler, ChangeHandler, KeyUpHandler, ClickHandler {
 
 	private static CourseSelectorViewUiBinder uiBinder = GWT
 			.create(CourseSelectorViewUiBinder.class);
@@ -46,6 +53,12 @@ public class CourseSelectorView extends Composite implements
 
 	@UiField(provided = true)
 	CourseSelection courseSelection;
+
+	@UiField
+	TextBox searchBox;
+
+	@UiField
+	CheckBox selectedDepartmentsOnly;
 
 	/**
 	 * Because this class has a default constructor, it can be used as a binder
@@ -76,6 +89,9 @@ public class CourseSelectorView extends Composite implements
 		
 		departmentList.update();
 		departmentList.addChangeHandler(this);
+		searchBox.addKeyUpHandler(this);
+		selectedDepartmentsOnly.setValue(false);
+		selectedDepartmentsOnly.addClickHandler(this);
 		updateCourseList();
 	}
 
@@ -89,14 +105,39 @@ public class CourseSelectorView extends Composite implements
 		// Clear the body from any existing elements
 		courseList.clear();
 		
-		List<Department> departments = departmentList.getSelectedDepartments();
+		String searchTerm = searchBox.getText().trim().toLowerCase();
+		List<Department> departments;
 		
-		for( Department department : departments ){
-			courseList.addDeparment(department);
+		if (selectedDepartmentsOnly.getValue()) {
+			// Search only selected departments (original behavior)
+			departments = departmentList.getSelectedDepartments();
+		} else {
+			// Global search across all departments
+			departments = courseList.getAllDepartments();
 		}
 		
+		for( Department department : departments ){
+			courseList.addDeparment(department, searchTerm);
+		}
+		
+		// Only try to select a course if we have departments and the first department has courses
+		// and there are actually visible courses in the list after filtering
 		if( departments.size() > 0 && selectionController.getSelectedCourse() == null ){
-			selectionController.selectCourse( departments.get(0).courses.get(0) );
+			// Find the first department with courses that match the search filter
+			for (Department dept : departments) {
+				if (dept.courses.size() > 0) {
+					// Find first course in this department that matches the search
+					for (Course course : dept.courses) {
+						if (courseList.matchesSearchTerm(course, searchTerm)) {
+							selectionController.selectCourse(course);
+							break;
+						}
+					}
+					if (selectionController.getSelectedCourse() != null) {
+						break;
+					}
+				}
+			}
 		}
 		
 		new IncomingAnimation( courseList.getElement() ).run();
@@ -113,6 +154,16 @@ public class CourseSelectorView extends Composite implements
 
 	@Override
 	public void onChange(ChangeEvent event) {
+		updateCourseList();
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent event) {
+		updateCourseList();
+	}
+
+	@Override
+	public void onClick(ClickEvent event) {
 		updateCourseList();
 	}
 

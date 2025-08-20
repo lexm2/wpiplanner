@@ -11,9 +11,12 @@ import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.WidgetCollection;
 
 import edu.wpi.scheduler.client.controller.HasCourse;
+import edu.wpi.scheduler.client.Scheduler;
 import edu.wpi.scheduler.shared.model.Course;
 import edu.wpi.scheduler.shared.model.Department;
 import edu.wpi.scheduler.shared.model.Section;
+
+import java.util.List;
 
 public class CourseList extends ComplexPanel {
 
@@ -44,7 +47,15 @@ public class CourseList extends ComplexPanel {
 	}
 
 	public void addDeparment(Department department) {
+		addDeparment(department, "");
+	}
+
+	public void addDeparment(Department department, String searchTerm) {
 		for (Course course : department.courses) {
+			if (!matchesSearchTerm(course, searchTerm)) {
+				continue;
+			}
+
 			CourseListItemBase item = new CourseListItemBase(selectionController, course);
 
 			//String name = fixCase(course.name);  Capitalization handled by Workday now. 
@@ -60,6 +71,26 @@ public class CourseList extends ComplexPanel {
 
 			this.add(item);
 		}
+	}
+
+	public boolean matchesSearchTerm(Course course, String searchTerm) {
+		if (searchTerm == null || searchTerm.isEmpty()) {
+			return true;
+		}
+
+		String courseName = course.name.toLowerCase();
+		String courseNumber = course.number.toLowerCase();
+		String departmentAbbrev = course.department.abbreviation.toLowerCase();
+		String courseAbbrev = course.toAbbreviation().toLowerCase();
+
+		return courseName.contains(searchTerm) || 
+		       courseNumber.contains(searchTerm) || 
+		       departmentAbbrev.contains(searchTerm) ||
+		       courseAbbrev.contains(searchTerm);
+	}
+
+	public List<Department> getAllDepartments() {
+		return Scheduler.getDatabase().departments;
 	}
 
 	public void add(CourseListItemBase child) {

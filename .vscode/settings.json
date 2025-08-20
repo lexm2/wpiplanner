@@ -10,5 +10,9 @@
         "war/WEB-INF/lib/gwt-servlet.jar"
     ],
     "java.compile.nullAnalysis.mode": "disabled",
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.exclude": {
+          "gwt-2.11.0/**": true
+    },
+    "java.format.settings.profile": "GoogleStyle"
 }

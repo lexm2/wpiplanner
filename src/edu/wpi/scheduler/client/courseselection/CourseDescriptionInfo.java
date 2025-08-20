@@ -78,17 +78,17 @@ public class CourseDescriptionInfo extends Composite {
 			professorList.setInnerHTML("<i>N/A</i>");
 		}
 
-		//String seatsHTML = "<b>Seats available: </b>";
+		// String seatsHTML = "<b>Seats available: </b>";
 		String seatsHTML = "";
 
-//		if (!course.hasAvailableSeats())
-//			seatsHTML += CourseList.NoSeatWarning;
-//
-//		seatsHTML += " " + seatsAvailable + "/" + seats;
-//		seatsHTML += "<br>";
-//		seatsHTML += "<b>Waitlist</b>: " + waitlistAvailable + "/" + waitlist;
-//
-//		seatsList.setInnerHTML(seatsHTML);
+		// if (!course.hasAvailableSeats())
+		// seatsHTML += CourseList.NoSeatWarning;
+		//
+		// seatsHTML += " " + seatsAvailable + "/" + seats;
+		// seatsHTML += "<br>";
+		// seatsHTML += "<b>Waitlist</b>: " + waitlistAvailable + "/" + waitlist;
+		//
+		// seatsList.setInnerHTML(seatsHTML);
 
 		title.setInnerText(course.name);
 	}

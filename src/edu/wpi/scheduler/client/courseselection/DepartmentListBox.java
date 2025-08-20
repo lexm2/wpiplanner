@@ -48,8 +48,9 @@ public class DepartmentListBox extends ListBox {
 			);
 
 	public DepartmentListBox(StudentSchedule studentSchedule) {
-		super(true); // Create is a multi-select
-		
+		super(); // Create is a multi-select
+		setMultipleSelect(true);
+
 		Style style = this.getElement().getStyle();
 		style.setHeight(100.0, Unit.PCT);
 		style.setBorderWidth(0.0, Unit.PX);
