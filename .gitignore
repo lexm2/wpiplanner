@@ -8,3 +8,14 @@ target
 .gwt
 gwt-unitCache
 /test-classes
+
+# GWT SDK and build artifacts
+gwt-2.11.0/
+*.cache.js
+war/WEB-INF/deploy/
+war/scheduler/*.cache.js
+war/scheduler/compilation-mappings.txt
+war/scheduler/scheduler.devmode.js
+war/scheduler/scheduler.nocache.js
+war/WEB-INF/classes/
+war/WEB-INF/deploy/scheduler/symbolMaps/
