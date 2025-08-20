@@ -1,3 +1,14 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "war/WEB-INF/classes",
+    "java.project.referencedLibraries": [
+        "gwt-2.11.0/gwt-user.jar",
+        "gwt-2.11.0/gwt-dev.jar",
+        "gwt-2.11.0/gwt-servlet.jar",
+        "war/WEB-INF/lib/gwt-servlet.jar"
+    ],
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
