@@ -21,6 +21,7 @@ echo Using GWT SDK at: %GWT_HOME%
 rem Clean previous build artifacts
 echo Cleaning previous build...
 if exist "%WAR_DIR%\scheduler" rmdir /s /q "%WAR_DIR%\scheduler"
+if exist "%CLASSES_DIR%" rmdir /s /q "%CLASSES_DIR%"
 
 rem Create classes directory if it doesn't exist
 if not exist "%CLASSES_DIR%" mkdir "%CLASSES_DIR%"
@@ -49,7 +50,10 @@ if %ERRORLEVEL% neq 0 (
 rem Copy non-Java files to classes directory
 echo.
 echo Copying resources...
-xcopy /E /I /Y "%SRC_DIR%\edu\wpi\scheduler" "%CLASSES_DIR%\edu\wpi\scheduler" >nul
+rem Use xcopy to copy all files preserving directory structure, then remove Java files
+xcopy /E /I /Y "%SRC_DIR%\*" "%CLASSES_DIR%" >nul
+rem Remove Java files from classes directory since they're already compiled
+del /s /q "%CLASSES_DIR%\*.java" 2>nul
 
 rem Run GWT Compiler
 echo.
@@ -65,7 +69,25 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
+rem Verify compilation results
+echo.
+echo Verifying build results...
+if exist "%WAR_DIR%\scheduler\scheduler.nocache.js" (
+    echo ✓ GWT nocache.js file generated successfully
+) else (
+    echo ✗ WARNING: GWT nocache.js file not found
+)
+
+if exist "%WAR_DIR%\scheduler\*.cache.js" (
+    echo ✓ GWT cache.js files generated successfully
+) else (
+    echo ✗ WARNING: GWT cache.js files not found
+)
+
 echo.
 echo Build completed successfully!
+echo Generated files:
+dir "%WAR_DIR%\scheduler\*.js" /b 2>nul
+echo.
 echo You can now serve the application from the war directory.
 echo For development, use: java -cp gwt-dev.jar com.google.gwt.dev.codeserver.CodeServer edu.wpi.scheduler.Scheduler
