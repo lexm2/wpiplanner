@@ -18,6 +18,10 @@ if not exist "%GWT_HOME%\gwt-dev.jar" (
 
 echo Using GWT SDK at: %GWT_HOME%
 
+rem Clean previous build artifacts
+echo Cleaning previous build...
+if exist "%WAR_DIR%\scheduler" rmdir /s /q "%WAR_DIR%\scheduler"
+
 rem Create classes directory if it doesn't exist
 if not exist "%CLASSES_DIR%" mkdir "%CLASSES_DIR%"
 
