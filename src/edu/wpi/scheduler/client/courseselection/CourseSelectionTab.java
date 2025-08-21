@@ -19,7 +19,4 @@ public class CourseSelectionTab extends BaseTab {
 	public Widget getBody() {
 		return this.selectorView;
 	}
-
-	
-	
 }

@@ -52,8 +52,8 @@
 		</g:east>
 
 		<g:center>
-			<g:VerticalPanel width="100%" height="100%">
-				<g:cell height="60px">
+			<g:HTMLPanel styleName="courseListParent">
+				<div style="flex-shrink: 0;">
 					<g:VerticalPanel styleName="{style.searchPanel}" width="100%">
 						<g:HorizontalPanel>
 							<g:HTML>Search:&nbsp;</g:HTML>
@@ -63,13 +63,11 @@
 							<g:CheckBox ui:field="selectedDepartmentsOnly" text="Filter by selected departments only" />
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
-				</g:cell>
-				<g:cell>
-					<g:ScrollPanel width="100%" height="100%">
-						<c:CourseList ui:field="courseList" />
-					</g:ScrollPanel>
-				</g:cell>
-			</g:VerticalPanel>
+				</div>
+				<g:ScrollPanel styleName="courseListContainer">
+					<c:CourseList ui:field="courseList" />
+				</g:ScrollPanel>
+			</g:HTMLPanel>
 		</g:center>
 
 	</g:SplitLayoutPanel>
