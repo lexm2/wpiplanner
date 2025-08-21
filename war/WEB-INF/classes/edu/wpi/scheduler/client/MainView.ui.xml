@@ -5,62 +5,102 @@
 
 	<ui:style>
 		.rightTabs {
-			float: right;
+			display: flex;
+			align-items: stretch;
+			justify-content: flex-end;
 			height: 70px;
-			padding-top: 10px;
+			padding: 0 20px;
+			gap: 0;
 		}
 		
 		.rightTabs > button {
-			height: 60px;
+			height: 70px;
+			border-radius: 0;
+			border: none;
+			border-bottom: 2px solid transparent;
+			font-family: 'Inter', sans-serif;
+			font-weight: 500;
+			font-size: 14px;
+			transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+			background: transparent;
 		}
 		
 		.topBar {
-			border-bottom: 1px solid #000;
-			background-color: #c41230;
+			background: linear-gradient(135deg, #c41230 0%, #e62341 100%);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+			border: none;
 		}
 		
 		.topBarNoBottom {
-			background-color: #c41230;
+			background: linear-gradient(135deg, #c41230 0%, #e62341 100%);
 		}
 		
-		.headerTitle{
+		.headerTitle {
 			color: white;
-			font-size: 36px;
-			font-family: Arial;
+			font-size: 32px;
+			font-family: 'Inter', sans-serif;
+			font-weight: 700;
+			letter-spacing: -0.02em;
+			margin: 4px 0 0 0;
+			padding-left: 16px;
 		}
 		
-		.headerSubTitle{
+		.headerSubTitle {
+			color: rgba(255, 255, 255, 0.9);
+			font-size: 13px;
+			font-family: 'Inter', sans-serif;
+			font-weight: 400;
+			margin: 0;
+			padding-left: 16px;
+			letter-spacing: 0.02em;
+		}
+		
+		.authorLabel {
+			color: rgba(255, 255, 255, 0.8);
+			font-size: 11px;
+			font-family: 'Inter', sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			margin: 2px 0;
+			padding-left: 12px;
+		}
+		
+		.updatedTimestamp {
+			color: rgba(255, 255, 255, 0.9);
+			font-size: 12px;
+			font-family: 'Inter', sans-serif;
+			font-weight: 400;
+			margin: 2px 0;
+			padding-left: 12px;
+		}
+		
+		.refreshButton {
 			color: white;
-			font-size: 12px;
-			font-family: Arial;
-		}
-		
-		.authorLabel{
-			color:white;
-			font-size: 12px;
-			font-family: Arial;
-			font-style: Italic;
-		}
-		
-		.updatedTimestamp{
-			color:white;
-			font-size: 12px;
-			font-family: Arial;
-		}
-		
-		.refreshButton{
-			color: white;
-			background-color: #ac1028;
-			border: 1px solid white;
-			font-size: 10px;
-			font-family: Arial;
+			background-color: rgba(255, 255, 255, 0.15);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 6px;
+			font-size: 11px;
+			font-family: 'Inter', sans-serif;
+			font-weight: 500;
 			margin-left: 8px;
-			padding: 2px 6px;
+			padding: 6px 12px;
 			cursor: pointer;
+			transition: all 0.2s ease;
+			backdrop-filter: blur(8px);
 		}
 		
-		.refreshButton:hover{
-			background-color: #8e0c20;
+		.refreshButton:hover {
+			background-color: rgba(255, 255, 255, 0.25);
+			border-color: rgba(255, 255, 255, 0.5);
+			transform: translateY(-1px);
+		}
+		
+		.infoPanel {
+			padding: 8px 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 2px;
 		}
 	</ui:style>
 	<g:DockLayoutPanel ui:field="layoutPanel">
@@ -76,8 +116,8 @@
 						</g:north>
 					</g:DockLayoutPanel>
 				</g:west>
-				<g:west size="320">
-					<g:VerticalPanel styleName='{style.topBarNoBottom}' width="100%" height="100%">
+				<g:west size="380">
+					<g:VerticalPanel styleName='{style.infoPanel}' width="100%" height="100%">
 						<g:Label styleName='{style.authorLabel}'></g:Label>
 						<g:Label styleName='{style.authorLabel}'></g:Label>
 						<g:InlineHTML ui:field='oldSchedLink' styleName='{style.updatedTimestamp}'></g:InlineHTML>
