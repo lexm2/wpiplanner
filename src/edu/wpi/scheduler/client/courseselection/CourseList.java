@@ -17,10 +17,16 @@ import edu.wpi.scheduler.shared.model.Department;
 import edu.wpi.scheduler.shared.model.Section;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class CourseList extends ComplexPanel {
 
 	private final CourseSelectionController selectionController;
+	private static final int RESULTS_PER_PAGE = 100;
+	private int currentlyDisplayed = 0;
+	private List<Course> remainingCourses = new ArrayList<Course>();
+	private String currentSearchTerm = "";
+	private List<Department> currentDepartments = new ArrayList<Department>();
 
 	public static class CourseComparator implements Comparator<HasCourse> {
 
@@ -51,8 +57,21 @@ public class CourseList extends ComplexPanel {
 	}
 
 	public void addDeparment(Department department, String searchTerm) {
+		this.currentSearchTerm = searchTerm;
+		List<Course> matchingCourses = new ArrayList<Course>();
 		for (Course course : department.courses) {
-			if (!matchesSearchTerm(course, searchTerm)) {
+			if (matchesSearchTerm(course, searchTerm)) {
+				matchingCourses.add(course);
+			}
+		}
+		
+		addCoursesToDisplay(matchingCourses, searchTerm);
+	}
+	
+	private void addCoursesToDisplay(List<Course> courses, String searchTerm) {
+		for (Course course : courses) {
+			if (currentlyDisplayed >= RESULTS_PER_PAGE) {
+				remainingCourses.add(course);
 				continue;
 			}
 
@@ -70,6 +89,7 @@ public class CourseList extends ComplexPanel {
 			item.add(null, name);
 
 			this.add(item);
+			currentlyDisplayed++;
 		}
 	}
 
@@ -91,6 +111,49 @@ public class CourseList extends ComplexPanel {
 
 	public List<Department> getAllDepartments() {
 		return Scheduler.getDatabase().departments;
+	}
+	
+	public void resetPagination() {
+		currentlyDisplayed = 0;
+		remainingCourses.clear();
+	}
+	
+	public void loadMoreResults() {
+		if (hasMoreResults()) {
+			int toLoad = Math.min(RESULTS_PER_PAGE, remainingCourses.size());
+			
+			for (int i = 0; i < toLoad; i++) {
+				Course course = remainingCourses.remove(0);
+				
+				CourseListItemBase item = new CourseListItemBase(selectionController, course);
+				String name = course.name;
+
+				if (!course.hasAvailableSeats()) {
+					if (course.hasAvailableWaitlist()) name = NoSeatButWaitlistWarning + " " + name;
+					else name = NoSeatWarning + " " + name;
+				}
+
+				item.add("128px", new TermView(course));
+				item.add(null, name);
+
+				this.add(item);
+				currentlyDisplayed++;
+			}
+		}
+	}
+	
+	public boolean hasMoreResults() {
+		return remainingCourses.size() > 0;
+	}
+	
+	public int getRemainingCount() {
+		return remainingCourses.size();
+	}
+	
+	@Override
+	public void clear() {
+		super.clear();
+		resetPagination();
 	}
 
 	public void add(CourseListItemBase child) {

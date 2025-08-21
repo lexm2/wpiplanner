@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Button;
 
 import edu.wpi.scheduler.client.IncomingAnimation;
 import edu.wpi.scheduler.client.controller.StudentSchedule;
@@ -60,6 +61,9 @@ public class CourseSelectorView extends Composite implements
 	@UiField
 	CheckBox selectedDepartmentsOnly;
 
+	@UiField
+	Button loadMoreButton;
+
 	/**
 	 * Because this class has a default constructor, it can be used as a binder
 	 * template. In other words, it can be used in other *.ui.xml files as
@@ -92,6 +96,7 @@ public class CourseSelectorView extends Composite implements
 		searchBox.addKeyUpHandler(this);
 		selectedDepartmentsOnly.setValue(false);
 		selectedDepartmentsOnly.addClickHandler(this);
+		loadMoreButton.addClickHandler(this);
 		updateCourseList();
 	}
 
@@ -141,7 +146,18 @@ public class CourseSelectorView extends Composite implements
 			}
 		}
 		
+		updateLoadMoreButton();
 		new IncomingAnimation( courseList.getElement() ).run();
+	}
+	
+	private void updateLoadMoreButton() {
+		if (courseList.hasMoreResults()) {
+			loadMoreButton.setVisible(true);
+			int remaining = courseList.getRemainingCount();
+			loadMoreButton.setText("Load More (" + remaining + " remaining)");
+		} else {
+			loadMoreButton.setVisible(false);
+		}
 	}
 
 	/**
@@ -165,7 +181,12 @@ public class CourseSelectorView extends Composite implements
 
 	@Override
 	public void onClick(ClickEvent event) {
-		updateCourseList();
+		if (event.getSource() == loadMoreButton) {
+			courseList.loadMoreResults();
+			updateLoadMoreButton();
+		} else {
+			updateCourseList();
+		}
 	}
 
 }

@@ -28,6 +28,21 @@
 		    margin-top: 5px;
 		    font-size: 12px;
 		}
+		
+		.loadMoreButton {
+		    margin: 10px;
+		    padding: 8px 16px;
+		    background-color: #007cba;
+		    color: white;
+		    border: none;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    font-size: 14px;
+		}
+		
+		.loadMoreButton:hover {
+		    background-color: #005a87;
+		}
 	</ui:style>
 
 	<g:SplitLayoutPanel>
@@ -65,7 +80,10 @@
 					</g:VerticalPanel>
 				</div>
 				<g:ScrollPanel styleName="courseListContainer">
-					<c:CourseList ui:field="courseList" />
+					<g:VerticalPanel width="100%">
+						<c:CourseList ui:field="courseList" />
+						<g:Button ui:field="loadMoreButton" styleName="{style.loadMoreButton}" text="Load More" visible="false" />
+					</g:VerticalPanel>
 				</g:ScrollPanel>
 			</g:HTMLPanel>
 		</g:center>
