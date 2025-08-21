@@ -60,7 +60,7 @@
 							<g:TextBox ui:field="searchBox" styleName="{style.searchBox}" />
 						</g:HorizontalPanel>
 						<g:HorizontalPanel styleName="{style.checkboxPanel}">
-							<g:CheckBox ui:field="selectedDepartmentsOnly" text="Search selected departments only" />
+							<g:CheckBox ui:field="selectedDepartmentsOnly" text="Filter by selected departments only" />
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 				</g:cell>

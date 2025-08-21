@@ -107,13 +107,14 @@ public class CourseSelectorView extends Composite implements
 		
 		String searchTerm = searchBox.getText().trim().toLowerCase();
 		List<Department> departments;
+		boolean isGlobalSearch = !searchTerm.isEmpty() && !selectedDepartmentsOnly.getValue();
 		
-		if (selectedDepartmentsOnly.getValue()) {
-			// Search only selected departments (original behavior)
-			departments = departmentList.getSelectedDepartments();
-		} else {
-			// Global search across all departments
+		if (isGlobalSearch) {
+			// Global search across all departments when there's a search term and not filtering by selected departments
 			departments = courseList.getAllDepartments();
+		} else {
+			// Normal filter mode - show only selected departments
+			departments = departmentList.getSelectedDepartments();
 		}
 		
 		for( Department department : departments ){
