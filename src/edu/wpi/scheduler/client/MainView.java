@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -13,6 +15,8 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
@@ -49,6 +53,9 @@ public class MainView extends Composite {
 	
 	@UiField
 	Label updatedLabel;
+	
+	@UiField
+	Button refreshButton;
 	
 
 	public MainView( final StudentSchedule studentSchedule, ScheduleDB db) {
@@ -110,5 +117,9 @@ public class MainView extends Composite {
 		bodyPanel.add(body);
 	}
 	
+	@UiHandler("refreshButton")
+	void handleRefreshClick(ClickEvent e) {
+		Scheduler.refreshFromLiveData();
+	}
 
 }

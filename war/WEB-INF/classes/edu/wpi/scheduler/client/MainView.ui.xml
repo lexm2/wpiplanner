@@ -46,6 +46,21 @@
 			font-size: 12px;
 			font-family: Arial;
 		}
+		
+		.refreshButton{
+			color: white;
+			background-color: #ac1028;
+			border: 1px solid white;
+			font-size: 10px;
+			font-family: Arial;
+			margin-left: 8px;
+			padding: 2px 6px;
+			cursor: pointer;
+		}
+		
+		.refreshButton:hover{
+			background-color: #8e0c20;
+		}
 	</ui:style>
 	<g:DockLayoutPanel ui:field="layoutPanel">
 		<g:north size="50">
@@ -72,7 +87,10 @@
 							<g:InlineHTML ui:field='oldSchedLink' styleName='{style.updatedTimestamp}'></g:InlineHTML>
 						</g:north>
 						<g:north size="14">
-							<g:Label ui:field='updatedLabel' styleName='{style.updatedTimestamp}'></g:Label>
+							<g:HorizontalPanel>
+								<g:Label ui:field='updatedLabel' styleName='{style.updatedTimestamp}'></g:Label>
+								<g:Button ui:field='refreshButton' text='Refresh' styleName='{style.refreshButton}' title='Refresh schedule data (updated every 15 minutes)'></g:Button>
+							</g:HorizontalPanel>
 						</g:north>
 					</g:DockLayoutPanel>
 				</g:west>

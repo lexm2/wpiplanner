@@ -57,4 +57,22 @@ public class Scheduler implements EntryPoint {
 		RootPanel.get().clear();
 		RootPanel.get().add(new MainView(studentSchedule, db));
 	}
+
+	public static void refreshFromLiveData() {
+		XMLHttpRequest xmlHttpRequest = XMLHttpRequest.create();
+		// Add cache-busting parameter to ensure we get the latest data
+		String url = "new.schedb?t=" + System.currentTimeMillis();
+		xmlHttpRequest.open("GET", url);
+
+		LoadSchedule load = new LoadSchedule(xmlHttpRequest);
+
+		try {
+			xmlHttpRequest.send();
+		} catch (JavaScriptException e) {
+			Window.alert(e.getMessage());
+		}
+
+		RootPanel.get("loadingText").getElement().setInnerHTML("");
+		RootPanel.get("loadingText").add(load);
+	}
 }

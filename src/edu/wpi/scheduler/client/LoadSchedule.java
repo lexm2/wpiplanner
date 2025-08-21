@@ -80,11 +80,16 @@ public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandle
 		String response = xmlHttpRequest.getResponseText();
 		xmlHttpRequest = null;
 
+		// Debug logging
+		GWT.log("Response length: " + response.length());
+		GWT.log("Response start: " + response.substring(0, Math.min(200, response.length())));
+
 		//Try loading as XML
 		try{ 
 			Scheduler.loadScheduler(loadXML(response));
 			return; 
 		} catch(Exception e){
+			GWT.log("XML parsing failed: " + e.toString());
 			//IE has an error that will not understand the <?xml version="1.1" encoding="UTF-8"?>
 			//A possible fix is either to:
 			//Change "1.1" to "1.0"
@@ -97,14 +102,15 @@ public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandle
 			} catch(Exception e2){
 			}
 			
-			GWT.log(e.toString());
+			GWT.log("XML parsing failed: " + e.toString());
 		}
 		
-		//Try loading as JSON
+		//Fallback: Try loading as JSON
 		try{ 
 			Scheduler.loadScheduler(loadJSON(response));
 			return; 
 		} catch(Exception e){
+			GWT.log("JSON parsing failed: " + e.toString());
 		}
 		
 		Window.alert("Unable to parse database. What kind of data am I getting?");

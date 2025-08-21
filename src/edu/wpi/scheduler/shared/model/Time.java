@@ -26,9 +26,16 @@ public class Time implements Comparable<Time>, Serializable {
 	 */
 	public Time(String time) {
 		int length = time.length();
+		if (length < 4) {
+			throw new IllegalArgumentException("Time string too short: " + time);
+		}
 		boolean meridian = time.substring(length - 2).equals("AM");
 
-		this.hour = Integer.valueOf(time.substring(0, time.indexOf(":")));
+		int colonIndex = time.indexOf(":");
+		if (colonIndex == -1) {
+			throw new IllegalArgumentException("Time string missing colon: " + time);
+		}
+		this.hour = Integer.valueOf(time.substring(0, colonIndex));
 		this.minutes = Integer.valueOf(time.substring(length - 4, length - 2));
 
 		// If we are dealing with PM, we have to transform 1PM into 13, but
