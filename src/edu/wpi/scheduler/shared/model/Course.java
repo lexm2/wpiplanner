@@ -51,10 +51,22 @@ public class Course implements Serializable {
 		return false;
 	}
 	
+	private boolean isTermMatch(String sectionTerm, String targetTerm) {
+		String[] terms = sectionTerm.split(",");
+		for (String term : terms) {
+			String trimmedTerm = term.trim();
+			if (trimmedTerm.length() > 0 && trimmedTerm.charAt(0) == targetTerm.charAt(0)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasAvailableSeatsForTerm(String term){
 		for (Section section : sections) {
-			if (section.hasAvailableSats() && section.term.charAt(0) == term.charAt(0)) return true;
-			else if (section.hasAvailableSats() && section.term.length() > 8 && section.term.substring(8).charAt(0) == term.charAt(0)) return true;
+			if (section.hasAvailableSats() && isTermMatch(section.term, term)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -69,8 +81,9 @@ public class Course implements Serializable {
 	
 	public boolean hasAvailableWaitlistForTerm(String term){
 		for (Section section : sections) {
-			if(section.hasAvailableWaitlist() && section.term.charAt(0) == term.charAt(0)) return true;
-			else if (section.hasAvailableWaitlist() && section.term.length() > 8 && section.term.substring(8).charAt(0) == term.charAt(0)) return true;
+			if (section.hasAvailableWaitlist() && isTermMatch(section.term, term)) {
+				return true;
+			}
 		}
 		return false;
 	}
