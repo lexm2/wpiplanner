@@ -3,44 +3,49 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	
 		<g:HTMLPanel>
-			<center style="margin-top:5px;">
-				<div style="display: inline-block; width: 70%; margin:auto; border: 4px solid gray; background-color:#c4c4c4; overflow-x:hidden; overflow-y:hidden;">
-					<h2>How to use Planner</h2>
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/QSEwh-V5uYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+			<div style="display: flex; gap: 24px; padding: 24px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;">
+				<div style="flex: 2; min-width: 600px; background: white; border-radius: 16px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10); padding: 32px; overflow: hidden;">
+					<h2 style="color: #c41230; margin-bottom: 24px; font-size: 2rem; font-weight: 600;">How to use Planner</h2>
+					<div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12); margin-bottom: 24px;">
+						<iframe width="100%" height="315" src="https://www.youtube.com/embed/QSEwh-V5uYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+					</div>
 					
-					<h2>Changes not shown in the above video:</h2>
-					<ul style="text-align: left; font-size:15px">
-						<li>The term icons have more colors:
-							<ul>
-								<li>Green: the term is enabled and has available seats.</li>
-								<li>Blue: the term is enabled and has no available seats, but has spots on the waitlist.</li>
-								<li>Orange: the term is enabled but has no available seats or spots on the waitlist.</li>
-								<li>Red: the term is disabled. This color is only shown in the bottom right in the Courses box and Schedules tab.</li>
+					<h3 style="color: #495057; margin-bottom: 16px; font-size: 1.5rem; font-weight: 500;">Changes not shown in the above video:</h3>
+					<ul style="text-align: left; color: #6c757d; line-height: 1.7; margin-left: 20px;">
+						<li style="margin-bottom: 12px;">The term icons have more colors:
+							<ul style="margin-top: 8px; margin-left: 20px;">
+								<li style="margin-bottom: 4px;"><span style="color: #28a745; font-weight: 600;">Green:</span> the term is enabled and has available seats.</li>
+								<li style="margin-bottom: 4px;"><span style="color: #0066cc; font-weight: 600;">Blue:</span> the term is enabled and has no available seats, but has spots on the waitlist.</li>
+								<li style="margin-bottom: 4px;"><span style="color: #fd7e14; font-weight: 600;">Orange:</span> the term is enabled but has no available seats or spots on the waitlist.</li>
+								<li style="margin-bottom: 4px;"><span style="color: #c41230; font-weight: 600;">Red:</span> the term is disabled. This color is only shown in the bottom right in the Courses box and Schedules tab.</li>
 							</ul>
 						</li>
-						<li>Instead of the Closed/Waitlisted tab, this version has a red warning symbol next to the name when the class or section is filled with no spots on the waitlist, 
+						<li style="margin-bottom: 12px;">Instead of the Closed/Waitlisted tab, this version has a red warning symbol next to the name when the class or section is filled with no spots on the waitlist, 
 						or a blue warning symbol when the class is filled but has slots on the waitlist. If you cannot see the different color warning icons on your browser, hover over 
 						the icon to see which warning it is.</li>
 						<li>CRNs no longer exist due to the switch to workday.</li>
 					</ul>
-
-	       		</div>
-	       		<div style="display: inline-block; vertical-align:top; width: 28%; margin:auto; border: 4px solid gray; background-color:#c4c4c4;">
-					<h2>Planner App Information:</h2>
-					<p style="text-align: left; font-size:15px">Based on the WPI Scheduler IQP by:</p>
-					<ul style="text-align: left; font-size:15px">
-						<li>Henrique Polido</li>
-						<li>Ryan Anthony</li>
-						<li>Douglas Lally</li>
-					</ul>
-					<p style="text-align: left; font-size:15px">Updated for compatibility with Workday schedule data by:</p>
-					<ul style="text-align: left; font-size:15px">
-						<li>Jordyn McKeen</li>
-						<li>Nick Markou</li>
-					</ul>
-					<p style="text-align: left; font-size:15px">In collaboration with the WPI IT Web Development Team.</p>
 	       		</div>
 	       		
-	       </center>
+	       		<div style="flex: 1; min-width: 300px; background: white; border-radius: 16px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10); padding: 32px;">
+					<h2 style="color: #c41230; margin-bottom: 24px; font-size: 2rem; font-weight: 600;">Planner App Information</h2>
+					<div style="margin-bottom: 24px;">
+						<p style="color: #6c757d; margin-bottom: 12px; font-weight: 500;">Based on the WPI Scheduler IQP by:</p>
+						<ul style="color: #6c757d; line-height: 1.6; margin-left: 20px;">
+							<li>Henrique Polido</li>
+							<li>Ryan Anthony</li>
+							<li>Douglas Lally</li>
+						</ul>
+					</div>
+					<div style="margin-bottom: 24px;">
+						<p style="color: #6c757d; margin-bottom: 12px; font-weight: 500;">Updated for compatibility with Workday schedule data by:</p>
+						<ul style="color: #6c757d; line-height: 1.6; margin-left: 20px;">
+							<li>Jordyn McKeen</li>
+							<li>Nick Markou</li>
+						</ul>
+					</div>
+					<p style="color: #6c757d; line-height: 1.6; font-style: italic;">In collaboration with the WPI IT Web Development Team.</p>
+	       		</div>
+	       	</div>
 		</g:HTMLPanel>
 </ui:UiBinder> 

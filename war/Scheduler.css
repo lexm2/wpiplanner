@@ -1,69 +1,183 @@
-/** Add css rules here for your application. */
-/** Example rules used by the template application (remove for your app) */
+/** Modern WPI Planner Styles */
+
+/* CSS Custom Properties for consistent theming */
+:root {
+  /* WPI Brand Colors */
+  --wpi-crimson: #c41230;
+  --wpi-crimson-light: #e62341;
+  --wpi-crimson-dark: #a01020;
+  
+  /* Modern Grays */
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f4;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  
+  /* Accent Colors */
+  --accent-blue: #0066cc;
+  --accent-green: #28a745;
+  --accent-orange: #fd7e14;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+}
+/* Modern Typography */
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	line-height: 1.6;
+	color: var(--gray-800);
+}
+
 h1 {
-	font-size: 2em;
-	font-weight: bold;
-	color: #777777;
-	margin: 40px 0px 70px;
+	font-size: 2.5rem;
+	font-weight: 600;
+	color: var(--wpi-crimson);
+	margin: var(--spacing-xl) 0 var(--spacing-lg);
 	text-align: center;
+	letter-spacing: -0.025em;
 }
 
-.sched-TopButtonSelected {
-	background-color: #c41230;
-	color: white;
-	box-shadow: inset -20px 0px 10px -10px white;
+h2 {
+	font-size: 2rem;
+	font-weight: 500;
+	color: var(--gray-800);
+	margin: var(--spacing-lg) 0 var(--spacing-md);
+	letter-spacing: -0.025em;
 }
 
-.sched-TopButton:enabled {
-	background-color: #c41230;
-	color: black;
-	box-shadow: inset -10px 0px 10px -10px black;
+h3 {
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: var(--gray-700);
+	margin: var(--spacing-md) 0 var(--spacing-sm);
 }
 
-.sched-TopButton:disabled {
-	background-color: #A9B0B7;
-	color: gray;
-	box-shadow: inset -10px 0px 10px -10px gray;
+p, li {
+	font-size: 1rem;
+	line-height: 1.7;
+	color: var(--gray-700);
 }
 
+/* Modern link styles */
+a {
+	color: var(--wpi-crimson);
+	text-decoration: none;
+	transition: color var(--transition-fast);
+}
+
+a:hover {
+	color: var(--wpi-crimson-light);
+	text-decoration: underline;
+}
+
+/* Modern Header Navigation Tabs */
 .sched-TopButton, .sched-TopButtonSelected {
-	font-size: 20px;
+	font-size: 1.125rem;
+	font-weight: 500;
 	left: 50px;
 	position: relative;
 	margin: 0px 50px 0px -100px;
-	padding: 0px 75px;
+	padding: var(--spacing-md) var(--spacing-xl);
 	text-decoration: none;
 	cursor: pointer;
-	cursor: hand;
-	border: 0px solid #bbb;
-	border-left: 0px;
-	border-bottom: 0px;
-	border-top: 0px;
-	border-radius: 0px 75px 0px 0px;
+	border: none;
+	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+	transition: all var(--transition-base);
+	transform: translateY(0);
+	box-shadow: var(--shadow-sm);
+}
+
+.sched-TopButtonSelected {
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+	color: white;
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.sched-TopButton:enabled {
+	background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+	color: var(--gray-800);
+}
+
+.sched-TopButton:disabled {
+	background: var(--gray-300);
+	color: var(--gray-500);
+	cursor: not-allowed;
+	opacity: 0.6;
 }
 
 .sched-TopButton:enabled:hover {
-	background-color: #e62341;
+	background: linear-gradient(135deg, var(--wpi-crimson-light) 0%, var(--wpi-crimson) 100%);
+	color: white;
+	transform: translateY(-4px);
+	box-shadow: var(--shadow-lg);
 }
 
 
-.sendButton {
-	display: block;
-	font-size: 16pt;
+/* Modern Buttons */
+.sendButton, .sched-Button {
+	display: inline-block;
+	font-size: 1rem;
+	font-weight: 500;
+	padding: var(--spacing-sm) var(--spacing-md);
+	margin: var(--spacing-xs);
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	border-radius: var(--radius-md);
+	transition: all var(--transition-base);
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+	color: white;
+	box-shadow: var(--shadow-sm);
+	transform: translateY(0);
 }
 
-.sched-Button {
-  margin: 0;
-  padding: 3px 5px 3px 5px;
-  text-decoration: none;
-  cursor: pointer;
-  cursor: hand;
-  font-size:small;
-  background: url("scheduler/gwt/clean/images/hborder.png") repeat-x 0px -2077px;
-  border:1px solid #bbb;
-  border-bottom: 1px solid #a0a0a0;
-  border-radius: 3px;
- -moz-border-radius: 3px;
+.sendButton:hover, .sched-Button:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+	background: linear-gradient(135deg, var(--wpi-crimson-light) 0%, var(--wpi-crimson) 100%);
+}
+
+.sendButton:active, .sched-Button:active {
+	transform: translateY(0);
+	box-shadow: var(--shadow-sm);
+}
+
+/* Secondary button variant */
+.sched-Button.secondary {
+	background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+	color: var(--gray-800);
+	border: 1px solid var(--gray-300);
+}
+
+.sched-Button.secondary:hover {
+	background: linear-gradient(135deg, var(--gray-200) 0%, var(--gray-300) 100%);
 }
 
 /** Most GWT widgets already have a style name defined */
@@ -84,25 +198,43 @@ h1 {
 	margin: 15px 6px 6px;
 }
 
+/* Modern Course List */
 .courseList {
 	width: 100%;
-	border-spacing: 0px;
+	border-spacing: 0;
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	box-shadow: var(--shadow-sm);
+	background: white;
 }
 
 .courseList>tr:nth-child(even) {
-	background: #F3F7FB;
+	background: var(--gray-50);
 }
 
 .courseList>tr:nth-child(odd) {
-	background: #FFF;
+	background: white;
 }
 
 .courseList>tr:hover {
-	background: #EEE;
+	background: var(--gray-100);
+	transform: scale(1.001);
+	transition: all var(--transition-fast);
 }
 
 .courseList td {
-	padding: 3px;
+	padding: var(--spacing-md);
+	border-bottom: 1px solid var(--gray-200);
+	transition: all var(--transition-fast);
+}
+
+.courseList th {
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+	color: white;
+	padding: var(--spacing-md);
+	font-weight: 600;
+	text-align: left;
+	border: none;
 }
 
 .termView div {
@@ -115,18 +247,25 @@ h1 {
 	border-radius: 10px;
 }
 
+/* Modern Schedule Views */
 .permutationCourseItem {
-	border-width: 0px 0px 1px 0px;
-	border-color: black;
-	border-style: solid;
+	border-bottom: 2px solid var(--gray-200);
 	width: 100%;
+	background: white;
+	margin-bottom: var(--spacing-sm);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+	transition: all var(--transition-base);
+}
+
+.permutationCourseItem:hover {
+	box-shadow: var(--shadow-md);
+	transform: translateY(-2px);
 }
 
 .permutationPeriodItem {
-	border-color: grey;
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 10px;
+	border: 2px solid var(--gray-300);
+	border-radius: var(--radius-lg);
 	overflow: hidden;
 	text-align: center;
 	display: table-cell;
@@ -134,12 +273,30 @@ h1 {
 	width: 100%;
 	left: 0px;
 	cursor: pointer;
+	background: var(--gray-50);
+	transition: all var(--transition-base);
+	font-weight: 500;
+}
+
+.permutationPeriodItem:hover {
+	border-color: var(--wpi-crimson);
+	background: var(--wpi-crimson);
+	color: white;
+	box-shadow: var(--shadow-md);
 }
 
 .permutationCanvas {
-	border-radius: 10px;
-	border: 2px #CCCCCC solid;
+	border-radius: var(--radius-lg);
+	border: 3px solid var(--gray-300);
 	cursor: pointer;
+	background: white;
+	box-shadow: var(--shadow-sm);
+	transition: all var(--transition-base);
+}
+
+.permutationCanvas:hover {
+	border-color: var(--wpi-crimson);
+	box-shadow: var(--shadow-md);
 }
 
 .permutationHourMarker {
@@ -183,18 +340,36 @@ h1 {
 	opacity: 0.95;
 }
 
+/* Modern Detail and Conflict Components */
 .ConflictResolverItem {
-	border: 1px solid #BBBBBB;
-	border-radius: 10px;
-	padding: 4px;
-	margin: 4px;
+	border: 2px solid var(--gray-300);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-md);
+	margin: var(--spacing-sm);
+	background: white;
+	box-shadow: var(--shadow-sm);
+	transition: all var(--transition-base);
+}
+
+.ConflictResolverItem:hover {
+	border-color: var(--accent-orange);
+	box-shadow: var(--shadow-md);
+	transform: translateY(-2px);
 }
 
 .DetailedSection {
-	border: 1px solid #BBBBBB;
-	border-radius: 10px;
-	padding: 4px;
+	border: 2px solid var(--gray-300);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-md);
 	width: 100%;
+	background: white;
+	box-shadow: var(--shadow-sm);
+	transition: all var(--transition-base);
+}
+
+.DetailedSection:hover {
+	border-color: var(--wpi-crimson);
+	box-shadow: var(--shadow-md);
 }
 
 .TimeTable {
@@ -305,24 +480,112 @@ h1 {
 	border-color: black;
 }
 
-/* Fix ScrollPanel scrolling for course list */
+/* Modern Course Selection Interface */
 .gwt-ScrollPanel {
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
 }
 
-/* Ensure proper height constraints for scrolling */
 .courseListContainer {
-	flex: 1; /* Take up remaining space in flex container */
-	min-height: 300px; /* Minimum height for usability */
+	flex: 1;
+	min-height: 300px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	border: 1px solid #ccc;
+	border: 1px solid var(--gray-300);
+	border-radius: var(--radius-md);
+	background: white;
+	box-shadow: var(--shadow-sm);
+	margin: var(--spacing-sm);
 }
 
-/* Make the parent container use flexbox */
 .courseListParent {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	background: var(--gray-50);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-sm);
+}
+
+/* Modern search panel styling */
+.gwt-VerticalPanel {
+	background: white;
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+	margin-bottom: var(--spacing-sm);
+}
+
+/* Modern text input styling */
+.gwt-TextBox {
+	padding: var(--spacing-sm) var(--spacing-md);
+	border: 2px solid var(--gray-300);
+	border-radius: var(--radius-md);
+	font-size: 1rem;
+	transition: all var(--transition-base);
+	background: white;
+}
+
+.gwt-TextBox:focus {
+	outline: none;
+	border-color: var(--wpi-crimson);
+	box-shadow: 0 0 0 3px rgba(196, 18, 48, 0.1);
+}
+
+/* Modern checkbox styling */
+.gwt-CheckBox {
+	font-size: 0.875rem;
+	color: var(--gray-700);
+	transition: color var(--transition-fast);
+}
+
+.gwt-CheckBox:hover {
+	color: var(--wpi-crimson);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.courseListParent {
+		padding: var(--spacing-xs);
+	}
+	
+	.courseListContainer {
+		min-height: 250px;
+		margin: var(--spacing-xs);
+	}
+	
+	h1 {
+		font-size: 2rem;
+		margin: var(--spacing-lg) 0 var(--spacing-md);
+	}
+	
+	h2 {
+		font-size: 1.5rem;
+	}
+	
+	.sched-TopButton, .sched-TopButtonSelected {
+		font-size: 1rem;
+		padding: var(--spacing-sm) var(--spacing-md);
+		margin: 0 var(--spacing-sm) 0 -var(--spacing-lg);
+	}
+	
+	.gwt-TextBox {
+		width: 100%;
+		box-sizing: border-box;
+	}
+}
+
+@media (max-width: 480px) {
+	.courseListContainer {
+		min-height: 200px;
+	}
+	
+	.courseList td {
+		padding: var(--spacing-sm);
+		font-size: 0.875rem;
+	}
+	
+	.sendButton, .sched-Button {
+		font-size: 0.875rem;
+		padding: var(--spacing-xs) var(--spacing-sm);
+	}
 }
