@@ -88,11 +88,11 @@ public class TabList extends Composite{
 			style.setZIndex(count-i);
 			
 			useClass = (lastSelected == widget) 
-					? "sched-TopButtonSelected" : "sched-TopButton";
+					? "sched-NavTabSelected" : "sched-NavTab";
 			widget.setStyleName(useClass);
 			
 			useClass = (((FocusWidget) widget).isEnabled())
-					? "sched-TopButtonEnabled" : "sched-TopButtonDisabled";
+					? "sched-NavTabEnabled" : "sched-NavTabDisabled";
 			widget.addStyleName(useClass);
 		}
 		
