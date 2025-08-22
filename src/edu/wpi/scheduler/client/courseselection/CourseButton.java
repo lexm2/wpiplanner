@@ -42,7 +42,7 @@ public class CourseButton extends Button implements StudentScheduleEventHandler,
 	}
 
 	public void updateIcon() {
-		//getUpFace().setHTML();
+		// getUpFace().setHTML();
 		setHTML(AbstractImagePrototype.create(getIcon()).getSafeHtml());
 	}
 

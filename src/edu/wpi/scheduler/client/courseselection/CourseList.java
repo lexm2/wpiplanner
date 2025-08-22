@@ -1,23 +1,18 @@
 package edu.wpi.scheduler.client.courseselection;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.regexp.shared.RegExp;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.WidgetCollection;
 
-import edu.wpi.scheduler.client.controller.HasCourse;
 import edu.wpi.scheduler.client.Scheduler;
+import edu.wpi.scheduler.client.controller.HasCourse;
 import edu.wpi.scheduler.shared.model.Course;
 import edu.wpi.scheduler.shared.model.Department;
-import edu.wpi.scheduler.shared.model.Section;
-
-import java.util.List;
-import java.util.ArrayList;
 
 public class CourseList extends ComplexPanel {
 
@@ -41,7 +36,7 @@ public class CourseList extends ComplexPanel {
 	}
 
 	public static final CourseComparator comparator = new CourseComparator();
-	
+
 	public static final String NoSeatWarning = "<span style=\"color: red; font-weight: bold;\" title=\"There are no seats left.\">&#9888;</span>";
 	public static final String NoSeatButWaitlistWarning = "<span style=\"color: blue; font-weight: bold;\" title=\"There are no seats left, but there are spots left on the waitlist.\">&#9888;</span>";
 
@@ -64,10 +59,10 @@ public class CourseList extends ComplexPanel {
 				matchingCourses.add(course);
 			}
 		}
-		
+
 		addCoursesToDisplay(matchingCourses, searchTerm);
 	}
-	
+
 	private void addCoursesToDisplay(List<Course> courses, String searchTerm) {
 		for (Course course : courses) {
 			if (currentlyDisplayed >= RESULTS_PER_PAGE) {
@@ -77,12 +72,14 @@ public class CourseList extends ComplexPanel {
 
 			CourseListItemBase item = new CourseListItemBase(selectionController, course);
 
-			//String name = fixCase(course.name);  Capitalization handled by Workday now. 
+			// String name = fixCase(course.name); Capitalization handled by Workday now.
 			String name = course.name;
 
 			if (!course.hasAvailableSeats()) {
-				if (course.hasAvailableWaitlist()) name = NoSeatButWaitlistWarning + " " + name;
-				else name = NoSeatWarning + " " + name;
+				if (course.hasAvailableWaitlist())
+					name = NoSeatButWaitlistWarning + " " + name;
+				else
+					name = NoSeatWarning + " " + name;
 			}
 
 			item.add("128px", new TermView(course));
@@ -103,34 +100,36 @@ public class CourseList extends ComplexPanel {
 		String departmentAbbrev = course.department.abbreviation.toLowerCase();
 		String courseAbbrev = course.toAbbreviation().toLowerCase();
 
-		return courseName.contains(searchTerm) || 
-		       courseNumber.contains(searchTerm) || 
-		       departmentAbbrev.contains(searchTerm) ||
-		       courseAbbrev.contains(searchTerm);
+		return courseName.contains(searchTerm) ||
+				courseNumber.contains(searchTerm) ||
+				departmentAbbrev.contains(searchTerm) ||
+				courseAbbrev.contains(searchTerm);
 	}
 
 	public List<Department> getAllDepartments() {
 		return Scheduler.getDatabase().departments;
 	}
-	
+
 	public void resetPagination() {
 		currentlyDisplayed = 0;
 		remainingCourses.clear();
 	}
-	
+
 	public void loadMoreResults() {
 		if (hasMoreResults()) {
 			int toLoad = Math.min(RESULTS_PER_PAGE, remainingCourses.size());
-			
+
 			for (int i = 0; i < toLoad; i++) {
 				Course course = remainingCourses.remove(0);
-				
+
 				CourseListItemBase item = new CourseListItemBase(selectionController, course);
 				String name = course.name;
 
 				if (!course.hasAvailableSeats()) {
-					if (course.hasAvailableWaitlist()) name = NoSeatButWaitlistWarning + " " + name;
-					else name = NoSeatWarning + " " + name;
+					if (course.hasAvailableWaitlist())
+						name = NoSeatButWaitlistWarning + " " + name;
+					else
+						name = NoSeatWarning + " " + name;
 				}
 
 				item.add("128px", new TermView(course));
@@ -141,15 +140,15 @@ public class CourseList extends ComplexPanel {
 			}
 		}
 	}
-	
+
 	public boolean hasMoreResults() {
 		return remainingCourses.size() > 0;
 	}
-	
+
 	public int getRemainingCount() {
 		return remainingCourses.size();
 	}
-	
+
 	@Override
 	public void clear() {
 		super.clear();

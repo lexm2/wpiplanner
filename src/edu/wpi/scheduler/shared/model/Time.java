@@ -50,7 +50,7 @@ public class Time implements Comparable<Time>, Serializable {
 	/*-{
 	    console.log(text);
 	}-*/;
-	
+
 	private void assertValidTime() {
 		if (hour < 0 || hour >= 24 || minutes < 0 || minutes >= 60) {
 			throw new IllegalArgumentException("Input times is not within bounds.");
@@ -59,29 +59,28 @@ public class Time implements Comparable<Time>, Serializable {
 
 	@Override
 	public String toString() {
-		return toString( true );
+		return toString(true);
 	}
-	
-	public String toString( boolean bMinutes ){
+
+	public String toString(boolean bMinutes) {
 		String min = Integer.toString(minutes);
 
 		if (min.length() == 1)
 			min = "0" + min;
-		
-		if( bMinutes )
+
+		if (bMinutes)
 			min = ":" + min;
 		else
-			min = "";	
+			min = "";
 
 		// Remember: ... 10AM, 11AM, 12PM, 1PM, 2PM ...
 		if (hour <= 12)
 			return hour + min + (hour == 12 ? "PM" : "AM");
 
 		return (hour - 12) + min + "PM";
-		
+
 	}
-	
-	
+
 	public double getValue() {
 		return ((double) this.hour) + ((double) this.minutes) / 60.0;
 	}
@@ -102,45 +101,38 @@ public class Time implements Comparable<Time>, Serializable {
 
 		return this.hour < o.hour ? -1 : 1;
 	}
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (obj == null || obj.getClass() != getClass()){
-            return false;
-		}
-        if (obj == this){
-            return true;
-        }
-        else
-        {
-        	return ((Time)obj).hour == hour && ((Time)obj).minutes == minutes;
-        }
-	}
-	
 
-	public Time increment(int byHours, int byMinutes)
-	{
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || obj.getClass() != getClass()) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		} else {
+			return ((Time) obj).hour == hour && ((Time) obj).minutes == minutes;
+		}
+	}
+
+	public Time increment(int byHours, int byMinutes) {
 		hour += byHours;
 		minutes += byMinutes;
 		// Convert 60 minutes to 1 hour
-		while(minutes >= 60)
-		{
+		while (minutes >= 60) {
 			hour += 1;
 			minutes -= 60;
 		}
 		// Deal with minutes underflow
-		while(minutes < 0) {
+		while (minutes < 0) {
 			hour -= 1;
 			minutes += 60;
 		}
 		// Deal with hour overflow
-		while(hour >= 24)
-		{
+		while (hour >= 24) {
 			hour -= 24;
 		}
 		// Time should be valid
-		//assertValidTime();
+		// assertValidTime();
 		return this;
 	}
 

@@ -14,5 +14,8 @@
     "files.exclude": {
           "gwt-2.11.0/**": true
     },
-    "java.format.settings.profile": "GoogleStyle"
+    "java.format.settings.profile": "GoogleStyle",
+     "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    }
 }

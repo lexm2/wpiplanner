@@ -23,11 +23,11 @@ public class ConflictProblem extends AbstractProblem {
 	@Override
 	public void applySolution(StudentSchedule schedule) {
 		SectionProducer producer = schedule.getSectionProducer(conflict.course);
-		
-		for( Section section : conflict.course.sections ){
+
+		for (Section section : conflict.course.sections) {
 			producer.denySection(section);
 		}
-		
+
 	}
 
 	@Override
@@ -48,6 +48,6 @@ public class ConflictProblem extends AbstractProblem {
 
 	@Override
 	public String getDescription() {
-		return conflict.course.toString() + " is conflicting with " + other.course.toString() ;
+		return conflict.course.toString() + " is conflicting with " + other.course.toString();
 	}
 }

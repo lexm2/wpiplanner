@@ -27,7 +27,8 @@ import edu.wpi.scheduler.client.permutation.PermutationController;
 import edu.wpi.scheduler.shared.model.Course;
 import edu.wpi.scheduler.shared.model.Section;
 
-public class CanvasProgress extends ComplexPanel implements ProducerEventHandler, AnimationCallback, RequiresResize, ResizeHandler {
+public class CanvasProgress extends ComplexPanel
+		implements ProducerEventHandler, AnimationCallback, RequiresResize, ResizeHandler {
 
 	public static class CanvasProgressSection {
 		public double x;
@@ -59,7 +60,7 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 		this.getElement().getStyle().setHeight(100.0, Unit.PCT);
 
 		title.setStyleName("ScheduleLoadingLabel");
-		
+
 		this.add(title, getElement());
 		this.add(canvas, getElement());
 	}
@@ -68,7 +69,7 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 	public void onLoad() {
 		controller.addProduceHandler(this);
 		resizeRegistration = Window.addResizeHandler(this);
-		
+
 		updateSize();
 		redraw();
 	}
@@ -158,7 +159,7 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 			context.setTextBaseline(TextBaseline.BOTTOM);
 			context.fillText(title, width / 2, courseY - 4);
 		}
-		
+
 		Element titleElement = title.getElement();
 
 		titleElement.getStyle().setLeft(width / 2 - titleElement.getClientWidth() / 2, Unit.PX);
@@ -181,7 +182,7 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 	public void onResize() {
 		updateSize();
 	}
-	
+
 	@Override
 	public void onResize(ResizeEvent event) {
 		updateSize();
@@ -191,7 +192,7 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 	public void execute(double timestamp) {
 		updateSize();
 
-		//ScheduleProducer producer = controller.getProducer();
+		// ScheduleProducer producer = controller.getProducer();
 		Context2d context = canvas.getContext2d();
 		int width = canvas.getCoordinateSpaceWidth();
 		int height = canvas.getCoordinateSpaceHeight();
@@ -201,25 +202,27 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 
 		context.clearRect(0.0, 0.0, (double) width, (double) height);
 		context.drawImage(background.getCanvasElement(), 0.0, 0.0);
-		
+
 		/*
-		if (producer.treeSearchState.size() > 1) {
-
-			for (int i = 1; i < producer.treeSearchState.size(); i++) {
-				CanvasProgressSection progress = getBySection(producer.getSectionFromTree(i - 1));
-				CanvasProgressSection progress2 = getBySection(producer.getSectionFromTree(i));
-
-				context.beginPath();
-				context.moveTo(progress.x + progress.w / 2, progress.y + progress.h + 1);
-				context.lineTo(progress2.x + progress2.w / 2, progress2.y - 1);
-				context.stroke();
-			}
-
-		}
-		
-		if(isAttached() && producer.isActive())
-			redraw();
-			*/
+		 * if (producer.treeSearchState.size() > 1) {
+		 * 
+		 * for (int i = 1; i < producer.treeSearchState.size(); i++) {
+		 * CanvasProgressSection progress = getBySection(producer.getSectionFromTree(i -
+		 * 1));
+		 * CanvasProgressSection progress2 =
+		 * getBySection(producer.getSectionFromTree(i));
+		 * 
+		 * context.beginPath();
+		 * context.moveTo(progress.x + progress.w / 2, progress.y + progress.h + 1);
+		 * context.lineTo(progress2.x + progress2.w / 2, progress2.y - 1);
+		 * context.stroke();
+		 * }
+		 * 
+		 * }
+		 * 
+		 * if(isAttached() && producer.isActive())
+		 * redraw();
+		 */
 	}
 
 	@Override
@@ -228,6 +231,6 @@ public class CanvasProgress extends ComplexPanel implements ProducerEventHandler
 			initItems();
 
 		this.redraw();
-	}	
+	}
 
 }

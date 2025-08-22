@@ -9,8 +9,7 @@ import edu.wpi.scheduler.shared.model.Section;
 import edu.wpi.scheduler.shared.model.Term;
 import edu.wpi.scheduler.shared.model.TimeCell;
 
-public class TimeConflictProblem extends AbstractProblem 
-{
+public class TimeConflictProblem extends AbstractProblem {
 	ScheduleProducer parent;
 	Section section;
 
@@ -18,10 +17,8 @@ public class TimeConflictProblem extends AbstractProblem
 	/*-{
 	    console.log(text);
 	}-*/;
-	
-	
-	public TimeConflictProblem(ScheduleProducer parent, Section section) 
-	{
+
+	public TimeConflictProblem(ScheduleProducer parent, Section section) {
 		this.section = section;
 		this.parent = parent;
 	}
@@ -36,17 +33,14 @@ public class TimeConflictProblem extends AbstractProblem
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		HashMap<Term, List<TimeCell>> conflicts = parent.getTimeConflicts(section);
 
 		String desc = "Re-enable the following times to allow this section: ";
 
-		for(Term term : section.getTerms())
-		{
+		for (Term term : section.getTerms()) {
 			desc += "<br>" + term.name() + "-Term: ";
-			for(TimeCell conflict : conflicts.get(term))
-			{
+			for (TimeCell conflict : conflicts.get(term)) {
 				desc += conflict.day.getName() + "@" + conflict.time.toString() + " ";
 			}
 		}
@@ -54,14 +48,11 @@ public class TimeConflictProblem extends AbstractProblem
 	}
 
 	@Override
-	public void applySolution(StudentSchedule schedule) 
-	{
+	public void applySolution(StudentSchedule schedule) {
 		HashMap<Term, List<TimeCell>> conflicts = parent.getTimeConflicts(section);
-		for(Term term : section.getTerms())
-		{
+		for (Term term : section.getTerms()) {
 			StudentChosenTimes chosenTimes = schedule.studentTermTimes.getTimesForTerm(term);
-			for(TimeCell conflict : conflicts.get(term))
-			{
+			for (TimeCell conflict : conflicts.get(term)) {
 				chosenTimes.selectTime(conflict.timeToGrid(), conflict.dayToGrid());
 			}
 		}

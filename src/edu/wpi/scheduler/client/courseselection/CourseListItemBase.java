@@ -16,19 +16,18 @@ public class CourseListItemBase extends ComplexPanel implements ClickHandler, Ha
 	private Course course;
 	private CourseSelectionController selectionController;
 
-	public CourseListItemBase( CourseSelectionController selectionController, Course course ){
+	public CourseListItemBase(CourseSelectionController selectionController, Course course) {
 		this.course = course;
 		this.selectionController = selectionController;
-		
+
 		this.setElement(Document.get().createTRElement());
-		
+
 		Element addButton = this.add("36px", new CourseButton(selectionController.getStudentSchedule(), course));
 		addButton.getStyle().setProperty("textAlign", "center");
-		
+
 		Element courseAbbr = this.add("100px", course.department.abbreviation + course.number);
 		courseAbbr.getStyle().setProperty("textAlign", "center");
 
-		
 		this.addDomHandler(this, ClickEvent.getType());
 	}
 
@@ -37,14 +36,14 @@ public class CourseListItemBase extends ComplexPanel implements ClickHandler, Ha
 		this.add(child, elem);
 		return elem;
 	}
-	
+
 	public Element add(String width, String innerHTML) {
 		Element elem = addCell(width);
 		elem.setInnerHTML(innerHTML);
 		return elem;
 	}
-	
-	private Element addCell(String width){
+
+	private Element addCell(String width) {
 		Element elem = DOM.createTD();
 
 		elem.getStyle().setProperty("width", width);

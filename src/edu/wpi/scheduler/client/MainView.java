@@ -7,7 +7,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -35,66 +34,66 @@ public class MainView extends Composite {
 
 	interface MainViewUiBinder extends UiBinder<Widget, MainView> {
 	}
-	
+
 	@UiField
 	DockLayoutPanel layoutPanel;
-	
+
 	@UiField
 	SimplePanel bodyPanel;
-	
-	@UiField(provided=true)
+
+	@UiField(provided = true)
 	TabList tabList;
-	
+
 	@UiField
 	Label yearLabel;
-	
+
 	@UiField
 	InlineHTML oldSchedLink;
-	
+
 	@UiField
 	Label updatedLabel;
-	
+
 	@UiField
 	Button refreshButton;
-	
 
-	public MainView( final StudentSchedule studentSchedule, ScheduleDB db) {
+	public MainView(final StudentSchedule studentSchedule, ScheduleDB db) {
 		tabList = new TabList(this, studentSchedule);
-		
+
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		//layoutPanel.add( new CourseSelectorView(studentSchedule)  );
-		bodyPanel.add( tabList.getHomeView() );
-		
-		
+
+		// layoutPanel.add( new CourseSelectorView(studentSchedule) );
+		bodyPanel.add(tabList.getHomeView());
+
 		getElement().getStyle().setLeft(0, Unit.PX);
 		getElement().getStyle().setRight(0, Unit.PX);
 		getElement().getStyle().setTop(0, Unit.PX);
 		getElement().getStyle().setBottom(0, Unit.PX);
 		getElement().getStyle().setPosition(Position.ABSOLUTE);
-		
-		//read year header from "yearHeader.txt"
+
+		// read year header from "yearHeader.txt"
 		try {
 			new RequestBuilder(RequestBuilder.GET, "yearHeader.txt").sendRequest("", new RequestCallback() {
 				@Override
 				public void onResponseReceived(Request req, Response resp) {
 					String text = resp.getText();
-					
-					// first line is year. second line is true or false: whether to display oldSchedLink
+
+					// first line is year. second line is true or false: whether to display
+					// oldSchedLink
 					String[] splitText = text.split("\n");
-					
-					//set yearLabel from first line
+
+					// set yearLabel from first line
 					yearLabel.setText(splitText[0]);
-					
-					//convert second line to boolean
+
+					// convert second line to boolean
 					boolean showOldSchedLink = Boolean.parseBoolean(splitText[1]);
-					
-					//if true, display the label with oldSchedLink
+
+					// if true, display the label with oldSchedLink
 					if (showOldSchedLink) {
-						oldSchedLink.setHTML("Looking for this year's schedule? <a style='color:white;text-decoration:underline;' href='/old'>Click here.</a>");
+						oldSchedLink.setHTML(
+								"Looking for this year's schedule? <a style='color:white;text-decoration:underline;' href='/old'>Click here.</a>");
 					}
 				}
-				
+
 				@Override
 				public void onError(Request res, Throwable throwable) {
 					Logger logger = Logger.getLogger("logger");
@@ -105,18 +104,18 @@ public class MainView extends Composite {
 			Logger logger = Logger.getLogger("logger");
 			logger.log(Level.SEVERE, "Unable to request yearHeader.txt");
 		}
-		
+
 		String refreshTimestamp = "Schedule Data Refreshed: " + db.generated;
-		
+
 		updatedLabel.setText(refreshTimestamp);
-		
+
 	}
 
 	public void setBody(Widget body) {
 		bodyPanel.remove(bodyPanel.getWidget());
 		bodyPanel.add(body);
 	}
-	
+
 	@UiHandler("refreshButton")
 	void handleRefreshClick(ClickEvent e) {
 		Scheduler.refreshFromLiveData();

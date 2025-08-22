@@ -15,7 +15,7 @@ public class ProgressEvent extends JavaScriptObject {
 	public final native int getLoaded() /*-{
 		return this.loaded;
 	}-*/;
-	
+
 	public final native boolean lengthComputable() /*-{
 		return this.lengthComputable;
 	}-*/;

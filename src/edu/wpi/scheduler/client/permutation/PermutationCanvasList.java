@@ -55,7 +55,7 @@ public class PermutationCanvasList extends FlowPanel implements
 
 		add(favoriteButton, getElement());
 		add(scroll, getElement());
-		
+
 		Style favoriteStyle = favoriteButton.getElement().getStyle();
 		Style scrollStyle = scroll.getElement().getStyle();
 
@@ -126,9 +126,9 @@ public class PermutationCanvasList extends FlowPanel implements
 				controller.selectPermutation(permutation);
 			}
 		});
-		
+
 		new IncomingAnimation(canvas.getElement()).run();
-		
+
 		return canvas;
 	}
 
@@ -153,7 +153,7 @@ public class PermutationCanvasList extends FlowPanel implements
 	@Override
 	protected void onLoad() {
 		StudentSchedule schedule = controller.getStudentSchedule();
-		
+
 		schedule.addTimeChangeListner(this);
 		schedule.addFavoriteHandler(this);
 		controller.addProduceHandler(this);
@@ -166,7 +166,7 @@ public class PermutationCanvasList extends FlowPanel implements
 	@Override
 	protected void onUnload() {
 		StudentSchedule schedule = controller.getStudentSchedule();
-		
+
 		schedule.removeTimeChangeListner(this);
 		schedule.removeFavoriteHandler(this);
 		controller.removeProduceHandler(this);
@@ -184,7 +184,7 @@ public class PermutationCanvasList extends FlowPanel implements
 		background.getElement().setAttribute("height", "150px");
 		Context2d context = background.getContext2d();
 		StudentSchedule schedule = controller.getStudentSchedule();
-		
+
 		double heightPerHour = 150.0 / (schedule.getEndHour() - schedule
 				.getStartHour());
 
@@ -238,8 +238,7 @@ public class PermutationCanvasList extends FlowPanel implements
 
 		if (type == UpdateType.FINISH) {
 			ScheduleProducer producer = controller.getProducer();
-			
-			
+
 			if (producer.getPermutations().size() == 0) {
 				scheduleList.clear();
 				scheduleList.add(new Label("Unable to find schedules..."));

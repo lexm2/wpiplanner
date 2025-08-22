@@ -12,26 +12,28 @@ import edu.wpi.scheduler.client.courseselection.CourseList;
 import edu.wpi.scheduler.shared.model.Section;
 
 public class SectionCheckbox extends CheckBox implements StudentScheduleEventHandler, ValueChangeHandler<Boolean> {
-	
+
 	private final StudentSchedule schedule;
 	private final Section section;
 
-	public SectionCheckbox( StudentSchedule schedule, Section section ){
+	public SectionCheckbox(StudentSchedule schedule, Section section) {
 		this.schedule = schedule;
 		this.section = section;
-		
+
 		String html = section.number;
-		
+
 		if (!section.hasAvailableSats()) {
-			if (section.hasAvailableWaitlist()) html += " " + CourseList.NoSeatButWaitlistWarning;
-			else html += " " + CourseList.NoSeatWarning;
+			if (section.hasAvailableWaitlist())
+				html += " " + CourseList.NoSeatButWaitlistWarning;
+			else
+				html += " " + CourseList.NoSeatWarning;
 		}
-		
+
 		setHTML(html);
 		addValueChangeHandler(this);
 		update();
 	}
-	
+
 	@Override
 	protected void onLoad() {
 		schedule.addStudentScheduleHandler(this);
@@ -44,11 +46,11 @@ public class SectionCheckbox extends CheckBox implements StudentScheduleEventHan
 
 	@Override
 	public void onCoursesChanged(StudentScheduleEvent studentScheduleEvent) {
-		if( section.course.equals(studentScheduleEvent.getCourse()))
+		if (section.course.equals(studentScheduleEvent.getCourse()))
 			this.update();
 	}
-	
-	public SectionProducer getProducer(){
+
+	public SectionProducer getProducer() {
 		return schedule.getSectionProducer(section.course);
 	}
 
@@ -64,5 +66,5 @@ public class SectionCheckbox extends CheckBox implements StudentScheduleEventHan
 			getProducer().denySection(section);
 		}
 	}
-	
+
 }

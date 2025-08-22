@@ -18,104 +18,85 @@ import edu.wpi.scheduler.client.permutation.PermutationTab;
 import edu.wpi.scheduler.client.timechooser.TimeTab;
 import edu.wpi.scheduler.client.welcome.WelcomeTab;
 
-public class TabList extends Composite{
+public class TabList extends Composite {
 
 	private static TabListUiBinder uiBinder = GWT.create(TabListUiBinder.class);
 
 	interface TabListUiBinder extends UiBinder<Widget, TabList> {
 	}
-	
+
 	@UiField
 	HorizontalPanel horizontalPanel;
-	
+
 	final MainView mainView;
-	
+
 	final WelcomeTab welcome;
 	final CourseSelectionTab courseSelection;
 	final TimeTab timeChooser;
-	
+
 	BaseTab lastSelected;
 
-	public TabList( MainView mainView, StudentSchedule studentSchedule ) {
+	public TabList(MainView mainView, StudentSchedule studentSchedule) {
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 		this.mainView = mainView;
-		
+
 		welcome = new WelcomeTab(studentSchedule);
 		courseSelection = new CourseSelectionTab(studentSchedule);
 		timeChooser = new TimeTab(studentSchedule);
-		
-		addTab( courseSelection  );
-		addTab( welcome );
-		addTab( timeChooser );
-		addTab( new PermutationTab(studentSchedule));
+
+		addTab(courseSelection);
+		addTab(welcome);
+		addTab(timeChooser);
+		addTab(new PermutationTab(studentSchedule));
 	}
-	
-	public Widget getHomeView(){
+
+	public Widget getHomeView() {
 		return courseSelection.getBody();
 	}
-	
-	public void addTab( final BaseTab baseTab ){
-		this.horizontalPanel.add( baseTab );
-		
+
+	public void addTab(final BaseTab baseTab) {
+		this.horizontalPanel.add(baseTab);
+
 		horizontalPanel.setCellHeight(baseTab, "100%");
-		
+
 		baseTab.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				mainView.setBody( baseTab.getBody() );
+				mainView.setBody(baseTab.getBody());
 				baseTab.updateView();
 				lastSelected = baseTab;
 				update();
 			}
 		});
-		
-		if( lastSelected == null )
+
+		if (lastSelected == null)
 			lastSelected = baseTab;
-		
+
 		update();
 	}
-	
-	public void update(){
+
+	public void update() {
 		int count = horizontalPanel.getWidgetCount();
 		String useClass;
-		
-		for( int i = 0; i < count; i++ ){
+
+		for (int i = 0; i < count; i++) {
 			Widget widget = horizontalPanel.getWidget(i);
 			Style style = widget.getElement().getStyle();
-			
-			style.setZIndex(count-i);
-			
-			useClass = (lastSelected == widget) 
-					? "sched-NavTabSelected" : "sched-NavTab";
+
+			style.setZIndex(count - i);
+
+			useClass = (lastSelected == widget)
+					? "sched-NavTabSelected"
+					: "sched-NavTab";
 			widget.setStyleName(useClass);
-			
+
 			useClass = (((FocusWidget) widget).isEnabled())
-					? "sched-NavTabEnabled" : "sched-NavTabDisabled";
+					? "sched-NavTabEnabled"
+					: "sched-NavTabDisabled";
 			widget.addStyleName(useClass);
 		}
-		
-		/*
-		int count = horizontalPanel.getWidgetCount();
-		String bgColor = "#FFFFFF";
-		
-		for( int i = 0; i < count; i++ ){
-			Widget widget = horizontalPanel.getWidget(i);
-			Style style = widget.getElement().getStyle();
-			
-			style.setZIndex(count-i);
-			
-			
-			if( lastSelected == widget){
-				style.setBackgroundColor("#EFFFEF");
-				bgColor = null;
-			} else {
-				style.setBackgroundColor(bgColor);
-			}
-			
-			widget.setStyleName( i == count-1 ? "sched-TopButton" : "sched-TopButton-notLast");
-		}
-		*/
+
 	}
 }

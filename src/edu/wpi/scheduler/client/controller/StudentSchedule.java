@@ -20,8 +20,7 @@ import edu.wpi.scheduler.shared.model.Period;
 import edu.wpi.scheduler.shared.model.Section;
 
 // FIXME should we put this in the model somewhere? It's confusing me that it's in the controller folder
-public class StudentSchedule implements HasHandlers
-{
+public class StudentSchedule implements HasHandlers {
 	public final List<SectionProducer> sectionProducers = new ArrayList<SectionProducer>();
 
 	/**
@@ -32,9 +31,9 @@ public class StudentSchedule implements HasHandlers
 	public final ArrayList<SchedulePermutation> favoritePermutations = new ArrayList<SchedulePermutation>();
 
 	private HandlerManager handlerManager = new HandlerManager(this);
-	
+
 	public StudentTermTimes studentTermTimes = new StudentTermTimes(this);
-	
+
 	protected double startTime = 8.0;
 	protected double endTime = 16.0;
 
@@ -58,7 +57,7 @@ public class StudentSchedule implements HasHandlers
 
 		conflicts.addCourse(course);
 		sectionProducers.add(producer);
-		
+
 		courseUpdated(course, StudentScheduleEvents.ADD, source);
 
 		return producer;
@@ -80,7 +79,7 @@ public class StudentSchedule implements HasHandlers
 
 		if (course != null)
 			sectionProducers.remove(producer);
-		
+
 		courseUpdated(course, StudentScheduleEvents.REMOVE, null);
 	}
 
@@ -114,7 +113,7 @@ public class StudentSchedule implements HasHandlers
 		return false;
 	}
 
-	//add new favorite
+	// add new favorite
 	public void addFavorite(SchedulePermutation permutation) {
 		if (containsFavorite(permutation))
 			return;
@@ -122,11 +121,11 @@ public class StudentSchedule implements HasHandlers
 		this.favoritePermutations.add(permutation);
 
 		fireEvent(new FavoriteEvent(FavoriteEventType.ADD));
-		
+
 		StorageStudentSchedule.saveFavorites(this);
 	}
-	
-	//load favorite from storage
+
+	// load favorite from storage
 	public void loadFavorite(SchedulePermutation permutation) {
 		if (containsFavorite(permutation))
 			return;
@@ -151,17 +150,16 @@ public class StudentSchedule implements HasHandlers
 	public void courseUpdated(Course course) {
 		courseUpdated(course, StudentScheduleEvents.UPDATE, null);
 	}
-	
+
 	public void courseUpdated(Course course, StudentScheduleEvents eventType, Widget source) {
 		updateTimeRange();
 		StudentScheduleEvent event = new StudentScheduleEvent(course, eventType);
 		event.setWidgetSource(source);
-		
+
 		this.fireEvent(event);
-		
+
 		StorageStudentSchedule.saveSchedule(this);
 	}
-	
 
 	public double getStartHour() {
 		return startTime;
@@ -170,7 +168,7 @@ public class StudentSchedule implements HasHandlers
 	public double getEndHour() {
 		return endTime;
 	}
-	
+
 	public void setTimeRange(double startTime, double endTime) {
 
 		startTime = Math.floor(startTime);
@@ -200,7 +198,7 @@ public class StudentSchedule implements HasHandlers
 
 		setTimeRange(startTime, endTime);
 	}
-	
+
 	public HandlerRegistration addTimeChangeListner(TimeRangeChangEventHandler handler) {
 		return handlerManager.addHandler(TimeRangeChangeEvent.TYPE, handler);
 	}

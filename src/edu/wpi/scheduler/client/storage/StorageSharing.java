@@ -1,6 +1,5 @@
 package edu.wpi.scheduler.client.storage;
 
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Window;
 
 import edu.wpi.scheduler.client.Scheduler;
@@ -8,7 +7,7 @@ import edu.wpi.scheduler.client.controller.SchedulePermutation;
 import edu.wpi.scheduler.shared.model.Section;
 
 public class StorageSharing {
-	
+
 	public static native void console(String text)
 	/*-{
 	    console.log(text);
@@ -22,15 +21,14 @@ public class StorageSharing {
 		for (Section section : permutation.sections) {
 			output += getCrnHex(section.crn);
 		}
-		
-//		Storage localStorage = Storage.getLocalStorageIfSupported();
-//		
-//		String output = ""; // Version
-//
-//		if (localStorage != null) {
-//			output = localStorage.getItem("savedCourse");
-//		}
 
+		// Storage localStorage = Storage.getLocalStorageIfSupported();
+		//
+		// String output = ""; // Version
+		//
+		// if (localStorage != null) {
+		// output = localStorage.getItem("savedCourse");
+		// }
 
 		return output;
 	}

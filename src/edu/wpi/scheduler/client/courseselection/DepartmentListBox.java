@@ -39,13 +39,14 @@ public class DepartmentListBox extends ListBox {
 	private Map<Department, OptionElement> options = new HashMap<Department, OptionElement>();
 
 	private static final List<AcademicGroup> groups = Arrays.asList(
-			new AcademicGroup("Science", "MA", "PH", "BB", "BCB", "CH", "CS", "GE", "DS", "IMGD", "MMS", "MPE", "MME", "NEU"),
-			new AcademicGroup("Engineering", "ECE", "RBE", "AREN", "ARCH", "BME", "CE", "CHE", "ES", "ME", "MFE", "MTE", "NSE", "FP", "SYS", "AE"),
+			new AcademicGroup("Science", "MA", "PH", "BB", "BCB", "CH", "CS", "GE", "DS", "IMGD", "MMS", "MPE", "MME",
+					"NEU"),
+			new AcademicGroup("Engineering", "ECE", "RBE", "AREN", "ARCH", "BME", "CE", "CHE", "ES", "ME", "MFE", "MTE",
+					"NSE", "FP", "SYS", "AE"),
 			new AcademicGroup("Language", "GN", "AB", "CN", "ESL", "JP", "ISE", "SP"),
 			new AcademicGroup("Humanities", "PY", "AR", "HI", "HU", "MU", "RE", "TH", "WR", "EN", "INTL"),
 			new AcademicGroup("Social Science", "ECON", "SS", "PSY", "DEV", "ENV", "GOV", "SS", "SD", "SOC", "STS"),
-			new AcademicGroup("Business", "BUS", "ETR", "FIN", "MIS", "MKT", "OBC", "ACC", "OIE")
-			);
+			new AcademicGroup("Business", "BUS", "ETR", "FIN", "MIS", "MKT", "OBC", "ACC", "OIE"));
 
 	public DepartmentListBox(StudentSchedule studentSchedule) {
 		super(); // Create is a multi-select
@@ -94,11 +95,11 @@ public class DepartmentListBox extends ListBox {
 
 			groupElements.get(deptGroup).appendChild(option);
 
-			if (savedDeps == null ){
-				if( dept.abbreviation.equals("MA"))
+			if (savedDeps == null) {
+				if (dept.abbreviation.equals("MA"))
 					option.setSelected(true);
-				
-			} else if( savedDeps.contains(dept.abbreviation))
+
+			} else if (savedDeps.contains(dept.abbreviation))
 				option.setSelected(true);
 
 			options.put(dept, option);

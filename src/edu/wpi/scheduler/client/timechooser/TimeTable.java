@@ -20,8 +20,7 @@ import edu.wpi.scheduler.shared.model.Term;
 import edu.wpi.scheduler.shared.model.Time;
 import edu.wpi.scheduler.shared.model.TimeCell;
 
-public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandler, MouseMoveHandler
-{
+public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 	// CSS constants
 	static final String ROW = "TimeTable_Row";
 	static final String TERM = "TimeTable_TermLabel";
@@ -35,26 +34,26 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 	static final String ODD = "TimeTable_Cell_Odd";
 
 	// Native DOM Cell Element
-	public static class TimeElement extends Element
-	{
-		protected TimeElement() {}
+	public static class TimeElement extends Element {
+		protected TimeElement() {
+		}
 
-		public native final void setDay(int day) 
+		public native final void setDay(int day)
 		/*-{
 			this.day = day;
 		}-*/;
 
-		public native final int getDay() 
+		public native final int getDay()
 		/*-{
 			return this.day;
 		}-*/;
 
-		public native final void setTime(int time) 
+		public native final void setTime(int time)
 		/*-{
 			this.time = time;
 		}-*/;
 
-		public native final int getTime() 
+		public native final int getTime()
 		/*-{
 			return this.time;
 		}-*/;
@@ -72,8 +71,7 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 	int dropX = -1;
 	int dropY = -1;
 
-	public TimeTable(Term term, StudentChosenTimes model) 
-	{
+	public TimeTable(Term term, StudentChosenTimes model) {
 		this.model = model;
 		controller = new TimeChooserController(this, model);
 		// Create blank "table"
@@ -89,10 +87,9 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 		term_cell.setAttribute("class", TERM);
 		days_row.appendChild(term_cell);
 		// Add Days Cell
-		for(int x = 0; x < TimeCell.NUM_DAYS; x++)
-		{
+		for (int x = 0; x < TimeCell.NUM_DAYS; x++) {
 			Element day_cell = DOM.createDiv();
-			day_cell.setInnerText(TimeCell.week[TimeCell.START_DAY+x].getName().toUpperCase());
+			day_cell.setInnerText(TimeCell.week[TimeCell.START_DAY + x].getName().toUpperCase());
 			day_cell.setAttribute("class", DAY);
 			days_row.appendChild(day_cell);
 		}
@@ -100,8 +97,7 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 		// Add time choosing rows / hour labels
 		String current_row = EVEN;
 		Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
-		for (int y = 0; y < TimeCell.NUM_HOURS * TimeCell.CELLS_PER_HOUR ; y++) 
-		{
+		for (int y = 0; y < TimeCell.NUM_HOURS * TimeCell.CELLS_PER_HOUR; y++) {
 			// Create each row
 			Element row = DOM.createDiv();
 			row.setAttribute("class", ROW);
@@ -112,8 +108,7 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 			hour_cell.setInnerText(time.toString());
 			row.appendChild(hour_cell);
 			// For each cell in a row
-			for (int x = 0; x < TimeCell.NUM_DAYS; x++)
-			{
+			for (int x = 0; x < TimeCell.NUM_DAYS; x++) {
 				// Create the cell and set it to the proper values
 				TimeElement cell = DOM.createDiv().cast();
 				cell.getStyle().setCursor(Cursor.POINTER);
@@ -131,16 +126,13 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 		update();
 	}
 
-	private void update()
-	{
+	private void update() {
 		// Update the cells
 		// Starting with an even row
 		String current_row = EVEN;
-		for(int y = 1; y < table.getChildCount(); y++)
-		{
+		for (int y = 1; y < table.getChildCount(); y++) {
 			Element row = table.getChild(y).cast();
-			for(int x = 1; x < row.getChildCount(); x++)
-			{
+			for (int x = 1; x < row.getChildCount(); x++) {
 				// Update cell visual state
 				TimeElement cell = row.getChild(x).cast();
 				String classID = CELL + " " + STATIC + " ";
@@ -149,17 +141,15 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 				// Add whether the cell is an even or odd cell
 				classID += " " + current_row;
 				// Set the CSS classes
-				cell.setAttribute("class", classID);	
+				cell.setAttribute("class", classID);
 			}
 			// Update row counter
 			current_row = current_row.equals(EVEN) ? ODD : EVEN;
 		}
 	}
 
-	private void drawDrag() 
-	{
-		if(dragX >= 0 && dragY >= 0 && dropX >= 0 && dropY >= 0)
-		{
+	private void drawDrag() {
+		if (dragX >= 0 && dragY >= 0 && dropX >= 0 && dropY >= 0) {
 			int x1 = Math.min(dragX, dropX);
 			int y1 = Math.min(dragY, dropY);
 			int x2 = Math.max(dragX, dropX);
@@ -170,35 +160,30 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 			// Figure out if the cells should be marked as being selected or not
 			classID += isAlreadySelected ? DESELECTED : SELECTED;
 			// Mark the cells being dragged
-			for(int y = y1+1; y <= y2+1; y++)
-			{
+			for (int y = y1 + 1; y <= y2 + 1; y++) {
 				Element row = table.getChild(y).cast();
-				for(int x = x1+1; x <= x2+1; x++)
-				{
+				for (int x = x1 + 1; x <= x2 + 1; x++) {
 					// Update cell visual state
 					TimeElement cell = row.getChild(x).cast();
 					// Set the CSS classes
-					cell.setAttribute("class", classID);	
+					cell.setAttribute("class", classID);
 				}
 			}
 		}
 	}
 
-	public void setSize(int width, int height) 
-	{
+	public void setSize(int width, int height) {
 		// Update the table
 		table.getStyle().setWidth(width, Unit.PX);
 		table.getStyle().setHeight(height, Unit.PX);
-		//table.getStyle().setPosition(Position.RELATIVE);
+		// table.getStyle().setPosition(Position.RELATIVE);
 		double cellWidth = ((double) width) / (TimeCell.NUM_DAYS + 1);
-		double cellHeight = ((double)height) / ((TimeCell.NUM_HOURS * TimeCell.CELLS_PER_HOUR) + 1);
+		double cellHeight = ((double) height) / ((TimeCell.NUM_HOURS * TimeCell.CELLS_PER_HOUR) + 1);
 		// Update the cells
-		for(int y = 0; y < table.getChildCount(); y++)
-		{
+		for (int y = 0; y < table.getChildCount(); y++) {
 			Element row = table.getChild(y).cast();
 			row.getStyle().setHeight(cellHeight, Unit.PX);
-			for(int x = 0; x < row.getChildCount(); x++)
-			{
+			for (int x = 0; x < row.getChildCount(); x++) {
 				// Update cell's size
 				TimeElement cell = row.getChild(x).cast();
 				cell.getStyle().setWidth(cellWidth - 1.0, Unit.PX);
@@ -210,8 +195,7 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 	}
 
 	@Override
-	public void onLoad()
-	{
+	public void onLoad() {
 		// Add local handlers
 		mouseDown = this.addDomHandler(this, MouseDownEvent.getType());
 		mouseMove = this.addDomHandler(this, MouseMoveEvent.getType());
@@ -220,9 +204,8 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 		update();
 	}
 
-	@Override 
-	public void onUnload()
-	{
+	@Override
+	public void onUnload() {
 		// Remove any handlers
 		mouseDown.removeHandler();
 		mouseMove.removeHandler();
@@ -230,72 +213,63 @@ public class TimeTable extends Widget implements MouseDownHandler, MouseUpHandle
 	}
 
 	@Override
-	public void onMouseDown(MouseDownEvent event) 
-	{
+	public void onMouseDown(MouseDownEvent event) {
 		// Get the cell this happened in
 		TimeElement elem = event.getNativeEvent().getEventTarget().cast();
 		// Event occurred in an actual cell
-		try 
-		{
-			//Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
-			//time.increment(0, elem.getTime() * (60 / TimeCell.CELLS_PER_HOUR));
-			//DayOfWeek day = TimeCell.week[elem.getDay() + TimeCell.START_DAY];
-			//System.out.println("Down: " + day + ", " + time);
+		try {
+			// Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
+			// time.increment(0, elem.getTime() * (60 / TimeCell.CELLS_PER_HOUR));
+			// DayOfWeek day = TimeCell.week[elem.getDay() + TimeCell.START_DAY];
+			// System.out.println("Down: " + day + ", " + time);
 			dragX = elem.getDay();
 			dragY = elem.getTime();
 		}
 		// Event occurred outside an actual cell
-		catch(Exception e)
-		{
-			//System.out.println("Down: Outside");
+		catch (Exception e) {
+			// System.out.println("Down: Outside");
 		}
 		update();
 	}
 
 	@Override
-	public void onMouseMove(MouseMoveEvent event) 
-	{
+	public void onMouseMove(MouseMoveEvent event) {
 		// Get the cell this happened in
 		TimeElement elem = event.getNativeEvent().getEventTarget().cast();
 		// Event occurred in an actual cell
-		try 
-		{
-			//Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
-			//time.increment(0, elem.getTime() * (60 / TimeCell.CELLS_PER_HOUR));
-			//DayOfWeek day = TimeCell.week[elem.getDay() + TimeCell.START_DAY];
-			//System.out.println("Move: " + day + ", " + time);
+		try {
+			// Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
+			// time.increment(0, elem.getTime() * (60 / TimeCell.CELLS_PER_HOUR));
+			// DayOfWeek day = TimeCell.week[elem.getDay() + TimeCell.START_DAY];
+			// System.out.println("Move: " + day + ", " + time);
 			dropX = elem.getDay();
 			dropY = elem.getTime();
 		}
 		// Event occurred outside an actual cell
-		catch(Exception e)
-		{
-			//System.out.println("Move: Outside");
+		catch (Exception e) {
+			// System.out.println("Move: Outside");
 		}
 		update();
 		drawDrag();
 	}
 
 	@Override
-	public void onMouseUp(MouseUpEvent event) 
-	{
+	public void onMouseUp(MouseUpEvent event) {
 		// Get the cell this happened in
 		TimeElement elem = event.getNativeEvent().getEventTarget().cast();
 		// Event occurred in an actual cell
-		try 
-		{
-			//Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
-			//time.increment(0, elem.getTime() * (60 / TimeCell.CELLS_PER_HOUR));
-			//DayOfWeek day = TimeCell.week[elem.getDay() + TimeCell.START_DAY];
-			//System.out.println("Up: " + day + ", " + time);
+		try {
+			// Time time = new Time(TimeCell.START_HOUR, TimeCell.START_MIN);
+			// time.increment(0, elem.getTime() * (60 / TimeCell.CELLS_PER_HOUR));
+			// DayOfWeek day = TimeCell.week[elem.getDay() + TimeCell.START_DAY];
+			// System.out.println("Up: " + day + ", " + time);
 			dropX = elem.getDay();
 			dropY = elem.getTime();
-			//System.out.println(dragX+ ", " +  dragY+ " ; " + dropX + ", " + dropY);
+			// System.out.println(dragX+ ", " + dragY+ " ; " + dropX + ", " + dropY);
 		}
 		// Event occurred outside an actual cell
-		catch(Exception e)
-		{
-			//System.out.println("Up: Outside");
+		catch (Exception e) {
+			// System.out.println("Up: Outside");
 		}
 		controller.timeChosen(dragX, dragY, dropX, dropY);
 		dragX = dragY = dropX = dropY = -1;

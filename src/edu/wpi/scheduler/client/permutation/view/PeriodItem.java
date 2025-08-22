@@ -18,58 +18,57 @@ public class PeriodItem extends FlowPanel implements ClickHandler {
 
 	public static final PermutationViewResources resources = GWT
 			.create(PermutationViewResources.class);
-	
+
 	public static AbstractImagePrototype personIcon = AbstractImagePrototype.create(resources.personIcon());
 	public static AbstractImagePrototype clockIcon = AbstractImagePrototype.create(resources.clockIcon());
-	
+
 	public final Term term;
 	public final Period period;
 	public final PermutationController controller;
-	
+
 	public final Label title = new Label();
 	public final Label type = new Label();
 	public final InlineHTML seats = new InlineHTML();
 
-	public PeriodItem(PermutationController controller, Period period, Term term) {	
+	public PeriodItem(PermutationController controller, Period period, Term term) {
 		this.controller = controller;
 		this.period = period;
 		this.term = term;
-		
+
 		String personHTML = personIcon.getHTML() + " " + period.seatsAvailable + "/" + period.seats;
 		String waitlistHTML = clockIcon.getHTML() + " " + period.actualWaitlist + "/" + period.maxWaitlist;
-		
+
 		title.setText(period.section.course.department.abbreviation + " " + period.section.course.number);
 		type.setText(period.type);
 		seats.setHTML(personHTML + " " + waitlistHTML);
-		
+
 		type.getElement().getStyle().setFontSize(11, Unit.PX);
 		type.getElement().getStyle().setBottom(11.0, Unit.PX);
 		type.getElement().getStyle().setLeft(0, Unit.PX);
 		type.getElement().getStyle().setRight(0, Unit.PX);
 		type.getElement().getStyle().setProperty("margin", "auto");
-		type.getElement().getStyle().setPosition(Position.ABSOLUTE); 
-		
+		type.getElement().getStyle().setPosition(Position.ABSOLUTE);
+
 		seats.getElement().getStyle().setFontSize(9.0, Unit.PX);
 		seats.getElement().getStyle().setLeft(5.0, Unit.PX);
 		seats.getElement().getStyle().setBottom(0.0, Unit.PX);
-		seats.getElement().getStyle().setPosition(Position.ABSOLUTE); 
-		
-		
+		seats.getElement().getStyle().setPosition(Position.ABSOLUTE);
+
 		add(title);
 		add(type);
 		add(seats);
 
 		this.setStyleName("permutationPeriodItem");
 	}
-	
+
 	@Override
-	public void onLoad(){
+	public void onLoad() {
 		addDomHandler(this, ClickEvent.getType());
 	}
-	
+
 	@Override
-	public void onUnload(){
-		
+	public void onUnload() {
+
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class WeekCourseColumn extends ComplexPanel implements PermutationSelectE
 		createPeriods();
 		controller.addSelectListner(this);
 	}
-	
+
 	@Override
 	protected void onUnload() {
 		controller.removeSelectListner(this);
@@ -55,27 +55,27 @@ public class WeekCourseColumn extends ComplexPanel implements PermutationSelectE
 
 	public void createPeriods() {
 		this.clear();
-		
-		if( controller.getSelectedSection() != null )
+
+		if (controller.getSelectedSection() != null)
 			addSection(controller.getSelectedSection());
-		
+
 		SchedulePermutation permutation = controller.getSelectedPermutation();
-		
-		if( permutation != null ){
+
+		if (permutation != null) {
 			for (Section section : permutation.sections) {
-				if( controller.getSelectedSection() != section )
+				if (controller.getSelectedSection() != section)
 					addSection(section);
 			}
 		}
-		
+
 		this.updatePeriods();
 	}
-	
-	private void addSection( Section section ){
+
+	private void addSection(Section section) {
 		for (Period period : section.periods) {
-			if (period.days.contains(this.day)){
-				for (Term term : section.getTerms()){
-					if( allowTerm( term ))
+			if (period.days.contains(this.day)) {
+				for (Term term : section.getTerms()) {
+					if (allowTerm(term))
 						addPeriod(period, term);
 				}
 			}
@@ -83,12 +83,12 @@ public class WeekCourseColumn extends ComplexPanel implements PermutationSelectE
 	}
 
 	public void updatePeriods() {
-		if(!isAttached())
+		if (!isAttached())
 			return;
-		
+
 		double height = (double) getElement().getClientHeight();
 		Section selectedSection = controller.getSelectedSection();
-		
+
 		for (Widget widget : this.getChildren()) {
 			PeriodItem item = (PeriodItem) widget;
 			Style periodStyle = item.getElement().getStyle();
@@ -97,8 +97,8 @@ public class WeekCourseColumn extends ComplexPanel implements PermutationSelectE
 			periodStyle.setTop(timeProgress(item.period.startTime) * height, Unit.PX);
 			item.setHeight((timeProgress(item.period.endTime) - timeProgress(item.period.startTime)) * height);
 			periodStyle.setBackgroundColor(controller.getCourseColor(item.period.section.course));
-			
-			if( selectedSection == null || item.period.section.equals(selectedSection) ){
+
+			if (selectedSection == null || item.period.section.equals(selectedSection)) {
 				periodStyle.setOpacity(1.0f);
 				periodStyle.setZIndex(2);
 			} else {
@@ -107,8 +107,8 @@ public class WeekCourseColumn extends ComplexPanel implements PermutationSelectE
 			}
 		}
 	}
-	
-	public boolean allowTerm( Term term ){
+
+	public boolean allowTerm(Term term) {
 		return allowedTerms.contains(term);
 	}
 
@@ -116,7 +116,7 @@ public class WeekCourseColumn extends ComplexPanel implements PermutationSelectE
 		PeriodItem item = new PeriodItem(controller, period, term);
 
 		add(item, body);
-		
+
 		return item;
 	}
 

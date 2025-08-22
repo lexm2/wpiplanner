@@ -16,20 +16,20 @@ import edu.wpi.scheduler.shared.model.Section;
 import edu.wpi.scheduler.shared.model.Time;
 
 public class SchedJSONParser {
-	
+
 	public static native void console(String text)
 	/*-{
 	    console.log(text);
 	}-*/;
-	
-	public SchedJSONParser(){
-		
+
+	public SchedJSONParser() {
+
 	}
-	
+
 	public ScheduleDB parse(JSONArray document) {
 		return parseDB(document);
 	}
-	
+
 	/**
 	 * <schedb xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 * xmlns="http://www.wpischeduler.org"
@@ -54,7 +54,7 @@ public class SchedJSONParser {
 
 		return scheduleDB;
 	}
-	
+
 	/**
 	 * Parses a department <dept abbrev="AB" name="ARABIC">
 	 * 
@@ -108,16 +108,15 @@ public class SchedJSONParser {
 		return course;
 	}
 
-
 	/**
 	 * Reads a section node from the XML element. Example section: <section
 	 * crn="11126" number="A01" seats="25" availableseats="0" term="201301"
 	 * part-of-term="A Term">
 	 * 
 	 * @param course
-	 *            The parent course of this section
+	 *               The parent course of this section
 	 * @param node
-	 *            The XML node
+	 *               The XML node
 	 * @return a new section for the corresponding XML node
 	 */
 	private static Section readSectionNode(Course course, JSONObject node) {
@@ -125,7 +124,7 @@ public class SchedJSONParser {
 
 		section.crn = (long) node.get("crn").isNumber().doubleValue();
 		section.number = node.get("number").isString().stringValue();
-		section.seats =  (int) node.get("seats").isNumber().doubleValue();
+		section.seats = (int) node.get("seats").isNumber().doubleValue();
 		section.seatsAvailable = (int) node.get("availableseats").isNumber().doubleValue();
 		section.note = node.get("note").isString().toString();
 
@@ -169,16 +168,16 @@ public class SchedJSONParser {
 
 		return period;
 	}
-	
-	private static Time readTime(JSONNumber number){
+
+	private static Time readTime(JSONNumber number) {
 		double value = number.doubleValue();
 		int minute = (int) (value % 100.0);
 		int hour = (int) (value / 100.0);
-		
-		if( hour == 0 )
+
+		if (hour == 0)
 			hour = 12;
-		
-		return new Time(hour, minute);		
+
+		return new Time(hour, minute);
 	}
 
 	/**
@@ -206,15 +205,15 @@ public class SchedJSONParser {
 	 */
 	private static HashSet<DayOfWeek> getDaysOfWeek(JSONArray days2) {
 		HashSet<DayOfWeek> days = new HashSet<DayOfWeek>();
-		
-		if( days2.size() == 1 && days2.get(0).isString().stringValue().equals("UNKNOWN"))
+
+		if (days2.size() == 1 && days2.get(0).isString().stringValue().equals("UNKNOWN"))
 			return days;
 
-		for(int i = 0; i < days2.size(); i++ ){
+		for (int i = 0; i < days2.size(); i++) {
 			days.add(DayOfWeek.getByName(days2.get(i).isString().stringValue()));
 		}
 
 		return days;
 	}
-	
+
 }

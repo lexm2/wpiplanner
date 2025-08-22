@@ -23,7 +23,7 @@ public class DetailedView extends ScrollPanel implements PermutationSelectEventH
 	public DetailedView(PermutationController controller) {
 		this.controller = controller;
 		add(body);
-		
+
 		getElement().getStyle().setPosition(Position.ABSOLUTE);
 		getElement().getStyle().setLeft(0.0, Unit.PX);
 		getElement().getStyle().setRight(0.0, Unit.PX);
@@ -63,10 +63,12 @@ public class DetailedView extends ScrollPanel implements PermutationSelectEventH
 
 		cellFormatter.setWidth(1, 0, "30%");
 		cellFormatter.setWidth(1, 1, "70%");
-		
+
 		String html = "<h3>" + section.course.toString() + "</h3>Section(s): " + section.number;
-//		html += "<br>Seats available: " + section.seatsAvailable + "/" + section.seats;
-//		html += "<br>Waitlist spots occupied: " + section.actualWaitlist + "/" + section.maxWaitlist;
+		// html += "<br>Seats available: " + section.seatsAvailable + "/" +
+		// section.seats;
+		// html += "<br>Waitlist spots occupied: " + section.actualWaitlist + "/" +
+		// section.maxWaitlist;
 
 		table.setHTML(0, 0, html);
 		table.setWidget(0, 1, dataGrid);

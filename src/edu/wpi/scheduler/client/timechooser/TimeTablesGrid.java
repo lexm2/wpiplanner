@@ -35,7 +35,7 @@ public class TimeTablesGrid extends Grid implements ResizeHandler {
 		BTermTable = new TimeTable(Term.B, termTimes.getTimesForTerm(Term.B));
 		CTermTable = new TimeTable(Term.C, termTimes.getTimesForTerm(Term.C));
 		DTermTable = new TimeTable(Term.D, termTimes.getTimesForTerm(Term.D));
-		
+
 		this.addTimeTable(0, 0, ATermTable);
 		this.addTimeTable(0, 1, BTermTable);
 		this.addTimeTable(1, 0, CTermTable);

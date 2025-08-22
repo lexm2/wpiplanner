@@ -28,7 +28,7 @@ public class ConflictController {
 		private static final long serialVersionUID = 8823532784912354546L;
 		public Section section;
 	}
-	
+
 	private class ProducerTimer extends Timer {
 		@Override
 		public void run() {
@@ -46,7 +46,7 @@ public class ConflictController {
 	 * conflicts with section B, then section B conflicts with section A
 	 */
 	private Map<Section, ConflictedList> conflicts = new HashMap<Section, ConflictedList>();
-	
+
 	/**
 	 * Timer that will generate more conflicts as needed
 	 */
@@ -55,52 +55,52 @@ public class ConflictController {
 	final List<Course> courses = new ArrayList<Course>();
 	final List<Section> sectionQueue = new ArrayList<Section>();
 
-	public ConflictController() {		
+	public ConflictController() {
 
 	}
-	
-	public void addCourse( Course course ){
-		if( this.courses.contains(course) )
+
+	public void addCourse(Course course) {
+		if (this.courses.contains(course))
 			return;
-		
+
 		this.courses.add(course);
-		sectionQueue.addAll( course.sections );
-		
+		sectionQueue.addAll(course.sections);
+
 		// Start generating!
 		timer.scheduleRepeating(10);
 	}
 
 	public void generate() {
-		
+
 		Section section = sectionQueue.remove(0);
 		ConflictedList list = new ConflictedList();
 		list.section = section;
-		
-		for( Entry<Section, ConflictedList> entry : conflicts.entrySet() ){
-			if( entry.getKey().course.equals(section.course) )
+
+		for (Entry<Section, ConflictedList> entry : conflicts.entrySet()) {
+			if (entry.getKey().course.equals(section.course))
 				continue;
-			
+
 			if (!hasConflictsNoCache(entry.getKey(), section))
 				continue;
-			
+
 			list.add(entry.getKey());
 			entry.getValue().add(section);
 		}
-		
+
 		conflicts.put(section, list);
 	}
-	
-	public ConflictedList getConflicts(Section section){
+
+	public ConflictedList getConflicts(Section section) {
 		return conflicts.get(section);
 	}
-	
+
 	public boolean hasConflicts(Section newSection, Section section) {
 		ConflictedList list1 = getConflicts(newSection);
 		ConflictedList list2 = getConflicts(section);
-		
-		if(list1 != null && list2 != null )
+
+		if (list1 != null && list2 != null)
 			return list1.contains(section);
-		
+
 		return hasConflictsNoCache(newSection, section);
 	}
 

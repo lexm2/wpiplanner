@@ -16,7 +16,7 @@ import edu.wpi.scheduler.shared.model.Section;
 import edu.wpi.scheduler.shared.model.Time;
 
 public class SchedXMLParser {
-	
+
 	public static native void console(String text)
 	/*-{
 	    console.log(text);
@@ -25,7 +25,7 @@ public class SchedXMLParser {
 	public ScheduleDB parse(Document document) {
 		ScheduleDB scheduleDB = new ScheduleDB();
 		// TODO: Update scheduleDB fields
-		
+
 		NodeList deps = document.getElementsByTagName("dept");
 
 		for (int i = 0; i < deps.getLength(); i++) {
@@ -35,12 +35,9 @@ public class SchedXMLParser {
 
 		}
 		NodeList sdblist = document.getElementsByTagName("schedb");
-		
-		
+
 		Element sdb = (Element) sdblist.item(0);
 		scheduleDB.generated = sdb.getAttribute("generated");
-		
-		
 
 		return scheduleDB;
 	}
@@ -102,9 +99,9 @@ public class SchedXMLParser {
 	 * part-of-term="A Term">
 	 * 
 	 * @param course
-	 *            The parent course of this section
+	 *               The parent course of this section
 	 * @param node
-	 *            The XML node
+	 *               The XML node
 	 * @return a new section for the corresponding XML node
 	 */
 	private Section readSectionNode(Course course, Element node) {
@@ -114,13 +111,12 @@ public class SchedXMLParser {
 		section.number = node.getAttribute("number");
 		section.seats = Integer.parseInt(node.getAttribute("seats"));
 		section.seatsAvailable = Integer.parseInt(node.getAttribute("availableseats"));
-		
+
 		section.actualWaitlist = Integer.parseInt(node.getAttribute("actual_waitlist"));
 		section.maxWaitlist = Integer.parseInt(node.getAttribute("max_waitlist"));
-		
-		
+
 		section.note = node.getAttribute("note");
-		
+
 		section.description = node.getAttribute("sec_desc");
 
 		// TODO (Nican): Read term information (How is this working?!)
@@ -149,22 +145,21 @@ public class SchedXMLParser {
 	private Period readPeriodNode(Section section, Element node) {
 		Period period = new Period(section);
 
-		//period.type = getPeriodType(node.getAttribute("type"));
+		// period.type = getPeriodType(node.getAttribute("type"));
 		period.type = node.getAttribute("type");
 		period.professor = node.getAttribute("professor");
 		period.startTime = new Time(node.getAttribute("starts"));
 		period.endTime = new Time(node.getAttribute("ends"));
 		period.location = node.getAttribute("building")
 				+ node.getAttribute("room");
-		
+
 		period.seats = Integer.parseInt(node.getAttribute("seats"));
 		period.seatsAvailable = Integer.parseInt(node.getAttribute("availableseats"));
-		
+
 		period.actualWaitlist = Integer.parseInt(node.getAttribute("actual_waitlist"));
 		period.maxWaitlist = Integer.parseInt(node.getAttribute("max_waitlist"));
-		
+
 		period.specificSection = node.getAttribute("section");
-		
 
 		String days = node.getAttribute("days");
 

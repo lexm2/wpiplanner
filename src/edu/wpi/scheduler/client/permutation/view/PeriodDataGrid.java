@@ -11,17 +11,16 @@ import edu.wpi.scheduler.shared.model.Section;
 public class PeriodDataGrid extends CellTable<Period> {
 
 	public PeriodDataGrid(Section section) {
-		
+
 		getElement().getStyle().setWidth(100.0, Unit.PCT);
 
-		
 		addColumn(new TextColumn<Period>() {
 			@Override
 			public String getValue(Period period) {
 				return period.specificSection;
 			}
 		}, "Section");
-		
+
 		addColumn(new TextColumn<Period>() {
 			@Override
 			public String getValue(Period period) {
@@ -42,14 +41,14 @@ public class PeriodDataGrid extends CellTable<Period> {
 				return period.type;
 			}
 		}, "Type");
-		
+
 		addColumn(new TextColumn<Period>() {
 			@Override
 			public String getValue(Period period) {
 				return period.seatsAvailable + "/" + period.seats;
 			}
 		}, "Seats Available");
-		
+
 		addColumn(new TextColumn<Period>() {
 			@Override
 			public String getValue(Period period) {
@@ -90,7 +89,8 @@ public class PeriodDataGrid extends CellTable<Period> {
 
 		// I really hate for having to hard-code this, but debugging the
 		// DataGrid is near impossible
-		//getElement().getStyle().setHeight(24.0 + section.periods.size() * 24.0 + 2.0, Unit.PX);
+		// getElement().getStyle().setHeight(24.0 + section.periods.size() * 24.0 + 2.0,
+		// Unit.PX);
 
 		redraw();
 	}

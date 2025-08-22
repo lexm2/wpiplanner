@@ -162,8 +162,8 @@ public class WeekCourseView extends CellPanel implements ResizeHandler, TimeRang
 	protected void onLoad() {
 		resizeHandle = Window.addResizeHandler(this);
 		controller.getStudentSchedule().addTimeChangeListner(this);
-		
-		new Timer(){
+
+		new Timer() {
 			public void run() {
 				createTimeColumn();
 			}

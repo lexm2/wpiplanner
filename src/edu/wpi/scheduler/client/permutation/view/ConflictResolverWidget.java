@@ -93,12 +93,11 @@ public class ConflictResolverWidget extends FlowPanel implements
 		getElement().getStyle().setTop(0, Unit.PX);
 		getElement().getStyle().setBottom(0, Unit.PX);
 		getElement().getStyle().setPosition(Position.ABSOLUTE);
-		
-		
+
 		Element title = DOM.createDiv();
 		title.setInnerHTML("<h2>No schedules can be generated. :(<br>We are finding a few solutions.");
 		title.getStyle().setTextAlign(TextAlign.CENTER);
-		
+
 		getElement().appendChild(title);
 		add(conflictList, getElement());
 
@@ -143,7 +142,7 @@ public class ConflictResolverWidget extends FlowPanel implements
 			producer.step();
 
 		if (!producer.canGenerate()) {
-			if (producer.getPermutations().size() == 0 && producer.maxSolutions < 10 ) {
+			if (producer.getPermutations().size() == 0 && producer.maxSolutions < 10) {
 				ScheduleProducer oldProducer = producer;
 
 				producer = new ScheduleProducer(oldProducer);

@@ -20,12 +20,12 @@ public class TermView extends Widget {
 	public TermView(Course course) {
 		this.course = course;
 		setElement(Document.get().createDivElement());
-	
+
 		for (Term term : Term.values())
 			this.addTerm(term);
 
 		this.setStyleName("termView");
-		
+
 	}
 
 	public boolean hasTerm(Term term) {
@@ -41,12 +41,12 @@ public class TermView extends Widget {
 	public Element addTerm(Term term) {
 		Element elem = DOM.createDiv();
 		elem.setInnerText(term.name);
-		
+
 		getElement().appendChild(elem);
 		terms.put(elem, term);
-		
-		//#FFBBBB red
-		//#DFFFDF green
+
+		// #FFBBBB red
+		// #DFFFDF green
 		return elem;
 	}
 
@@ -59,22 +59,20 @@ public class TermView extends Widget {
 	protected void update(Term term, Element label) {
 		if (!hasTerm(term)) {
 			label.getStyle().setOpacity(0.2);
-			label.setTitle("Course not offered during "+term.name+" Term.");
-		} 
-		else {
+			label.setTitle("Course not offered during " + term.name + " Term.");
+		} else {
 			if (course.hasAvailableSeatsForTerm(term.name)) {
 				label.getStyle().setBackgroundColor("#DFFFDF");
-				label.setTitle("Seats available during "+term.name+" Term.");
-			}
-			else if (course.hasAvailableWaitlistForTerm(term.name)) {
+				label.setTitle("Seats available during " + term.name + " Term.");
+			} else if (course.hasAvailableWaitlistForTerm(term.name)) {
 				label.getStyle().setBackgroundColor("#ccccff");
-				label.setTitle("There are no seats left, but there are spots left on the waitlist during "+term.name+" Term.");
-			}
-			else {
+				label.setTitle("There are no seats left, but there are spots left on the waitlist during " + term.name
+						+ " Term.");
+			} else {
 				label.getStyle().setBackgroundColor("#fce2b1");
-				label.setTitle("There are no seats left during "+term.name+" Term.");
+				label.setTitle("There are no seats left during " + term.name + " Term.");
 			}
-			//term.name is something such as "A" while section is "A Term, B Term", etc.
+			// term.name is something such as "A" while section is "A Term, B Term", etc.
 		}
 	}
 
@@ -82,7 +80,5 @@ public class TermView extends Widget {
 	protected void onLoad() {
 		this.update();
 	}
-
-
 
 }

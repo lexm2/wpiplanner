@@ -24,58 +24,59 @@ import edu.wpi.scheduler.client.controller.StudentScheduleEvents;
 import edu.wpi.scheduler.shared.model.Course;
 
 public class CourseSelection extends ComplexPanel implements StudentScheduleEventHandler {
-	
+
 	private CourseSelectionController selectionController;
-	
+
 	class UndoAnimation extends Animation {
-		
+
 		private Widget widget;
-		public UndoAnimation( Widget w ){
+
+		public UndoAnimation(Widget w) {
 			this.widget = w;
 		}
 
 		@Override
 		protected void onUpdate(double progress) {
-			widget.setHeight((32.0 * (1-progress)) + "px");
+			widget.setHeight((32.0 * (1 - progress)) + "px");
 		}
-		
+
 		@Override
 		protected void onComplete() {
 			super.onComplete();
 			widget.removeFromParent();
 		}
-		
+
 	}
-	
-	class UndoRemoveWidget extends ComplexPanel implements HasCourse, ClickHandler{
+
+	class UndoRemoveWidget extends ComplexPanel implements HasCourse, ClickHandler {
 		private final Course course;
 		Element div = DOM.createDiv();
 
-		public UndoRemoveWidget(Course course){
+		public UndoRemoveWidget(Course course) {
 			setElement(Document.get().createTRElement());
 			this.course = course;
-			
+
 			Element td = DOM.createTD();
 			td.setAttribute("colspan", "3");
-			
-			div.setInnerHTML("Course removed. <br>Click to add " + course.toAbbreviation() + " back" );
-			
+
+			div.setInnerHTML("Course removed. <br>Click to add " + course.toAbbreviation() + " back");
+
 			td.appendChild(div);
 			getElement().appendChild(td);
 			getElement().getStyle().setCursor(Cursor.POINTER);
-			
-			setHeight("32px");	
-			
+
+			setHeight("32px");
+
 			div.getStyle().setOverflow(Overflow.HIDDEN);
 			div.getStyle().setPosition(Position.RELATIVE);
 			div.getStyle().setTextAlign(TextAlign.CENTER);
 			new UndoAnimation(this).run(500, Duration.currentTimeMillis() + 3000.0);
-			
+
 			addDomHandler(this, ClickEvent.getType());
 		}
-		
+
 		@Override
-		public void setHeight( String height ){
+		public void setHeight(String height) {
 			div.getStyle().setProperty("height", height);
 		}
 
@@ -89,7 +90,7 @@ public class CourseSelection extends ComplexPanel implements StudentScheduleEven
 			selectionController.getStudentSchedule().addCourse(course, null);
 			removeFromParent();
 		}
-		
+
 	}
 
 	public CourseSelection(final CourseSelectionController selectionController) {
@@ -113,12 +114,12 @@ public class CourseSelection extends ComplexPanel implements StudentScheduleEven
 	protected void onLoad() {
 		StudentSchedule schedule = selectionController.getStudentSchedule();
 		schedule.addStudentScheduleHandler(this);
-		
+
 		this.clear();
-		
-		for( SectionProducer producer : schedule.sectionProducers ){
+
+		for (SectionProducer producer : schedule.sectionProducers) {
 			addCourse(producer.getCourse());
-		}		
+		}
 	}
 
 	@Override
@@ -128,44 +129,45 @@ public class CourseSelection extends ComplexPanel implements StudentScheduleEven
 
 	@Override
 	public void onCoursesChanged(StudentScheduleEvent event) {
-		if( event.event == StudentScheduleEvents.ADD){
+		if (event.event == StudentScheduleEvents.ADD) {
 			CourseSelectionItem item = addCourse(event.getCourse());
-			
-			if( event.getWidgetSourse() != null ){
-				CourseAddAnimation animation = new CourseAddAnimation(item.getElement(), event.getWidgetSourse().getElement());
+
+			if (event.getWidgetSourse() != null) {
+				CourseAddAnimation animation = new CourseAddAnimation(item.getElement(),
+						event.getWidgetSourse().getElement());
 				animation.run(500);
 			}
-			
-		} else if (event.event == StudentScheduleEvents.REMOVE){
+
+		} else if (event.event == StudentScheduleEvents.REMOVE) {
 			removeCourse(event.getCourse());
 		}
-	
+
 	}
-	
-	private CourseSelectionItem addCourse( Course course ){
+
+	private CourseSelectionItem addCourse(Course course) {
 		CourseSelectionItem child = new CourseSelectionItem(selectionController, course);
 
 		WidgetCollection children = getChildren();
-		
+
 		System.out.println("Starting to compare");
-		
-		for( int i = 0; i < children.size(); i++ ){
-			int comp = CourseList.comparator.compare(child, (HasCourse) children.get(i) );
-			//System.out.println("Comparing " + child.getCourse().toAbbreviation() + "  " + 
-			//		((HasCourse)children.get(i)).getCourse().toAbbreviation() + " " + comp);
-			if( comp <= 0){
+
+		for (int i = 0; i < children.size(); i++) {
+			int comp = CourseList.comparator.compare(child, (HasCourse) children.get(i));
+			// System.out.println("Comparing " + child.getCourse().toAbbreviation() + " " +
+			// ((HasCourse)children.get(i)).getCourse().toAbbreviation() + " " + comp);
+			if (comp <= 0) {
 				this.insert(child, this.getElement(), i, true);
 				return child;
 			}
 		}
-		
-		//Could not find a place to insert, put it at the end!
-		this.add( child, this.getElement() );
-		
+
+		// Could not find a place to insert, put it at the end!
+		this.add(child, this.getElement());
+
 		return child;
 	}
-	
-	private void removeCourse( Course course ){
+
+	private void removeCourse(Course course) {
 		for (Widget widget : this.getChildren()) {
 			HasCourse item = (HasCourse) widget;
 

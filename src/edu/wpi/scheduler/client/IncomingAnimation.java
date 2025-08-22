@@ -52,7 +52,7 @@ public class IncomingAnimation extends Animation {
 			double left = -element.getClientWidth() * percent;
 			getStyle().setLeft(left, Unit.PX);
 		} else {
-			double top = element.getClientHeight() * (1-percent);
+			double top = element.getClientHeight() * (1 - percent);
 			getStyle().setHeight(top, Unit.PX);
 		}
 	}

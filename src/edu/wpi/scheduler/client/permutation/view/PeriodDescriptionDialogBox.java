@@ -18,29 +18,28 @@ import edu.wpi.scheduler.shared.model.Section;
 public class PeriodDescriptionDialogBox extends DialogBox {
 
 	public static class TitleCheckbox extends SectionCheckbox implements Caption {
-		public TitleCheckbox(StudentSchedule schedule, Section section ){
+		public TitleCheckbox(StudentSchedule schedule, Section section) {
 			super(schedule, section);
 			setStyleName("Caption");
 			getElement().getStyle().setDisplay(Display.BLOCK);
 			setText(section.course.toString() + " - " + section.number);
 		}
 	}
-	
-	
+
 	public final Section section;
 
 	public final DockPanel dockPanel = new DockPanel();
 	public final PeriodDataGrid periodInfo;
 	public final Label title = new Label();
 	public final FlowPanel conflictList = new FlowPanel();
-	
+
 	public static final String dialogWidth = "1100px";
 
 	public PeriodDescriptionDialogBox(PermutationController controller, Section section) {
 		super(true, true, new TitleCheckbox(controller.getStudentSchedule(), section));
 		this.section = section;
 		periodInfo = new PeriodDataGrid(section);
-		
+
 		getElement().getStyle().setProperty("width", dialogWidth);
 		getElement().getStyle().setZIndex(10);
 
@@ -51,17 +50,17 @@ public class PeriodDescriptionDialogBox extends DialogBox {
 			conflictTitle.getElement().getStyle().setProperty("fontSize", "large");
 
 			conflictList.add(conflictTitle);
-			
-			if( list.size() > 0 ){
+
+			if (list.size() > 0) {
 				PeriodSelectList periodList = new PeriodSelectList(controller);
 				periodList.setSections(list, false);
 				Style periodStyle = periodList.getElement().getStyle();
 				periodStyle.setPropertyPx("maxHeight", 400);
 				periodStyle.setOverflowY(Overflow.SCROLL);
-				
+
 				conflictList.add(periodList);
 			} else {
-				conflictList.add( new Label("There are no sections with time conflicts with this section."));
+				conflictList.add(new Label("There are no sections with time conflicts with this section."));
 			}
 			dockPanel.add(conflictList, DockPanel.EAST);
 			dockPanel.setCellWidth(conflictList, "200px");
@@ -69,7 +68,7 @@ public class PeriodDescriptionDialogBox extends DialogBox {
 
 		dockPanel.add(this.periodInfo, DockPanel.SOUTH);
 		dockPanel.add(new Label(section.description), DockPanel.CENTER);
-		
+
 		dockPanel.setCellVerticalAlignment(periodInfo, DockPanel.ALIGN_BOTTOM);
 		dockPanel.setWidth(dialogWidth);
 

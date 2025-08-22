@@ -36,7 +36,7 @@ public class CourseItem extends CellPanel implements ClickHandler {
 		collapseButton.addClickHandler(this);
 
 		this.setStyleName("permutationCourseItem");
-		
+
 		setSpacing(0);
 
 		Element titleRow = DOM.createTR();
@@ -75,32 +75,30 @@ public class CourseItem extends CellPanel implements ClickHandler {
 			Element periodsCell = DOM.createTD();
 			itemPeriods = new PeriodSelectList(permutationController);
 			itemPeriods.setSections(producer.getCourse().sections, true);
-			
-			//periodsRow.getStyle().setDisplay(Display.NONE);
+
+			// periodsRow.getStyle().setDisplay(Display.NONE);
 			periodsCell.setAttribute("colspan", "3");
 			periodsCell.getStyle().setOverflow(Overflow.HIDDEN);
 
 			DOM.appendChild(periodsRow, periodsCell);
 			DOM.appendChild(getBody(), periodsRow);
 
-			this.add(itemPeriods, periodsCell);			
+			this.add(itemPeriods, periodsCell);
 		}
-		
-		
-		if( isHidden ){
+
+		if (isHidden) {
 			isHidden = false;
 			periodsRow.getStyle().setProperty("display", "");
-			collapseButton.setHTML("&#9660;"); //Arrow down
-			
-			//new IncomingAnimation(itemPeriods.getElement(), false).run();
+			collapseButton.setHTML("&#9660;"); // Arrow down
+
+			// new IncomingAnimation(itemPeriods.getElement(), false).run();
 		} else {
 			isHidden = true;
 			periodsRow.getStyle().setDisplay(Display.NONE);
-			collapseButton.setHTML("&#9654;"); //Arrow right
-			
-			//new IncomingAnimation(itemPeriods.getElement(), false, true).run();
+			collapseButton.setHTML("&#9654;"); // Arrow right
+
+			// new IncomingAnimation(itemPeriods.getElement(), false, true).run();
 		}
 
-		
 	}
 }

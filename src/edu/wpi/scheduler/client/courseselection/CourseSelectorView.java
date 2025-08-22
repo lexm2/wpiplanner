@@ -16,11 +16,11 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Button;
 
 import edu.wpi.scheduler.client.IncomingAnimation;
 import edu.wpi.scheduler.client.controller.StudentSchedule;
@@ -46,7 +46,7 @@ public class CourseSelectorView extends Composite implements
 	@UiField(provided = true)
 	DepartmentListBox departmentList;
 
-	@UiField(provided=true)
+	@UiField(provided = true)
 	CourseList courseList;
 
 	@UiField
@@ -90,7 +90,7 @@ public class CourseSelectorView extends Composite implements
 		getElement().getStyle().setPosition(Position.ABSOLUTE);
 
 		selectionController.addCourseSelectedListner(this);
-		
+
 		departmentList.update();
 		departmentList.addChangeHandler(this);
 		searchBox.addKeyUpHandler(this);
@@ -109,26 +109,28 @@ public class CourseSelectorView extends Composite implements
 	public void updateCourseList() {
 		// Clear the body from any existing elements
 		courseList.clear();
-		
+
 		String searchTerm = searchBox.getText().trim().toLowerCase();
 		List<Department> departments;
 		boolean isGlobalSearch = !searchTerm.isEmpty() && !selectedDepartmentsOnly.getValue();
-		
+
 		if (isGlobalSearch) {
-			// Global search across all departments when there's a search term and not filtering by selected departments
+			// Global search across all departments when there's a search term and not
+			// filtering by selected departments
 			departments = courseList.getAllDepartments();
 		} else {
 			// Normal filter mode - show only selected departments
 			departments = departmentList.getSelectedDepartments();
 		}
-		
-		for( Department department : departments ){
+
+		for (Department department : departments) {
 			courseList.addDeparment(department, searchTerm);
 		}
-		
-		// Only try to select a course if we have departments and the first department has courses
+
+		// Only try to select a course if we have departments and the first department
+		// has courses
 		// and there are actually visible courses in the list after filtering
-		if( departments.size() > 0 && selectionController.getSelectedCourse() == null ){
+		if (departments.size() > 0 && selectionController.getSelectedCourse() == null) {
 			// Find the first department with courses that match the search filter
 			for (Department dept : departments) {
 				if (dept.courses.size() > 0) {
@@ -145,11 +147,11 @@ public class CourseSelectorView extends Composite implements
 				}
 			}
 		}
-		
+
 		updateLoadMoreButton();
-		new IncomingAnimation( courseList.getElement() ).run();
+		new IncomingAnimation(courseList.getElement()).run();
 	}
-	
+
 	private void updateLoadMoreButton() {
 		if (courseList.hasMoreResults()) {
 			loadMoreButton.setVisible(true);

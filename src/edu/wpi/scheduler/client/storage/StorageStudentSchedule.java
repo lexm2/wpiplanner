@@ -1,7 +1,5 @@
 package edu.wpi.scheduler.client.storage;
 
-import java.util.Arrays;
-
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
@@ -28,7 +26,7 @@ public class StorageStudentSchedule {
 	}-*/;
 
 	public static void saveSchedule(StudentSchedule schedule) {
-		if( coursesLoaded == false ){
+		if (coursesLoaded == false) {
 			Window.alert("Saving courses before loading!");
 		}
 
@@ -56,46 +54,46 @@ public class StorageStudentSchedule {
 			localStorage.setItem("savedCourse", jsonArr.toString());
 		}
 	}
-	
-	//save all favorites to local storage
+
+	// save all favorites to local storage
 	public static void saveFavorites(StudentSchedule schedule) {
-		
+
 		String[] permutations = new String[schedule.favoritePermutations.size()];
-		
-		for(int i = 0; i < schedule.favoritePermutations.size(); i++) {
+
+		for (int i = 0; i < schedule.favoritePermutations.size(); i++) {
 			SchedulePermutation permutation = schedule.favoritePermutations.get(i);
 			String shareCode = StorageSharing.getShareCode(permutation);
 			permutations[i] = shareCode;
 		}
-		
+
 		String permutationsString = "";
-		for(int i = 0; i < permutations.length; i++) {
+		for (int i = 0; i < permutations.length; i++) {
 			permutationsString = permutationsString + permutations[i] + ",";
-			//console("PS: " + permutationsString);
+			// console("PS: " + permutationsString);
 		}
-		
+
 		Storage localStorage = Storage.getLocalStorageIfSupported();
 
 		if (localStorage != null) {
 			localStorage.setItem("favorites", permutationsString);
 		}
 	}
-	
-	//load all favorites from local storage
+
+	// load all favorites from local storage
 	public static void loadFavorites(StudentSchedule schedule) {
 		Storage localStorage = Storage.getLocalStorageIfSupported();
 
 		if (localStorage == null)
 			return;
-		
+
 		String permutationsString = localStorage.getItem("favorites");
 
 		if (permutationsString == null || permutationsString.isEmpty())
 			return;
-		
+
 		String[] permutations = permutationsString.split(",");
-		
-		for(int i = 0; i < permutations.length; i++) {
+
+		for (int i = 0; i < permutations.length; i++) {
 			SchedulePermutation permutation = StorageSharing.getPermutation(permutations[i]);
 			schedule.loadFavorite(permutation);
 		}
@@ -117,23 +115,23 @@ public class StorageStudentSchedule {
 
 	}
 
-	public static void loadSchedule( StudentSchedule schedule ) {
+	public static void loadSchedule(StudentSchedule schedule) {
 		coursesLoaded = true;
 		Storage localStorage = Storage.getLocalStorageIfSupported();
 
 		if (localStorage == null)
 			return;
 
-		//try to load permutation from share code if exists
-		//console("trying to load share code");
+		// try to load permutation from share code if exists
+		// console("trying to load share code");
 		try {
 			String shareCode = com.google.gwt.user.client.Window.Location.getParameter("share");
-			//console("share code: " + shareCode);
+			// console("share code: " + shareCode);
 			loadScheduleFromParam(schedule, shareCode);
 			return;
-		}catch (Exception e) {
-			//no share code... do nothing
-			//console("caught null pointer exception -- no share code");
+		} catch (Exception e) {
+			// no share code... do nothing
+			// console("caught null pointer exception -- no share code");
 		}
 
 		String depList = localStorage.getItem("savedCourse");
@@ -142,8 +140,6 @@ public class StorageStudentSchedule {
 			return;
 
 		schedule.sectionProducers.clear();
-
-
 
 		try {
 			JsArray<SectionProducerData> sections = JsonUtils.unsafeEval(depList).cast();
@@ -173,12 +169,10 @@ public class StorageStudentSchedule {
 	}
 
 	public static void loadScheduleFromParam(StudentSchedule schedule, String shareCode) {
-		
-		schedule.sectionProducers.clear();
-		
-		
-		assert (shareCode.substring(0, 2).equals("01"));
 
+		schedule.sectionProducers.clear();
+
+		assert (shareCode.substring(0, 2).equals("01"));
 
 		for (int i = 2; i < shareCode.length(); i += 18) {
 			long crn = Long.parseLong(shareCode.substring(i, i + 18), 16);
@@ -188,11 +182,11 @@ public class StorageStudentSchedule {
 			if (thisSection != null) {
 				Course course = thisSection.course;
 				SectionProducer producer = schedule.addCourse(course, null);
-				if(producer == null) {
+				if (producer == null) {
 					continue;
 				}
 				for (Section section : course.sections) {
-					if(thisSection.crn != section.crn) {
+					if (thisSection.crn != section.crn) {
 						producer.denySection(section);
 					}
 				}

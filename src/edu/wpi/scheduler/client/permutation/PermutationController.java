@@ -30,8 +30,8 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 
 	public final StudentSchedule studentSchedule;
 
-	protected List<DayOfWeek> validDayOfWeek =
-			Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY);
+	protected List<DayOfWeek> validDayOfWeek = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
+			DayOfWeek.THURSDAY, DayOfWeek.FRIDAY);
 
 	/**
 	 * Current selected schedule to be displayed
@@ -47,7 +47,7 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 	 * Generate schedules from the conflicts
 	 */
 	private ScheduleProducer producer;
-	
+
 	/**
 	 * Timer that will generate more schedules as needed
 	 */
@@ -101,7 +101,7 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 	public void removeSelectListner(PermutationSelectEventHandler handler) {
 		handlerManager.removeHandler(PermutationSelectEvent.TYPE, handler);
 	}
-	
+
 	public HandlerRegistration addProduceHandler(ProducerEventHandler handler) {
 		return handlerManager.addHandler(ProducerUpdateEvent.TYPE, handler);
 	}
@@ -110,14 +110,9 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 		handlerManager.removeHandler(ProducerUpdateEvent.TYPE, handler);
 	}
 
-
-
-
 	public List<DayOfWeek> getValidDaysOfWeek() {
 		return validDayOfWeek;
 	}
-
-	
 
 	public void selectPermutation(SchedulePermutation permutation) {
 
@@ -140,9 +135,9 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 	public void setSelectedSection(Section section) {
 		if (this.selectedSection != null && this.selectedSection.equals(section))
 			return;
-		
+
 		this.selectedSection = section;
-		
+
 		this.fireEvent(new PermutationSelectEvent());
 	}
 
@@ -150,29 +145,29 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 	public void onCoursesChanged(StudentScheduleEvent studentScheduleEvent) {
 		updateProducer();
 	}
-	
-	public ConflictController getConflictController(){
+
+	public ConflictController getConflictController() {
 		return getStudentSchedule().conflicts;
 	}
-	
-	public void generateSchedules(){
+
+	public void generateSchedules() {
 		int count = producer.getPermutations().size();
-		
-		for(int i = 0; i < 30 && producer.canGenerate(); i++){
+
+		for (int i = 0; i < 30 && producer.canGenerate(); i++) {
 			producer.step();
 		}
-		
+
 		int newCount = producer.getPermutations().size();
-		
-		if( newCount != count ){
+
+		if (newCount != count) {
 			fireEvent(new ProducerUpdateEvent(UpdateType.UPDATE));
 		}
-		
-		if(getSelectedPermutation() == null && newCount > 0){
+
+		if (getSelectedPermutation() == null && newCount > 0) {
 			selectPermutation(producer.getPermutations().get(0));
 		}
-		
-		if(!producer.canGenerate() || newCount > 300 ){
+
+		if (!producer.canGenerate() || newCount > 300) {
 			fireEvent(new ProducerUpdateEvent(UpdateType.FINISH));
 			timer.cancel();
 		}
@@ -181,13 +176,13 @@ public class PermutationController implements HasHandlers, StudentScheduleEventH
 	private void updateProducer() {
 		producer = new ScheduleProducer(this);
 		fireEvent(new ProducerUpdateEvent(UpdateType.NEW));
-		
+
 		selectedPermutation = null;
-		
+
 		generateSchedules();
 		timer.scheduleRepeating(10);
-		
-		if( producer.getPermutations().size() == 0 )
+
+		if (producer.getPermutations().size() == 0)
 			selectPermutation(null);
 	}
 

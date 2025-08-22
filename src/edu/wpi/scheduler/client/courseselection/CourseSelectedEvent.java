@@ -8,11 +8,11 @@ public class CourseSelectedEvent extends GwtEvent<CourseSelectedEventHandler> {
 
 	public static Type<CourseSelectedEventHandler> TYPE = new Type<CourseSelectedEventHandler>();
 	private Course course;
-	
-	public CourseSelectedEvent(Course course){
+
+	public CourseSelectedEvent(Course course) {
 		this.course = course;
 	}
-	
+
 	@Override
 	public com.google.gwt.event.shared.GwtEvent.Type<CourseSelectedEventHandler> getAssociatedType() {
 		return TYPE;
@@ -22,8 +22,8 @@ public class CourseSelectedEvent extends GwtEvent<CourseSelectedEventHandler> {
 	protected void dispatch(CourseSelectedEventHandler handler) {
 		handler.onCourseSelected(this);
 	}
-	
-	public Course getCourse(){
+
+	public Course getCourse() {
 		return course;
 	}
 

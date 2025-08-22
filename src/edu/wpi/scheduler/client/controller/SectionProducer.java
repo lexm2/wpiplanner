@@ -23,7 +23,7 @@ public class SectionProducer {
 				deniedSections.add(section);
 			}
 		}
-		
+
 	}
 
 	public Course getCourse() {
@@ -42,7 +42,6 @@ public class SectionProducer {
 	public boolean isSectionDenied(Section section) {
 		return deniedSections.contains(section);
 	}
-	
 
 	public boolean hasDeniedSection() {
 		return deniedSections.size() > 0;
@@ -71,7 +70,7 @@ public class SectionProducer {
 
 		while (sectionIterator.hasNext()) {
 			Section section = sectionIterator.next();
-			if (section.getTerms().contains(term)/* && section.hasAvailableSats()*/) {
+			if (section.getTerms().contains(term)/* && section.hasAvailableSats() */) {
 				sectionIterator.remove();
 				hasChange = true;
 			}

@@ -13,8 +13,6 @@ import edu.wpi.scheduler.client.controller.FavoriteEvent.FavoriteEventType;
 import edu.wpi.scheduler.client.controller.FavoriteEventHandler;
 import edu.wpi.scheduler.client.controller.StudentSchedule;
 import edu.wpi.scheduler.client.courseselection.CourseAddAnimation;
-import edu.wpi.scheduler.client.controller.SchedulePermutation;
-import edu.wpi.scheduler.client.storage.StorageSharing;
 import edu.wpi.scheduler.client.storage.StorageStudentSchedule;
 
 public class PermutationChooserView extends Composite implements FavoriteEventHandler {
@@ -23,7 +21,7 @@ public class PermutationChooserView extends Composite implements FavoriteEventHa
 	/*-{
 	    console.log(text);
 	}-*/;
-	
+
 	private static PermutationChooserViewUiBinder uiBinder = GWT
 			.create(PermutationChooserViewUiBinder.class);
 
@@ -65,15 +63,16 @@ public class PermutationChooserView extends Composite implements FavoriteEventHa
 		scheduleView.update();
 		courseList.update();
 	}
-	
+
 	@Override
 	protected void onLoad() {
 		studentSchedule.addFavoriteHandler(this);
 		permutationController.setSelectedSection(null);
-		
-		update();	
-		
-		//load favorites from local storage here since FavoriteHandler isn't initialized until this point
+
+		update();
+
+		// load favorites from local storage here since FavoriteHandler isn't
+		// initialized until this point
 		StorageStudentSchedule.loadFavorites(studentSchedule);
 	}
 
@@ -84,7 +83,7 @@ public class PermutationChooserView extends Composite implements FavoriteEventHa
 
 	@Override
 	public void onFavoriteUpdate(FavoriteEvent favoriteEvent) {
-		if( favoriteEvent.type == FavoriteEventType.ADD ){
+		if (favoriteEvent.type == FavoriteEventType.ADD) {
 			CourseAddAnimation anim = new CourseAddAnimation(thumbList.favoriteButton.getElement(), scheduleView.body);
 			anim.run(500);
 		}

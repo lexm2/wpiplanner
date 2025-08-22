@@ -8,8 +8,8 @@ import java.util.HashSet;
  * Note: No period can be offered more than one day a week at different times
  */
 @SuppressWarnings("serial")
-public class Period implements Serializable{
-	
+public class Period implements Serializable {
+
 	/** Section this period is apart of */
 	public Section section;
 	/** Period type; e.g. lecture, lab */
@@ -24,31 +24,33 @@ public class Period implements Serializable{
 	public Time endTime;
 	/** Location period is taught; e.g. FL320 */
 	public String location;
-	
+
 	/** Total seats for this section */
 	public int seats;
 	/** seats - numRegistered = seatsAvailable */
 	public int seatsAvailable;
-	
+
 	public int actualWaitlist;
 
 	public int maxWaitlist;
-	
+
 	public String specificSection;
-	
+
 	/**
 	 * Construct a period with a reference to the section it is apart of
+	 * 
 	 * @param section Section the period belongs to
 	 */
 	public Period(Section section) {
 		this.section = section;
 	}
-	
+
 	/**
 	 * Default period constructor
 	 */
-	public Period(){}
-	
+	public Period() {
+	}
+
 	public boolean isPeriodFilled() {
 		return this.seatsAvailable <= 0;
 	}
@@ -56,5 +58,5 @@ public class Period implements Serializable{
 	public boolean isPeriodWaitlistFilled() {
 		return actualWaitlist == maxWaitlist;
 	}
-	
+
 }

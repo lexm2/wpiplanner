@@ -19,8 +19,8 @@ import edu.wpi.scheduler.client.controller.FavoriteEvent;
 import edu.wpi.scheduler.client.controller.FavoriteEventHandler;
 import edu.wpi.scheduler.client.controller.SchedulePermutation;
 import edu.wpi.scheduler.client.controller.StudentSchedule;
-import edu.wpi.scheduler.client.generator.ScheduleProducer;
 import edu.wpi.scheduler.client.generator.ProducerUpdateEvent.UpdateType;
+import edu.wpi.scheduler.client.generator.ScheduleProducer;
 import edu.wpi.scheduler.client.generator.ScheduleProducer.ProducerEventHandler;
 import edu.wpi.scheduler.client.permutation.view.CanvasProgress;
 import edu.wpi.scheduler.client.permutation.view.ConflictResolverWidget;
@@ -28,7 +28,8 @@ import edu.wpi.scheduler.client.permutation.view.DetailedView;
 import edu.wpi.scheduler.client.permutation.view.GridCourseView;
 import edu.wpi.scheduler.client.permutation.view.WeekCourseView;
 
-public class PermutationScheduleView extends ComplexPanel implements PermutationSelectEventHandler, ProducerEventHandler, RequiresResize, FavoriteEventHandler {
+public class PermutationScheduleView extends ComplexPanel
+		implements PermutationSelectEventHandler, ProducerEventHandler, RequiresResize, FavoriteEventHandler {
 
 	enum ViewMode {
 		GRID,
@@ -42,14 +43,14 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 
 	private ViewMode viewMode = null;
 	private ViewMode selectedViewMode = ViewMode.GRID;
-	
+
 	public final Element body = DOM.createDiv();
 	public Widget bodyWidget;
-	
+
 	ToggleButton favoriteButton;
 	ToggleButton gridButton;
 	ToggleButton singleButton;
-	
+
 	public PermutationScheduleView(final PermutationController controller) {
 		setElement(DOM.createDiv());
 		this.controller = controller;
@@ -76,40 +77,38 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 			}
 		});
 		singleButton.getElement().getStyle().setFloat(Float.LEFT);
-		
-		
+
 		Button shareButton = new Button("Share", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				final DecoratedPopupPanel simplePopup = new DecoratedPopupPanel(true);
-			    simplePopup.ensureDebugId("cwBasicPopup-simplePopup");
-			    simplePopup.setWidth("200px");
-			    simplePopup.setWidget(new ShareWidget(controller.getSelectedPermutation()));
-			    
-			    Widget source = (Widget) event.getSource();
-	            int left = source.getAbsoluteLeft() + 10 - 200;
-	            int top = source.getAbsoluteTop() + 10;
-	            simplePopup.setPopupPosition(left, top);
-	            simplePopup.getElement().getStyle().setZIndex(5);
+				simplePopup.ensureDebugId("cwBasicPopup-simplePopup");
+				simplePopup.setWidth("200px");
+				simplePopup.setWidget(new ShareWidget(controller.getSelectedPermutation()));
 
-	            // Show the popup
-	            simplePopup.show();
+				Widget source = (Widget) event.getSource();
+				int left = source.getAbsoluteLeft() + 10 - 200;
+				int top = source.getAbsoluteTop() + 10;
+				simplePopup.setPopupPosition(left, top);
+				simplePopup.getElement().getStyle().setZIndex(5);
+
+				// Show the popup
+				simplePopup.show();
 			}
 		});
 		shareButton.getElement().getStyle().setFloat(Float.RIGHT);
 		shareButton.setStyleName("sched-Button");
-		
 
 		favoriteButton = new ToggleButton("Favorite", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				StudentSchedule studentSchedule = controller.getStudentSchedule();
 				SchedulePermutation permutation = controller.getSelectedPermutation();
-				
-				if( permutation == null )
+
+				if (permutation == null)
 					return;
-				
-				if(!studentSchedule.containsFavorite(permutation))
+
+				if (!studentSchedule.containsFavorite(permutation))
 					studentSchedule.addFavorite(permutation);
 				else
 					studentSchedule.removeFavorite(permutation);
@@ -120,8 +119,8 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 		add(gridButton, header);
 		add(singleButton, header);
 		add(favoriteButton, header);
-		add(shareButton, header );
-		
+		add(shareButton, header);
+
 		getElement().appendChild(header);
 		getElement().appendChild(body);
 
@@ -142,25 +141,25 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 		controller.removeProduceHandler(this);
 		controller.getStudentSchedule().removeFavoriteHandler(this);
 	}
-	
-	public void update(){
+
+	public void update() {
 		ViewMode target = selectedViewMode;
 		ScheduleProducer producer = controller.getProducer();
 		StudentSchedule studentSchedule = controller.getStudentSchedule();
 		SchedulePermutation permutation = controller.getSelectedPermutation();
 		int size = producer.getPermutations().size();
-		
-		if(permutation != null ){
+
+		if (permutation != null) {
 			boolean containsFavorite = studentSchedule.containsFavorite(permutation);
 			favoriteButton.setDown(containsFavorite);
 			favoriteButton.setHTML(containsFavorite ? "&#9733;" : "&#9734;");
-			
+
 		}
 
-		if (size == 0){
+		if (size == 0) {
 			target = producer.canGenerate() ? ViewMode.PROGRESS : ViewMode.CONFLICT;
 		}
-			
+
 		if (target == viewMode)
 			return;
 
@@ -174,31 +173,31 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 
 		add(bodyWidget, body);
 		viewMode = target;
-		
-		favoriteButton.setVisible( target == ViewMode.SINGLE || target == ViewMode.GRID || target == ViewMode.DETAIL );
+
+		favoriteButton.setVisible(target == ViewMode.SINGLE || target == ViewMode.GRID || target == ViewMode.DETAIL);
 		controller.setSelectedSection(null);
 	}
 
 	public void setView(ViewMode mode) {
 		selectedViewMode = mode;
 		update();
-		
-		gridButton.setDown( selectedViewMode == ViewMode.GRID );
-		singleButton.setDown( selectedViewMode == ViewMode.DETAIL );
+
+		gridButton.setDown(selectedViewMode == ViewMode.GRID);
+		singleButton.setDown(selectedViewMode == ViewMode.DETAIL);
 	}
 
 	private Widget getNewView(ViewMode mode) {
 		switch (mode) {
-		case GRID:
-			return new GridCourseView(controller);
-		case SINGLE:
-			return new WeekCourseView(controller);
-		case PROGRESS:
-			return new CanvasProgress(controller);
-		case CONFLICT:
-			return new ConflictResolverWidget(controller);
-		case DETAIL:
-			return new DetailedView(controller);
+			case GRID:
+				return new GridCourseView(controller);
+			case SINGLE:
+				return new WeekCourseView(controller);
+			case PROGRESS:
+				return new CanvasProgress(controller);
+			case CONFLICT:
+				return new ConflictResolverWidget(controller);
+			case DETAIL:
+				return new DetailedView(controller);
 		}
 
 		return null;
@@ -211,7 +210,7 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 		}
 		update();
 	}
-	
+
 	/**
 	 * Constant change of the view can be a bit ugly for the eyes
 	 * We are putting a delay
@@ -230,7 +229,7 @@ public class PermutationScheduleView extends ComplexPanel implements Permutation
 
 	@Override
 	public void onResize() {
-		if( bodyWidget instanceof RequiresResize ){
+		if (bodyWidget instanceof RequiresResize) {
 			((RequiresResize) bodyWidget).onResize();
 		}
 	}

@@ -13,21 +13,21 @@ import com.google.gwt.xml.client.XMLParser;
 
 import edu.wpi.scheduler.shared.model.ScheduleDB;
 
-public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandler{
+public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandler {
 
 	private XMLHttpRequest xmlHttpRequest;
-	
+
 	public final Label loadingLabel = new Label();
 	public final Label loadingBytes = new Label();
 
 	public LoadSchedule(XMLHttpRequest request) {
 		setElement(Document.get().createDivElement());
 		xmlHttpRequest = request;
-		
+
 		add(new Label("Loading scheduler database..."), getElement());
 		add(loadingLabel, getElement());
 		add(loadingBytes, getElement());
-		
+
 		setProgressUpdateHandler(request);
 		request.setOnReadyStateChange(this);
 	}
@@ -42,37 +42,37 @@ public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandle
 	}-*/;
 
 	private void progressUpdate(ProgressEvent event) {
-		loadingBytes.setText( event.getLoaded() + "/" + event.getTotal() + " bytes loaded!");
+		loadingBytes.setText(event.getLoaded() + "/" + event.getTotal() + " bytes loaded!");
 	}
 
 	@Override
 	public void onReadyStateChange(XMLHttpRequest xhr) {
-		
-		switch(xhr.getReadyState()){
-		case XMLHttpRequest.OPENED:
-			loadingLabel.setText("Connection to server open");
-			break;
-		case XMLHttpRequest.HEADERS_RECEIVED:
-			loadingLabel.setText("Received headers from server...");
-			break;
-		case XMLHttpRequest.LOADING:
-			loadingLabel.setText("Loading data from server...");
-			break;
-		case XMLHttpRequest.DONE:
-			loadingFinished();
-			break;
+
+		switch (xhr.getReadyState()) {
+			case XMLHttpRequest.OPENED:
+				loadingLabel.setText("Connection to server open");
+				break;
+			case XMLHttpRequest.HEADERS_RECEIVED:
+				loadingLabel.setText("Received headers from server...");
+				break;
+			case XMLHttpRequest.LOADING:
+				loadingLabel.setText("Loading data from server...");
+				break;
+			case XMLHttpRequest.DONE:
+				loadingFinished();
+				break;
 		}
 	}
-	
-	private void loadingFinished(){
-		
-		if( xmlHttpRequest == null )
+
+	private void loadingFinished() {
+
+		if (xmlHttpRequest == null)
 			return;
-		
-		if( xmlHttpRequest.getStatus() != 200 ){
-			//Uh oh... It failed to load
+
+		if (xmlHttpRequest.getStatus() != 200) {
+			// Uh oh... It failed to load
 			Window.alert(xmlHttpRequest.getStatusText());
-			loadingLabel.setText("Failed to load... Status: " + xmlHttpRequest.getStatus() );
+			loadingLabel.setText("Failed to load... Status: " + xmlHttpRequest.getStatus());
 			loadingBytes.setText("");
 			return;
 		}
@@ -84,50 +84,48 @@ public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandle
 		GWT.log("Response length: " + response.length());
 		GWT.log("Response start: " + response.substring(0, Math.min(200, response.length())));
 
-		//Try loading as XML
-		try{ 
+		// Try loading as XML
+		try {
 			Scheduler.loadScheduler(loadXML(response));
-			return; 
-		} catch(Exception e){
+			return;
+		} catch (Exception e) {
 			GWT.log("XML parsing failed: " + e.toString());
-			//IE has an error that will not understand the <?xml version="1.1" encoding="UTF-8"?>
-			//A possible fix is either to:
-			//Change "1.1" to "1.0"
-			//Or remove the line entirely.
-			try{ 
-				//Remove the first line
+			// IE has an error that will not understand the <?xml version="1.1"
+			// encoding="UTF-8"?>
+			// A possible fix is either to:
+			// Change "1.1" to "1.0"
+			// Or remove the line entirely.
+			try {
+				// Remove the first line
 				String newResponse = response.substring(response.indexOf("\n"));
 				Scheduler.loadScheduler(loadXML(newResponse));
-				return; 
-			} catch(Exception e2){
+				return;
+			} catch (Exception e2) {
 			}
-			
+
 			GWT.log("XML parsing failed: " + e.toString());
 		}
-		
-		//Fallback: Try loading as JSON
-		try{ 
+
+		// Fallback: Try loading as JSON
+		try {
 			Scheduler.loadScheduler(loadJSON(response));
-			return; 
-		} catch(Exception e){
+			return;
+		} catch (Exception e) {
 			GWT.log("JSON parsing failed: " + e.toString());
 		}
-		
+
 		Window.alert("Unable to parse database. What kind of data am I getting?");
 	}
-	
-	private ScheduleDB loadJSON(String response)
-	{
+
+	private ScheduleDB loadJSON(String response) {
 		SchedJSONParser parser = new SchedJSONParser();
 		JSONObject jsonDocument = JSONParser.parseLenient(response).isObject();
 		return parser.parse(jsonDocument.get("departments").isArray());
 	}
-	
-	private ScheduleDB loadXML(String response)
-	{
+
+	private ScheduleDB loadXML(String response) {
 		SchedXMLParser parser = new SchedXMLParser();
 		return parser.parse(XMLParser.parse(response));
 	}
-
 
 }

@@ -13,7 +13,7 @@ public class Section implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8236270010874393110L;
-	
+
 	/** Reference to parent course */
 	public Course course;
 	/** Course Registration Number */
@@ -57,7 +57,7 @@ public class Section implements Serializable {
 	 * Constructs a section with a reference to the course it is apart of
 	 * 
 	 * @param course
-	 *            course this section belongs to
+	 *               course this section belongs to
 	 */
 	public Section(Course course) {
 		this.course = course;
@@ -69,33 +69,34 @@ public class Section implements Serializable {
 	 */
 	public Section() {
 	}
-	
+
 	public boolean hasAvailableSats() {
-		for (Period p:this.periods) {
+		for (Period p : this.periods) {
 			if (p.isPeriodFilled()) {
 				return false;
 			}
 		}
 		return true;
-		
+
 		/*
-		if (seatsAvailable > 0) 
-			return true;
-		
-		if(seatsAvailable == 0 && seats == 0)
-			return true;
-		
-		return false;	
-		*/	
+		 * if (seatsAvailable > 0)
+		 * return true;
+		 * 
+		 * if(seatsAvailable == 0 && seats == 0)
+		 * return true;
+		 * 
+		 * return false;
+		 */
 	}
-	
+
 	public boolean hasAvailableWaitlist() {
-		for (Period p:this.periods) {
+		for (Period p : this.periods) {
 			if (p.isPeriodWaitlistFilled()) {
 				return false;
 			}
 		}
-		//number+="<span style=\"color: blue; font-weight: bold;\" title=\"There are no seats left, but there is spots left on the waitlist.\">&#9888;</span>";
+		// number+="<span style=\"color: blue; font-weight: bold;\" title=\"There are no
+		// seats left, but there is spots left on the waitlist.\">&#9888;</span>";
 		return true;
 	}
 }

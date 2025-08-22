@@ -26,15 +26,15 @@ public class CourseSelectionController implements HasHandlers {
 	public StudentSchedule getStudentSchedule() {
 		return studentSchedule;
 	}
-	
-	public Course getSelectedCourse(){
+
+	public Course getSelectedCourse() {
 		return this.selectedCourse;
 	}
-	
-	public void selectCourse( Course course ){
+
+	public void selectCourse(Course course) {
 		this.selectedCourse = course;
-		
-		this.fireEvent(new CourseSelectedEvent(course));		
+
+		this.fireEvent(new CourseSelectedEvent(course));
 	}
 
 	/**
@@ -47,8 +47,8 @@ public class CourseSelectionController implements HasHandlers {
 			CourseSelectedEventHandler handler) {
 		return handlerManager.addHandler(CourseSelectedEvent.TYPE, handler);
 	}
-	
-	public void removeCourseSelectedListner( CourseSelectedEventHandler handler ){
+
+	public void removeCourseSelectedListner(CourseSelectedEventHandler handler) {
 		handlerManager.removeHandler(CourseSelectedEvent.TYPE, handler);
 	}
 
