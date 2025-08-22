@@ -2,7 +2,13 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		
+		.horizontalPanel {
+			position: static !important;
+			display: flex !important;
+			align-items: center !important;
+			height: 100% !important;
+			width: 100% !important;
+		}
 	</ui:style>
-	<g:HorizontalPanel ui:field="horizontalPanel" />
+	<g:HorizontalPanel ui:field="horizontalPanel" styleName="{style.horizontalPanel}" />
 </ui:UiBinder> 
