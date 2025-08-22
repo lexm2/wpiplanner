@@ -3,134 +3,33 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:edu.wpi.scheduler.client.tabs">
 	<ui:with field='res' type='edu.wpi.scheduler.client.Resources' />
 
-	<ui:style>
-		.tabContainer {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			height: 100%;
-			padding: 10px 20px;
-			position: relative;
-			overflow: visible;
-		}
-		
-		.rightTabs {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			height: 100%;
-			padding: 0;
-			gap: 0;
-			background: rgba(255, 255, 255, 0.1);
-			border-radius: 8px;
-			backdrop-filter: blur(8px);
-		}
-		
-		.topBar {
-			background: linear-gradient(135deg, #c41230 0%, #e62341 100%);
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-			border: none;
-		}
-		
-		.topBarNoBottom {
-			background: linear-gradient(135deg, #c41230 0%, #e62341 100%);
-		}
-		
-		.headerTitle {
-			color: white;
-			font-size: 32px;
-			font-family: 'Inter', sans-serif;
-			font-weight: 700;
-			letter-spacing: -0.02em;
-			margin: 4px 0 0 0;
-			padding-left: 16px;
-		}
-		
-		.headerSubTitle {
-			color: rgba(255, 255, 255, 0.9);
-			font-size: 13px;
-			font-family: 'Inter', sans-serif;
-			font-weight: 400;
-			margin: 0;
-			padding-left: 16px;
-			letter-spacing: 0.02em;
-		}
-		
-		.authorLabel {
-			color: rgba(255, 255, 255, 0.8);
-			font-size: 11px;
-			font-family: 'Inter', sans-serif;
-			font-weight: 400;
-			font-style: normal;
-			margin: 2px 0;
-			padding-left: 12px;
-		}
-		
-		.updatedTimestamp {
-			color: rgba(255, 255, 255, 0.9);
-			font-size: 12px;
-			font-family: 'Inter', sans-serif;
-			font-weight: 400;
-			margin: 2px 0;
-			padding-left: 12px;
-		}
-		
-		.refreshButton {
-			color: white;
-			background-color: rgba(255, 255, 255, 0.15);
-			border: 1px solid rgba(255, 255, 255, 0.3);
-			border-radius: 6px;
-			font-size: 11px;
-			font-family: 'Inter', sans-serif;
-			font-weight: 500;
-			margin-left: 8px;
-			padding: 6px 12px;
-			cursor: pointer;
-			transition: all 0.2s ease;
-			backdrop-filter: blur(8px);
-		}
-		
-		.refreshButton:hover {
-			background-color: rgba(255, 255, 255, 0.25);
-			border-color: rgba(255, 255, 255, 0.5);
-			transform: translateY(-1px);
-		}
-		
-		.infoPanel {
-			padding: 8px 0;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			gap: 2px;
-		}
-	</ui:style>
 	<g:DockLayoutPanel ui:field="layoutPanel">
 		<g:north size="70">
-			<g:DockLayoutPanel styleName='{style.topBar}'>
+			<g:DockLayoutPanel styleName='mainView-topBar'>
 				<g:west size="185">
-					<g:DockLayoutPanel styleName='{style.topBarNoBottom}'>
+					<g:DockLayoutPanel styleName='mainView-topBarNoBottom'>
 						<g:north size="40">
-							<g:Label styleName='{style.headerTitle}'>Planner</g:Label>
+							<g:Label styleName='mainView-headerTitle'>Planner</g:Label>
 						</g:north>
 						<g:north size="20">
-							<g:Label ui:field='yearLabel' styleName='{style.headerSubTitle}'></g:Label>
+							<g:Label ui:field='yearLabel' styleName='mainView-headerSubTitle'></g:Label>
 						</g:north>
 					</g:DockLayoutPanel>
 				</g:west>
 				<g:west size="380">
-					<g:VerticalPanel styleName='{style.infoPanel}' width="100%" height="100%">
-						<g:Label styleName='{style.authorLabel}'></g:Label>
-						<g:Label styleName='{style.authorLabel}'></g:Label>
-						<g:InlineHTML ui:field='oldSchedLink' styleName='{style.updatedTimestamp}'></g:InlineHTML>
+					<g:VerticalPanel styleName='mainView-infoPanel' width="100%" height="100%">
+						<g:Label styleName='mainView-authorLabel'></g:Label>
+						<g:Label styleName='mainView-authorLabel'></g:Label>
+						<g:InlineHTML ui:field='oldSchedLink' styleName='mainView-updatedTimestamp'></g:InlineHTML>
 						<g:HorizontalPanel>
-							<g:Label ui:field='updatedLabel' styleName='{style.updatedTimestamp}'></g:Label>
-							<g:Button ui:field='refreshButton' text='Refresh' styleName='{style.refreshButton}' title='Refresh schedule data (updated every 15 minutes)'></g:Button>
+							<g:Label ui:field='updatedLabel' styleName='mainView-updatedTimestamp'></g:Label>
+							<g:Button ui:field='refreshButton' text='Refresh' styleName='mainView-refreshButton' title='Refresh schedule data (updated every 15 minutes)'></g:Button>
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 				</g:west>
 				<g:center>
-					<g:SimplePanel styleName='{style.tabContainer}'>
-						<s:TabList styleName='{style.rightTabs}' ui:field="tabList" />
+					<g:SimplePanel styleName='mainView-tabContainer'>
+						<s:TabList styleName='mainView-rightTabs' ui:field="tabList" />
 					</g:SimplePanel>
 				</g:center>
 			</g:DockLayoutPanel>

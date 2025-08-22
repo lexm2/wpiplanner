@@ -2,57 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:edu.wpi.scheduler.client.courseselection">
 
-	<ui:style>
-		.pretty {	
-		    font-weight: bold;
-		    margin-bottom: 5px;
-		    padding: 3px;
-		    text-align: center;
-		    background-color: lightgrey;
-		}
-		
-		.searchPanel {
-		    padding: 8px;
-		    background-color: #f0f0f0;
-		    border-bottom: 1px solid #ccc;
-		}
-		
-		.searchBox {
-		    width: 200px;
-		    padding: 4px;
-		    border: 1px solid #ccc;
-		    border-radius: 3px;
-		}
-		
-		.checkboxPanel {
-		    margin-top: 5px;
-		    font-size: 12px;
-		}
-		
-		.loadMoreButton {
-		    font-family: 'Inter', sans-serif;
-		    margin: 16px auto;
-		    padding: 12px 24px;
-		    background: linear-gradient(135deg, #007cba 0%, #0056b3 100%);
-		    color: white;
-		    border: none;
-		    border-radius: 8px;
-		    cursor: pointer;
-		    font-size: 14px;
-		    font-weight: 500;
-		    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-		    box-shadow: 0 2px 4px rgba(0, 124, 186, 0.2);
-		    display: block;
-		    min-height: 40px;
-		    letter-spacing: 0.01em;
-		}
-		
-		.loadMoreButton:hover {
-		    background: linear-gradient(135deg, #0056b3 0%, #007cba 100%);
-		    transform: translateY(-2px);
-		    box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3);
-		}
-	</ui:style>
 
 	<g:SplitLayoutPanel>
 		<g:west size="250">
@@ -67,7 +16,7 @@
 				<g:south size="250">
 					<g:ScrollPanel>
 						<g:FlowPanel>
-							<g:HTMLPanel styleName='{style.pretty}'>Courses</g:HTMLPanel>
+							<g:HTMLPanel styleName='courseSelector-pretty'>Courses</g:HTMLPanel>
 							<c:CourseSelection ui:field="courseSelection" />
 						</g:FlowPanel>
 					</g:ScrollPanel>
@@ -78,12 +27,12 @@
 		<g:center>
 			<g:HTMLPanel styleName="courseListParent">
 				<div style="flex-shrink: 0;">
-					<g:VerticalPanel styleName="{style.searchPanel}" width="100%">
+					<g:VerticalPanel styleName="courseSelector-searchPanel" width="100%">
 						<g:HorizontalPanel>
 							<g:HTML>Search:&nbsp;</g:HTML>
-							<g:TextBox ui:field="searchBox" styleName="{style.searchBox}" />
+							<g:TextBox ui:field="searchBox" styleName="courseSelector-searchBox" />
 						</g:HorizontalPanel>
-						<g:HorizontalPanel styleName="{style.checkboxPanel}">
+						<g:HorizontalPanel styleName="courseSelector-checkboxPanel">
 							<g:CheckBox ui:field="selectedDepartmentsOnly" text="Filter by selected departments only" />
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
@@ -91,7 +40,7 @@
 				<g:ScrollPanel styleName="courseListContainer">
 					<g:VerticalPanel width="100%">
 						<c:CourseList ui:field="courseList" />
-						<g:Button ui:field="loadMoreButton" styleName="{style.loadMoreButton}" text="Load More" visible="false" />
+						<g:Button ui:field="loadMoreButton" styleName="courseSelector-loadMoreButton" text="Load More" visible="false" />
 					</g:VerticalPanel>
 				</g:ScrollPanel>
 			</g:HTMLPanel>
