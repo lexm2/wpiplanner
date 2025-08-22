@@ -29,7 +29,7 @@ public class ShareWidget extends ComplexPanel {
 		// StorageSharing.getShareCode(permutation));
 		textbox.getElement().getStyle().setWidth(95, Unit.PCT);
 
-		add(textbox, getElement());
+		add(textbox);
 	}
 
 }

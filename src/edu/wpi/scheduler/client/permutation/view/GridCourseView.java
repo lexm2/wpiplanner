@@ -17,8 +17,8 @@ public class GridCourseView extends CellPanel {
 	public GridCourseView(PermutationController controller) {
 		this.controller = controller;
 
-		DOM.setElementProperty(getTable(), "cellSpacing", "0");
-		DOM.setElementProperty(getTable(), "cellPadding", "0");
+		getTable().setAttribute("cellspacing", "0");
+		getTable().setAttribute("cellpadding", "0");
 
 		Element firstRow = DOM.createTR();
 		Element secondRow = DOM.createTR();

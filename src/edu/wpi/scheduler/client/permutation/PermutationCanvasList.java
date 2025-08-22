@@ -53,8 +53,8 @@ public class PermutationCanvasList extends FlowPanel implements
 		this.controller = controller;
 		updateBackground();
 
-		add(favoriteButton, getElement());
-		add(scroll, getElement());
+		add(favoriteButton);
+		add(scroll);
 
 		Style favoriteStyle = favoriteButton.getElement().getStyle();
 		Style scrollStyle = scroll.getElement().getStyle();

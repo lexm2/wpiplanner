@@ -104,7 +104,7 @@ public class CourseSelection extends ComplexPanel implements StudentScheduleEven
 
 	@Override
 	public void add(Widget child) {
-		this.add(child, getElement());
+		super.add(child, getElement());
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class CourseSelection extends ComplexPanel implements StudentScheduleEven
 		}
 
 		// Could not find a place to insert, put it at the end!
-		this.add(child, this.getElement());
+		super.add(child, getElement());
 
 		return child;
 	}

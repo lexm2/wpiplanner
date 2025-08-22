@@ -5,8 +5,8 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ComplexPanel;
@@ -44,7 +44,7 @@ public class PermutationScheduleView extends ComplexPanel
 	private ViewMode viewMode = null;
 	private ViewMode selectedViewMode = ViewMode.GRID;
 
-	public final Element body = DOM.createDiv();
+	public final Element body = Document.get().createDivElement();
 	public Widget bodyWidget;
 
 	ToggleButton favoriteButton;
@@ -52,9 +52,9 @@ public class PermutationScheduleView extends ComplexPanel
 	ToggleButton singleButton;
 
 	public PermutationScheduleView(final PermutationController controller) {
-		setElement(DOM.createDiv());
+		setElement(Document.get().createDivElement());
 		this.controller = controller;
-		Element header = DOM.createDiv();
+		Element header = Document.get().createDivElement();
 
 		body.getStyle().setTop(26.0, Unit.PX);
 		body.getStyle().setRight(0.0, Unit.PX);

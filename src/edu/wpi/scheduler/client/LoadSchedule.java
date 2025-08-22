@@ -119,7 +119,7 @@ public class LoadSchedule extends ComplexPanel implements ReadyStateChangeHandle
 
 	private ScheduleDB loadJSON(String response) {
 		SchedJSONParser parser = new SchedJSONParser();
-		JSONObject jsonDocument = JSONParser.parseLenient(response).isObject();
+		JSONObject jsonDocument = JSONParser.parseStrict(response).isObject();
 		return parser.parse(jsonDocument.get("departments").isArray());
 	}
 

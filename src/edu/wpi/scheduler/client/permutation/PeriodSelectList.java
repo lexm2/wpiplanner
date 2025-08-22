@@ -92,8 +92,8 @@ public class PeriodSelectList extends FlowPanel implements
 
 			this.addDomHandler(this, MouseOverEvent.getType());
 			this.addDomHandler(this, MouseOutEvent.getType());
-			this.add(checkbox, this.getElement());
-			this.add(label, this.getElement());
+			this.add(checkbox, getElement());
+			this.add(label, getElement());
 			update();
 		}
 
