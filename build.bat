@@ -3,6 +3,16 @@ setlocal
 
 echo Building WPI Planner GWT Application...
 
+rem Download fresh schedule data
+echo Downloading fresh schedule data from WPI servers...
+curl -L -o war/new.schedb https://planner.wpi.edu/new.schedb
+if %ERRORLEVEL% EQU 0 (
+    echo ✓ Successfully downloaded fresh schedule data!
+) else (
+    echo ✗ Warning: Failed to download schedule data, using existing file
+)
+echo.
+
 set GWT_HOME=%~dp0gwt-2.11.0
 set PROJECT_ROOT=%~dp0
 set WAR_DIR=%PROJECT_ROOT%war

@@ -201,7 +201,6 @@ a:hover {
 }
 
 .sendButton:hover, .sched-Button:hover {
-	transform: translateY(-2px);
 	box-shadow: 0 4px 12px rgba(196, 18, 48, 0.3);
 	background: linear-gradient(135deg, var(--wpi-crimson-light) 0%, var(--wpi-crimson) 100%);
 }
@@ -302,7 +301,6 @@ a:hover {
 
 .permutationCourseItem:hover {
 	box-shadow: var(--shadow-md);
-	transform: translateY(-2px);
 }
 
 .permutationPeriodItem {
@@ -396,7 +394,6 @@ a:hover {
 .ConflictResolverItem:hover {
 	border-color: var(--accent-orange);
 	box-shadow: var(--shadow-md);
-	transform: translateY(-2px);
 }
 
 .DetailedSection {
