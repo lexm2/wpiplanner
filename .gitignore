@@ -19,3 +19,5 @@ war/scheduler/scheduler.devmode.js
 war/scheduler/scheduler.nocache.js
 war/WEB-INF/classes/
 war/WEB-INF/deploy/scheduler/symbolMaps/
+
+.fake
