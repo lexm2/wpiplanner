@@ -4,24 +4,24 @@
 	<ui:with field='res' type='edu.wpi.scheduler.client.Resources' />
 
 	<ui:style>
-		.rightTabs {
+		.tabContainer {
 			display: flex;
-			align-items: stretch;
+			align-items: center;
 			justify-content: flex-end;
-			height: 70px;
-			padding: 0 20px;
-			gap: 0;
+			height: 100%;
+			padding: 10px 20px;
 		}
 		
-		.rightTabs a {
-			height: 70px;
-			border: none;
-			font-family: 'Inter', sans-serif;
-			font-weight: 500;
-			font-size: 15px;
-			transition: all 0.2s ease;
-			background: transparent;
-			text-decoration: none;
+		.rightTabs {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			height: 50px;
+			padding: 0;
+			gap: 0;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 8px;
+			backdrop-filter: blur(8px);
 		}
 		
 		.topBar {
@@ -127,7 +127,7 @@
 					</g:VerticalPanel>
 				</g:west>
 				<g:center>
-					<g:SimplePanel>
+					<g:SimplePanel styleName='{style.tabContainer}'>
 						<s:TabList styleName='{style.rightTabs}' ui:field="tabList" />
 					</g:SimplePanel>
 				</g:center>

@@ -130,6 +130,7 @@ a:hover {
 	white-space: nowrap;
 }
 
+
 .sched-NavTab::after {
 	content: '';
 	position: absolute;
@@ -150,6 +151,7 @@ a:hover {
 	background: white;
 }
 
+
 .sched-NavTabEnabled:hover {
 	color: white;
 }
@@ -161,6 +163,8 @@ a:hover {
 .sched-NavTabSelected:hover::after {
 	background: white;
 }
+
+
 
 .sched-NavTabDisabled {
 	color: rgba(255, 255, 255, 0.4) !important;
@@ -174,6 +178,9 @@ a:hover {
 .sched-NavTabDisabled::after {
 	background: transparent !important;
 }
+
+
+
 
 
 /* Modern Buttons */
