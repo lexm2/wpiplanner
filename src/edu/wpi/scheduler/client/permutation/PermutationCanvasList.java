@@ -18,6 +18,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.ToggleButton;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DecoratedPopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import edu.wpi.scheduler.client.IncomingAnimation;
 import edu.wpi.scheduler.client.controller.FavoriteEvent;
@@ -35,7 +38,7 @@ import edu.wpi.scheduler.shared.model.Time;
 
 public class PermutationCanvasList extends FlowPanel implements
 		TimeRangeChangEventHandler, ProducerEventHandler, ScrollHandler,
-		FavoriteEventHandler, ClickHandler {
+		FavoriteEventHandler, ClickHandler, PermutationSelectEventHandler {
 
 	private PermutationController controller;
 	private Canvas background;
@@ -46,34 +49,101 @@ public class PermutationCanvasList extends FlowPanel implements
 	private final ScrollPanel scroll = new ScrollPanel(scheduleList);
 	public final ToggleButton favoriteButton = new ToggleButton(
 			"Favorites (0)", this);
+	
+	private final FlowPanel buttonHeaderPanel = new FlowPanel();
+	private Button shareButton;
+	private ToggleButton starButton;
 
 	public static final double favoriteButtonSize = 20.0;
+	public static final double buttonHeaderHeight = 50.0;
 
 	public PermutationCanvasList(PermutationController controller) {
 		this.controller = controller;
 		updateBackground();
 
+		createHeaderButtons();
+		add(buttonHeaderPanel);
 		add(favoriteButton);
 		add(scroll);
 
+		Style buttonHeaderStyle = buttonHeaderPanel.getElement().getStyle();
 		Style favoriteStyle = favoriteButton.getElement().getStyle();
 		Style scrollStyle = scroll.getElement().getStyle();
 
+		// Button header at top
+		buttonHeaderStyle.setTextAlign(TextAlign.CENTER);
+		buttonHeaderStyle.setLeft(0.0, Unit.PX);
+		buttonHeaderStyle.setRight(0.0, Unit.PX);
+		buttonHeaderStyle.setTop(0.0, Unit.PX);
+		buttonHeaderStyle.setHeight(buttonHeaderHeight, Unit.PX);
+
+		// Favorites button below button header
 		favoriteStyle.setTextAlign(TextAlign.CENTER);
 		favoriteStyle.setLeft(0.0, Unit.PX);
 		favoriteStyle.setRight(0.0, Unit.PX);
-		favoriteStyle.setTop(0.0, Unit.PX);
+		favoriteStyle.setTop(buttonHeaderHeight, Unit.PX);
 		favoriteStyle.setHeight(favoriteButtonSize, Unit.PX);
 
+		// Scroll panel below both headers
 		scrollStyle.setPosition(Position.ABSOLUTE);
 		scrollStyle.setLeft(0.0, Unit.PX);
 		scrollStyle.setRight(0.0, Unit.PX);
-		scrollStyle.setTop(favoriteButtonSize + 8, Unit.PX);
+		scrollStyle.setTop(buttonHeaderHeight + favoriteButtonSize + 8, Unit.PX);
 		scrollStyle.setBottom(0.0, Unit.PX);
 		scrollStyle.setOverflowX(Overflow.HIDDEN);
 		scrollStyle.setOverflowY(Overflow.SCROLL);
 
 		scroll.addScrollHandler(this);
+	}
+
+	private void createHeaderButtons() {
+		// Create share button
+		shareButton = new Button("Share", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final DecoratedPopupPanel simplePopup = new DecoratedPopupPanel(true);
+				simplePopup.ensureDebugId("cwBasicPopup-simplePopup");
+				simplePopup.setWidth("200px");
+				simplePopup.setWidget(new ShareWidget(controller.getSelectedPermutation()));
+
+				Widget source = (Widget) event.getSource();
+				int left = source.getAbsoluteLeft() + 10 - 200;
+				int top = source.getAbsoluteTop() + 10;
+				simplePopup.setPopupPosition(left, top);
+				simplePopup.getElement().getStyle().setZIndex(5);
+
+				simplePopup.show();
+			}
+		});
+		shareButton.setStyleName("sched-Button");
+
+		// Create star button (individual favorite toggle)
+		starButton = new ToggleButton("Favorite", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				StudentSchedule studentSchedule = controller.getStudentSchedule();
+				SchedulePermutation permutation = controller.getSelectedPermutation();
+
+				if (permutation == null)
+					return;
+
+				if (!studentSchedule.containsFavorite(permutation))
+					studentSchedule.addFavorite(permutation);
+				else
+					studentSchedule.removeFavorite(permutation);
+			}
+		});
+
+		// Add only Share and Star buttons to button header panel
+		buttonHeaderPanel.add(shareButton);
+		buttonHeaderPanel.add(starButton);
+
+		// Style buttons for inline display
+		shareButton.getElement().getStyle().setProperty("display", "inline-block");
+		shareButton.getElement().getStyle().setMarginRight(5, Unit.PX);
+		
+		starButton.getElement().getStyle().setProperty("display", "inline-block");
+		starButton.getElement().getStyle().setMarginRight(5, Unit.PX);
 	}
 
 	protected Canvas addPermutation(final SchedulePermutation permutation,
@@ -157,6 +227,7 @@ public class PermutationCanvasList extends FlowPanel implements
 		schedule.addTimeChangeListner(this);
 		schedule.addFavoriteHandler(this);
 		controller.addProduceHandler(this);
+		controller.addSelectListner(this);
 		updateBackground();
 		scheduleList.clear();
 		updateThumbnails();
@@ -170,6 +241,7 @@ public class PermutationCanvasList extends FlowPanel implements
 		schedule.removeTimeChangeListner(this);
 		schedule.removeFavoriteHandler(this);
 		controller.removeProduceHandler(this);
+		controller.removeSelectListner(this);
 	}
 
 	@Override
@@ -272,6 +344,15 @@ public class PermutationCanvasList extends FlowPanel implements
 				+ controller.getStudentSchedule().favoritePermutations.size()
 				+ ")");
 
+		// Update star button
+		SchedulePermutation permutation = controller.getSelectedPermutation();
+		if (permutation != null) {
+			StudentSchedule studentSchedule = controller.getStudentSchedule();
+			boolean containsFavorite = studentSchedule.containsFavorite(permutation);
+			starButton.setDown(containsFavorite);
+			starButton.setHTML(containsFavorite ? "&#9733;" : "&#9734;");
+		}
+
 		if (onFavorites()) {
 			scroll.setWidget(favoriteList);
 		} else {
@@ -287,6 +368,11 @@ public class PermutationCanvasList extends FlowPanel implements
 
 		for (SchedulePermutation permutation : controller.getStudentSchedule().favoritePermutations)
 			addPermutation(permutation, favoriteList);
+	}
+
+	@Override
+	public void onPermutationSelected(PermutationSelectEvent permutation) {
+		update();
 	}
 
 }
