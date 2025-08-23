@@ -48,7 +48,7 @@ public class PermutationCanvasList extends FlowPanel implements
 
 	private final ScrollPanel scroll = new ScrollPanel(scheduleList);
 	public final ToggleButton favoriteButton = new ToggleButton(
-			"Favorites (0)", this);
+			"Saved Schedules (0)", this);
 	
 	private final FlowPanel buttonHeaderPanel = new FlowPanel();
 	private Button shareButton;
@@ -64,6 +64,7 @@ public class PermutationCanvasList extends FlowPanel implements
 		createHeaderButtons();
 		add(buttonHeaderPanel);
 		add(favoriteButton);
+		favoriteButton.setStyleName("sched-Button");
 		add(scroll);
 
 		Style buttonHeaderStyle = buttonHeaderPanel.getElement().getStyle();
@@ -71,13 +72,18 @@ public class PermutationCanvasList extends FlowPanel implements
 		Style scrollStyle = scroll.getElement().getStyle();
 
 		// Button header at top
+		buttonHeaderStyle.setPosition(Position.ABSOLUTE);
 		buttonHeaderStyle.setTextAlign(TextAlign.CENTER);
 		buttonHeaderStyle.setLeft(0.0, Unit.PX);
 		buttonHeaderStyle.setRight(0.0, Unit.PX);
 		buttonHeaderStyle.setTop(0.0, Unit.PX);
 		buttonHeaderStyle.setHeight(buttonHeaderHeight, Unit.PX);
+		buttonHeaderStyle.setProperty("display", "flex");
+		buttonHeaderStyle.setProperty("alignItems", "center");
+		buttonHeaderStyle.setProperty("justifyContent", "center");
 
 		// Favorites button below button header
+		favoriteStyle.setPosition(Position.ABSOLUTE);
 		favoriteStyle.setTextAlign(TextAlign.CENTER);
 		favoriteStyle.setLeft(0.0, Unit.PX);
 		favoriteStyle.setRight(0.0, Unit.PX);
@@ -88,7 +94,7 @@ public class PermutationCanvasList extends FlowPanel implements
 		scrollStyle.setPosition(Position.ABSOLUTE);
 		scrollStyle.setLeft(0.0, Unit.PX);
 		scrollStyle.setRight(0.0, Unit.PX);
-		scrollStyle.setTop(buttonHeaderHeight + favoriteButtonSize + 8, Unit.PX);
+		scrollStyle.setTop(120.0, Unit.PX);
 		scrollStyle.setBottom(0.0, Unit.PX);
 		scrollStyle.setOverflowX(Overflow.HIDDEN);
 		scrollStyle.setOverflowY(Overflow.SCROLL);
@@ -118,7 +124,7 @@ public class PermutationCanvasList extends FlowPanel implements
 		shareButton.setStyleName("sched-Button");
 
 		// Create star button (individual favorite toggle)
-		starButton = new ToggleButton("Favorite", new ClickHandler() {
+		starButton = new ToggleButton("Save", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				StudentSchedule studentSchedule = controller.getStudentSchedule();
@@ -133,6 +139,7 @@ public class PermutationCanvasList extends FlowPanel implements
 					studentSchedule.removeFavorite(permutation);
 			}
 		});
+		starButton.setStyleName("sched-Button");
 
 		// Add only Share and Star buttons to button header panel
 		buttonHeaderPanel.add(shareButton);
@@ -340,7 +347,7 @@ public class PermutationCanvasList extends FlowPanel implements
 	}
 
 	private void update() {
-		favoriteButton.setText("Favorites ("
+		favoriteButton.setText("Saved Schedules ("
 				+ controller.getStudentSchedule().favoritePermutations.size()
 				+ ")");
 
@@ -350,7 +357,7 @@ public class PermutationCanvasList extends FlowPanel implements
 			StudentSchedule studentSchedule = controller.getStudentSchedule();
 			boolean containsFavorite = studentSchedule.containsFavorite(permutation);
 			starButton.setDown(containsFavorite);
-			starButton.setHTML(containsFavorite ? "&#9733;" : "&#9734;");
+			starButton.setHTML(containsFavorite ? "&#9733; Saved" : "Save");
 		}
 
 		if (onFavorites()) {
