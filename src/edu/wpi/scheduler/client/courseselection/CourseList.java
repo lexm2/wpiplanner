@@ -85,7 +85,7 @@ public class CourseList extends ComplexPanel {
 			item.add("128px", new TermView(course));
 			item.add(null, name);
 
-			this.add(item);
+			this.add(item, getElement());
 			currentlyDisplayed++;
 		}
 	}
@@ -135,7 +135,7 @@ public class CourseList extends ComplexPanel {
 				item.add("128px", new TermView(course));
 				item.add(null, name);
 
-				this.add(item);
+				this.add(item, getElement());
 				currentlyDisplayed++;
 			}
 		}

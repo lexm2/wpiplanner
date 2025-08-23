@@ -150,12 +150,12 @@ public class PeriodSelectList extends FlowPanel implements
 					: entry.getKey().toString());
 			label.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 			label.getElement().getStyle().setMarginLeft(4.0, Unit.PX);
-			this.add(label);
+			this.add(label, getElement());
 
 			for (Section section : entry.getValue()) {
 				PeriodListItem checkbox = new PeriodListItem(section);
 				checkbox.getElement().getStyle().setPaddingLeft(8.0, Unit.PX);
-				this.add(checkbox);
+				this.add(checkbox, getElement());
 			}
 		}
 	}

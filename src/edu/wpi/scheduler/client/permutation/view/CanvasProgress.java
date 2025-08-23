@@ -60,7 +60,7 @@ public class CanvasProgress extends ComplexPanel
 		this.getElement().getStyle().setHeight(100.0, Unit.PCT);
 
 		title.setStyleName("ScheduleLoadingLabel");
-
+		
 		this.add(title, getElement());
 		this.add(canvas, getElement());
 	}
