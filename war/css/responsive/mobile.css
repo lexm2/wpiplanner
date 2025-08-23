@@ -1,0 +1,65 @@
+/** Mobile Responsive Styles for WPI Planner (max-width: 768px) */
+
+@media (max-width: 768px) {
+	/* Layout Adjustments */
+	.courseListParent {
+		padding: var(--spacing-xs);
+	}
+	
+	.courseListContainer {
+		min-height: 250px;
+		margin: var(--spacing-xs);
+	}
+	
+	/* Typography Scaling */
+	h1 {
+		font-size: 2rem;
+		margin: var(--spacing-lg) 0 var(--spacing-md);
+	}
+	
+	h2 {
+		font-size: 1.5rem;
+	}
+	
+	/* Navigation */
+	.sched-NavTab, .sched-NavTabSelected {
+		font-size: 13px;
+		margin: 0 16px;
+		height: 70px;
+	}
+	
+	/* Form Elements */
+	.gwt-TextBox {
+		width: 100%;
+		box-sizing: border-box;
+		font-size: 16px; /* Prevents zoom on iOS */
+	}
+	
+	.courseSelector-searchBox {
+		width: 100%;
+		font-size: 16px; /* Prevents zoom on iOS */
+		box-sizing: border-box;
+	}
+	
+	/* Header Adjustments */
+	.mainView-headerTitle {
+		font-size: 24px;
+		padding-left: 12px;
+	}
+	
+	.mainView-headerSubTitle {
+		font-size: 11px;
+		padding-left: 12px;
+	}
+	
+	/* Welcome Page */
+	.welcome-mainContainer {
+		padding: var(--spacing-md);
+		flex-direction: column;
+	}
+	
+	.welcome-videoSection,
+	.welcome-infoSection {
+		min-width: 100%;
+	}
+}

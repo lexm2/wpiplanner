@@ -1,0 +1,132 @@
+/** Welcome Page Styles for WPI Planner */
+
+/* Main Container */
+.welcome-mainContainer {
+	display: flex;
+	gap: 24px;
+	padding: 24px;
+	max-width: 1200px;
+	margin: 0 auto;
+	flex-wrap: wrap;
+}
+
+/* Video Section */
+.welcome-videoSection {
+	flex: 2;
+	min-width: 600px;
+	background: white;
+	border-radius: 16px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+	padding: 32px;
+	overflow: hidden;
+}
+
+.welcome-videoTitle {
+	color: var(--wpi-crimson);
+	margin-bottom: 24px;
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.welcome-videoContainer {
+	position: relative;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+	margin-bottom: 24px;
+}
+
+.welcome-videoFrame {
+	width: 100%;
+	height: 315px;
+	frameborder: 0;
+	allowfullscreen: true;
+}
+
+/* Changes Section */
+.welcome-changesTitle {
+	color: var(--gray-700);
+	margin-bottom: 16px;
+	font-size: 1.5rem;
+	font-weight: 500;
+}
+
+.welcome-changesList {
+	text-align: left;
+	color: var(--gray-600);
+	line-height: 1.7;
+	margin-left: 20px;
+}
+
+.welcome-listItem {
+	margin-bottom: 12px;
+}
+
+.welcome-nestedList {
+	margin-top: 8px;
+	margin-left: 20px;
+}
+
+.welcome-nestedItem {
+	margin-bottom: 4px;
+}
+
+/* Color Labels */
+.welcome-colorLabel {
+	font-weight: 600;
+}
+
+.welcome-colorGreen {
+	color: var(--accent-green);
+}
+
+.welcome-colorBlue {
+	color: var(--accent-blue);
+}
+
+.welcome-colorOrange {
+	color: var(--accent-orange);
+}
+
+.welcome-colorRed {
+	color: var(--wpi-crimson);
+}
+
+/* Info Section */
+.welcome-infoSection {
+	flex: 1;
+	min-width: 300px;
+	background: white;
+	border-radius: 16px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+	padding: 32px;
+}
+
+.welcome-infoTitle {
+	color: var(--wpi-crimson);
+	margin-bottom: 24px;
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.welcome-infoBlock {
+	margin-bottom: 24px;
+}
+
+.welcome-infoLabel {
+	color: var(--gray-600);
+	margin-bottom: 12px;
+	font-weight: 500;
+}
+
+.welcome-infoList {
+	color: var(--gray-600);
+	line-height: 1.6;
+	margin-left: 20px;
+}
+
+.welcome-infoFooter {
+	color: var(--gray-600);
+	line-height: 1.6;
+	font-style: italic;
+}

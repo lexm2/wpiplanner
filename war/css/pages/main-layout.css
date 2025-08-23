@@ -1,0 +1,61 @@
+/** Main Layout Styles for WPI Planner */
+
+/* Top Bar and Header */
+.mainView-topBar {
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	border: none;
+}
+
+.mainView-topBarNoBottom {
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+}
+
+/* Header Text Elements */
+.mainView-headerTitle {
+	color: white;
+	font-size: 32px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	margin: 4px 0 0 0;
+	padding-left: 16px;
+}
+
+.mainView-headerSubTitle {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 13px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 400;
+	margin: 0;
+	padding-left: 16px;
+	letter-spacing: 0.02em;
+}
+
+.mainView-authorLabel {
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 11px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 2px 0;
+	padding-left: 12px;
+}
+
+.mainView-updatedTimestamp {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 12px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 400;
+	margin: 2px 0;
+	padding-left: 12px;
+}
+
+/* Info Panel */
+.mainView-infoPanel {
+	padding: var(--spacing-sm) 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2px;
+}

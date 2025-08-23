@@ -1,0 +1,93 @@
+/** Button Components for WPI Planner */
+
+/* Primary Buttons */
+.sendButton, .sched-Button {
+	font-family: 'Inter', sans-serif;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	font-weight: 500;
+	padding: 10px 16px;
+	margin: var(--spacing-xs);
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	border-radius: var(--radius-md);
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+	color: white;
+	box-shadow: 0 2px 4px rgba(196, 18, 48, 0.2);
+	transform: translateY(0);
+	letter-spacing: 0.01em;
+	min-height: 40px;
+	box-sizing: border-box;
+}
+
+.sendButton:hover, .sched-Button:hover {
+	box-shadow: 0 4px 12px rgba(196, 18, 48, 0.3);
+	background: linear-gradient(135deg, var(--wpi-crimson-light) 0%, var(--wpi-crimson) 100%);
+}
+
+.sendButton:active, .sched-Button:active {
+	transform: translateY(0);
+	box-shadow: var(--shadow-sm);
+}
+
+/* Secondary Button Variant */
+.sched-Button.secondary {
+	background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+	color: var(--gray-800);
+	border: 1px solid var(--gray-300);
+}
+
+.sched-Button.secondary:hover {
+	background: linear-gradient(135deg, var(--gray-200) 0%, var(--gray-300) 100%);
+}
+
+/* Load More Button (Course Selection) */
+.courseSelector-loadMoreButton {
+	font-family: 'Inter', sans-serif;
+	margin: var(--spacing-md) auto;
+	padding: var(--spacing-sm) var(--spacing-lg);
+	background: linear-gradient(135deg, var(--accent-blue) 0%, #0056b3 100%);
+	color: white;
+	border: none;
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all var(--transition-base);
+	box-shadow: var(--shadow-sm);
+	display: block;
+	min-height: 40px;
+	letter-spacing: 0.01em;
+}
+
+.courseSelector-loadMoreButton:hover {
+	background: linear-gradient(135deg, #0056b3 0%, var(--accent-blue) 100%);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+/* Refresh Button (MainView) */
+.mainView-refreshButton {
+	color: white;
+	background-color: rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: var(--radius-sm);
+	font-size: 11px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 500;
+	margin-left: var(--spacing-sm);
+	padding: 6px 12px;
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	backdrop-filter: blur(8px);
+}
+
+.mainView-refreshButton:hover {
+	background-color: rgba(255, 255, 255, 0.25);
+	border-color: rgba(255, 255, 255, 0.5);
+	transform: translateY(-1px);
+}

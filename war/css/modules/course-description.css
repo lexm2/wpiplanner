@@ -1,0 +1,13 @@
+/** Course Description Module Styles for WPI Planner */
+
+.courseDescription-mainDescription {
+	overflow: auto;
+}
+
+.courseDescription-title {
+	font-weight: bold;
+}
+
+.courseDescription-professorsSection {
+	margin-top: var(--spacing-md);
+}

@@ -1,0 +1,104 @@
+/** Navigation Components for WPI Planner */
+
+/* Horizontal Navigation Tabs */
+.sched-NavTab, .sched-NavTabSelected {
+	font-family: 'Inter', sans-serif;
+	font-size: 15px;
+	font-weight: 500;
+	position: relative;
+	margin: 0 24px;
+	padding: 0;
+	text-decoration: none;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	border-radius: 0;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 70px;
+	color: rgba(255, 255, 255, 0.75);
+	letter-spacing: 0.01em;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.sched-NavTab::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: transparent;
+	transition: background-color 0.2s ease;
+}
+
+/* Selected Tab State */
+.sched-NavTabSelected {
+	color: white;
+	font-weight: 600;
+}
+
+.sched-NavTabSelected::after {
+	background: white;
+}
+
+/* Hover States */
+.sched-NavTabEnabled:hover {
+	color: white;
+}
+
+.sched-NavTabEnabled:hover::after {
+	background: rgba(255, 255, 255, 0.4);
+}
+
+.sched-NavTabSelected:hover::after {
+	background: white;
+}
+
+/* Disabled Tab State */
+.sched-NavTabDisabled {
+	color: rgba(255, 255, 255, 0.4) !important;
+	cursor: not-allowed;
+}
+
+.sched-NavTabDisabled:hover {
+	color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.sched-NavTabDisabled::after {
+	background: transparent !important;
+}
+
+/* Tab Container Layouts */
+.mainView-tabContainer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 100%;
+	padding: 10px 20px;
+	position: relative;
+	overflow: visible;
+}
+
+.mainView-rightTabs {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 100%;
+	padding: 0;
+	gap: 0;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: var(--radius-md);
+	backdrop-filter: blur(8px);
+}
+
+.tabList-horizontalPanel {
+	position: static !important;
+	display: flex !important;
+	align-items: center !important;
+	height: 100% !important;
+	width: 100% !important;
+}

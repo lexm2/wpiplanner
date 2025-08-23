@@ -1,0 +1,29 @@
+/** Desktop Responsive Styles for WPI Planner (max-width: 480px) */
+
+@media (max-width: 480px) {
+	/* Ultra-small screen adjustments */
+	.courseListContainer {
+		min-height: 200px;
+	}
+	
+	.courseList td {
+		padding: var(--spacing-sm);
+		font-size: 13px;
+	}
+	
+	.sendButton, .sched-Button {
+		font-size: 13px;
+		padding: 8px 12px;
+		min-height: 36px;
+	}
+	
+	.mainView-headerTitle {
+		font-size: 20px;
+	}
+	
+	.sched-NavTab, .sched-NavTabSelected {
+		font-size: 12px;
+		margin: 0 12px;
+		height: 70px;
+	}
+}

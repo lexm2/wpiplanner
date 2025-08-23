@@ -1,0 +1,39 @@
+/** Course Selection Page Styles for WPI Planner */
+
+/* Course Selection Interface */
+.courseSelector-pretty {
+	font-weight: bold;
+	margin-bottom: var(--spacing-xs);
+	padding: var(--spacing-xs);
+	text-align: center;
+	background-color: var(--gray-300);
+	border-radius: var(--radius-sm);
+}
+
+/* Course List Container */
+.courseListContainer {
+	flex: 1;
+	min-height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: 1px solid var(--gray-300);
+	border-radius: var(--radius-md);
+	background: white;
+	box-shadow: var(--shadow-sm);
+	margin: var(--spacing-sm);
+}
+
+.courseListParent {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background: var(--gray-50);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-sm);
+}
+
+/* Scroll Panel Overrides */
+.gwt-ScrollPanel {
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+}

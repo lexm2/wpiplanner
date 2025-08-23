@@ -1,0 +1,19 @@
+/** Dialog Components for WPI Planner */
+
+/* GWT Dialog Box */
+.gwt-DialogBox {
+	width: 400px;
+}
+
+.dialogVPanel {
+	margin: 5px;
+}
+
+.serverResponseLabelError {
+	color: red;
+}
+
+/* Close Button */
+#closeButton {
+	margin: 15px 6px 6px;
+}

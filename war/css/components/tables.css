@@ -1,0 +1,144 @@
+/** Table Components for WPI Planner */
+
+/* Modern Course List Table */
+.courseList {
+	width: 100%;
+	border-spacing: 0;
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	box-shadow: var(--shadow-sm);
+	background: white;
+}
+
+.courseList>tr:nth-child(even) {
+	background: var(--gray-50);
+}
+
+.courseList>tr:nth-child(odd) {
+	background: white;
+}
+
+.courseList>tr:hover {
+	background: var(--gray-100);
+	transform: scale(1.001);
+	transition: all var(--transition-fast);
+}
+
+.courseList td {
+	padding: var(--spacing-md);
+	border-bottom: 1px solid var(--gray-200);
+	transition: all var(--transition-fast);
+}
+
+.courseList th {
+	background: linear-gradient(135deg, var(--wpi-crimson) 0%, var(--wpi-crimson-light) 100%);
+	color: white;
+	padding: var(--spacing-md);
+	font-weight: 600;
+	text-align: left;
+	border: none;
+}
+
+/* Time Table Components */
+.TimeTable {
+	font-size: 0px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: black;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.TimeTable_Row {
+	font-size: 0px;
+	vertical-align: top;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.TimeTable_TermLabel {
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.TimeTable_DayLabels {
+	font-size: 9px;
+	text-align: center;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.TimeTable_HourLabels {
+	font-size: 9px;
+	text-align: left;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+	border-right-width: 1px;
+	border-top-width: 1px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.TimeTable_Cell {
+	font-size: 0px;
+	border-right-width: 1px;
+	border-top-width: 1px;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+}
+
+.TimeTable_Cell_Static {
+	border-right-style: solid;
+	border-color: black;
+}
+
+.TimeTable_Cell_Selected {
+	background-color: #339900;
+	border-right-style: solid;
+	border-top-style: solid;
+	border-color: #339900;
+}
+
+.TimeTable_Cell_Deselected {
+	background-color: #FFDEDE;
+	border-right-style: solid;
+	border-top-style: solid;
+	border-color: #FFDEDE;
+}
+
+.TimeTable_Cell_Even {
+	border-top-style: solid;
+	border-color: black;
+}
+
+.TimeTable_Cell_Odd {
+	border-top-style: dotted;
+	border-color: black;
+}

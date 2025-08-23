@@ -1,0 +1,22 @@
+/** Tablet Responsive Styles for WPI Planner (768px - 1024px) */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	/* Course List Adjustments */
+	.courseListContainer {
+		min-height: 275px;
+	}
+	
+	/* Welcome Page Adjustments */
+	.welcome-videoSection {
+		min-width: 500px;
+	}
+	
+	.welcome-infoSection {
+		min-width: 250px;
+	}
+	
+	/* Navigation Spacing */
+	.sched-NavTab, .sched-NavTabSelected {
+		margin: 0 20px;
+	}
+}

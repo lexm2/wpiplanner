@@ -1,0 +1,12 @@
+/** Loading States Module Styles for WPI Planner */
+
+.ScheduleLoadingLabel {
+	width: 30%;
+	border-radius: 12px;
+	border: 1px solid #CCCCCC;
+	font-size: 40px;
+	position: absolute;
+	z-index: 2;
+	background-color: #FFFFFF;
+	opacity: 0.95;
+}

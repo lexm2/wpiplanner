@@ -95,7 +95,7 @@ public class ConflictResolverWidget extends FlowPanel implements
 		getElement().getStyle().setPosition(Position.ABSOLUTE);
 
 		Element title = DOM.createDiv();
-		title.setInnerHTML("<h2>No schedules can be generated. :(<br>We are finding a few solutions.");
+		title.setInnerHTML("<h2>No schedules can be generated.");
 		title.getStyle().setTextAlign(TextAlign.CENTER);
 
 		getElement().appendChild(title);

@@ -1,0 +1,98 @@
+/** Schedule View Page Styles for WPI Planner */
+
+/* Term View */
+.termView div {
+	margin: 2px;
+	padding: 2px;
+	display: inline;
+	border-color: grey;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px;
+}
+
+/* Permutation Course Items */
+.permutationCourseItem {
+	border-bottom: 2px solid var(--gray-200);
+	width: 100%;
+	background: white;
+	margin-bottom: var(--spacing-sm);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+	transition: all var(--transition-base);
+}
+
+.permutationCourseItem:hover {
+	box-shadow: var(--shadow-md);
+}
+
+/* Permutation Period Items */
+.permutationPeriodItem {
+	border: 2px solid var(--gray-300);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	left: 0px;
+	cursor: pointer;
+	background: var(--gray-50);
+	transition: all var(--transition-base);
+	font-weight: 500;
+}
+
+.permutationPeriodItem:hover {
+	border-color: var(--wpi-crimson);
+	background: var(--wpi-crimson);
+	color: white;
+	box-shadow: var(--shadow-md);
+}
+
+/* Permutation Canvas */
+.permutationCanvas {
+	border-radius: var(--radius-lg);
+	border: 3px solid var(--gray-300);
+	cursor: pointer;
+	background: white;
+	box-shadow: var(--shadow-sm);
+	transition: all var(--transition-base);
+}
+
+.permutationCanvas:hover {
+	border-color: var(--wpi-crimson);
+	box-shadow: var(--shadow-md);
+}
+
+/* Hour Markers */
+.permutationHourMarker {
+	border-bottom: 1px dotted #ddd;
+	border-top: 1px solid #ddd;
+	width: 100%;
+}
+
+.permutationHourLabel {
+	border: 1px solid #ddd;
+	font-size: smaller;
+	overflow: hidden;
+}
+
+/* Course Item Periods */
+.courseItemPeriods {
+	
+}
+
+.courseItemPeriods>div:hover {
+	background: #F3F7FB;
+}
+
+/* Period Selection */
+.PeriodSelectProf {
+	float: right;
+	cursor: pointer;
+	content: 'test';
+}
+
+.PeriodSelectProf:hover {
+	content: 'test';
+}
